@@ -781,18 +781,18 @@ h1 {
 }
 
 .character-window-custom .character-logo {
-  width: 72%;
-  height: 72%;
+  width: 80%;
+  height: 80%;
   max-width: none;
   aspect-ratio: auto;
   margin: 0;
   padding: 0;
   object-fit: contain;
-  object-position: center center;
+  object-position: 42% center;
   border: none;
   border-radius: 0;
   box-shadow: none;
-  transform: none;
+  transform: translateX(-6px);
 }
 
 .prep-grid {

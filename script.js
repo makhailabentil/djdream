@@ -1,3 +1,81 @@
+const SCROLL_POSITION_KEY = "djdream-scroll-y";
+
+const saveScrollPosition = () => {
+  sessionStorage.setItem(SCROLL_POSITION_KEY, String(Math.round(window.scrollY)));
+};
+
+const restoreScrollPosition = () => {
+  const saved = sessionStorage.getItem(SCROLL_POSITION_KEY);
+  if (saved === null) {
+    return;
+  }
+
+  const scrollY = Number(saved);
+  if (!Number.isFinite(scrollY) || scrollY < 0) {
+    return;
+  }
+
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollTo(0, scrollY);
+  root.style.scrollBehavior = previousBehavior;
+};
+
+const shouldRestoreScrollPosition = () => {
+  const navEntry = performance.getEntriesByType("navigation")[0];
+  return navEntry?.type === "reload" || navEntry?.type === "back_forward";
+};
+
+const initScrollRestore = () => {
+  if (!shouldRestoreScrollPosition()) {
+    return;
+  }
+
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  restoreScrollPosition();
+};
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "auto";
+}
+
+let scrollSaveRaf = 0;
+window.addEventListener(
+  "scroll",
+  () => {
+    if (scrollSaveRaf) {
+      return;
+    }
+
+    scrollSaveRaf = requestAnimationFrame(() => {
+      scrollSaveRaf = 0;
+      saveScrollPosition();
+    });
+  },
+  { passive: true },
+);
+
+window.addEventListener("pagehide", saveScrollPosition);
+
+window.addEventListener("pageshow", (event) => {
+  if (!shouldRestoreScrollPosition() && !event.persisted) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    restoreScrollPosition();
+    requestAnimationFrame(restoreScrollPosition);
+  });
+});
+
+initScrollRestore();
+document.addEventListener("DOMContentLoaded", initScrollRestore);
+window.addEventListener("load", initScrollRestore);
+
 const scrollToTopInstant = () => {
   if (window.location.hash) {
     history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -8,6 +86,7 @@ const scrollToTopInstant = () => {
   root.style.scrollBehavior = "auto";
   window.scrollTo(0, 0);
   root.style.scrollBehavior = previousBehavior;
+  sessionStorage.setItem(SCROLL_POSITION_KEY, "0");
 };
 
 const menuButton = document.querySelector(".menu-btn");
