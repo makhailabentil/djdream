@@ -1,4 +1,55 @@
 const SCROLL_POSITION_KEY = "djdream-scroll-y";
+const revealItems = document.querySelectorAll(".reveal");
+
+const revealElement = (element) => {
+  element.classList.add("in-view");
+  revealObserver?.unobserve(element);
+};
+
+const isRevealTargetInViewport = (element) => {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  return rect.bottom > 0 && rect.top < viewportHeight;
+};
+
+const revealVisibleElements = () => {
+  revealItems.forEach((item) => {
+    if (!item.classList.contains("in-view") && isRevealTargetInViewport(item)) {
+      revealElement(item);
+    }
+  });
+};
+
+let revealObserver = null;
+
+if (revealItems.length > 0) {
+  revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        revealElement(entry.target);
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.18 },
+  );
+
+  revealItems.forEach((item) => {
+    if (item.classList.contains("in-view")) {
+      return;
+    }
+
+    if (isRevealTargetInViewport(item)) {
+      revealElement(item);
+      return;
+    }
+
+    revealObserver.observe(item);
+  });
+}
 
 const saveScrollPosition = () => {
   sessionStorage.setItem(SCROLL_POSITION_KEY, String(Math.round(window.scrollY)));
@@ -37,6 +88,7 @@ const initScrollRestore = () => {
   }
 
   restoreScrollPosition();
+  revealVisibleElements();
 };
 
 if ("scrollRestoration" in history) {
@@ -68,7 +120,11 @@ window.addEventListener("pageshow", (event) => {
 
   requestAnimationFrame(() => {
     restoreScrollPosition();
-    requestAnimationFrame(restoreScrollPosition);
+    revealVisibleElements();
+    requestAnimationFrame(() => {
+      restoreScrollPosition();
+      revealVisibleElements();
+    });
   });
 });
 
@@ -92,7 +148,6 @@ const scrollToTopInstant = () => {
 const menuButton = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 const yearSpan = document.querySelector("#year");
-const revealItems = document.querySelectorAll(".reveal");
 const bookingForm = document.querySelector(".booking-form");
 const heroRotator = document.querySelector("#hero-rotator");
 const eventDateInput = document.querySelector("#event-date");
@@ -537,24 +592,6 @@ if (
       }
     });
   });
-}
-
-if (revealItems.length > 0) {
-  const observer = new IntersectionObserver(
-    (entries, revealObserver) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        entry.target.classList.add("in-view");
-        revealObserver.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.18 }
-  );
-
-  revealItems.forEach((item) => observer.observe(item));
 }
 
 if (bookingForm) {

@@ -788,11 +788,11 @@ h1 {
   margin: 0;
   padding: 0;
   object-fit: contain;
-  object-position: 42% center;
+  object-position: 48% center;
   border: none;
   border-radius: 0;
   box-shadow: none;
-  transform: translateX(-6px);
+  transform: translateX(-3px);
 }
 
 .prep-grid {
