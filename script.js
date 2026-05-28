@@ -3,13 +3,31 @@ const revealItems = document.querySelectorAll(".reveal");
 
 const revealElement = (element) => {
   element.classList.add("in-view");
-  revealObserver?.unobserve(element);
+  revealObservers.forEach((observer) => observer.unobserve(element));
+};
+
+const getRevealOptions = (element) => {
+  if (element.classList.contains("characters-content")) {
+    return { threshold: 0, rootMargin: "0px 0px 28% 0px" };
+  }
+
+  return { threshold: 0.1, rootMargin: "0px 0px 12% 0px" };
+};
+
+const getRevealLeadOffset = (element) => {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+  if (element.classList.contains("characters-content")) {
+    return viewportHeight * 0.28;
+  }
+
+  return viewportHeight * 0.12;
 };
 
 const isRevealTargetInViewport = (element) => {
   const rect = element.getBoundingClientRect();
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-  return rect.bottom > 0 && rect.top < viewportHeight;
+  return rect.bottom > 0 && rect.top < viewportHeight + getRevealLeadOffset(element);
 };
 
 const revealVisibleElements = () => {
@@ -20,23 +38,32 @@ const revealVisibleElements = () => {
   });
 };
 
-let revealObserver = null;
+const revealObservers = new Map();
+
+const observeRevealItem = (item) => {
+  const options = getRevealOptions(item);
+  const optionsKey = JSON.stringify(options);
+
+  if (!revealObservers.has(optionsKey)) {
+    revealObservers.set(
+      optionsKey,
+      new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          revealElement(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, options),
+    );
+  }
+
+  revealObservers.get(optionsKey).observe(item);
+};
 
 if (revealItems.length > 0) {
-  revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        revealElement(entry.target);
-        observer.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.18 },
-  );
-
   revealItems.forEach((item) => {
     if (item.classList.contains("in-view")) {
       return;
@@ -47,7 +74,7 @@ if (revealItems.length > 0) {
       return;
     }
 
-    revealObserver.observe(item);
+    observeRevealItem(item);
   });
 }
 
