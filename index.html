@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="D&J Dream Entertainment brings magical princesses, heroes, and unforgettable character experiences to birthdays and events."
+    />
+    <title>D&J Dream Entertainment | Character Parties & Events</title>
+    <link rel="canonical" href="https://dandjdream.com/" />
+    <meta property="og:url" content="https://dandjdream.com/" />
+    <meta property="og:title" content="D&J Dream Entertainment | Character Parties & Events" />
+    <meta
+      property="og:description"
+      content="Luxury character entertainment for birthdays and events in the Newburgh–Hudson Valley, NY area."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a id="top" class="page-top-anchor" aria-hidden="true" tabindex="-1"></a>
+    <header class="site-header">
+      <nav class="container nav">
+        <a class="brand" href="#top">
+          <img class="brand-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <span class="brand-text">Dream Entertainment</span>
+        </a>
+        <button class="menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#characters">Characters</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#prep">Prep Guide</a></li>
+          <li><a href="#highlights">Highlights</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#process">Process</a></li>
+          <li class="nav-book-menu-item">
+            <a class="btn btn-small" href="#booking">BOOK NOW</a>
+          </li>
+        </ul>
+        <a class="btn btn-small nav-book-btn" href="#booking">BOOK NOW</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <img
+          id="hero-rotator"
+          class="hero-rotator-bg"
+          src="./assets/party-01.png"
+          alt="Animated themed birthday party scene"
+        />
+        <div class="hero-screen"></div>
+        <div class="container hero-inner"></div>
+      </section>
+
+      <div class="hero-brand-banner reveal">
+        <a class="hero-brand" href="#top">
+          <img class="hero-brand-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <span class="hero-brand-text">Dream Entertainment</span>
+        </a>
+      </div>
+
+      <section class="hero-intro section">
+        <div class="container hero-intro-layout">
+          <div class="hero-intro-stack">
+            <div class="hero-copy reveal in-view">
+              <p class="eyebrow">Princesses | Heroes | Mermaids | Storybook Themes</p>
+              <h1>Luxury Character Entertainment That Feels Truly <span class="hero-magical">Magical</span></h1>
+              <p class="subcopy">
+                Give your child the kind of party guests talk about for months. We deliver
+                premium performances, polished planning, and unforgettable moments designed
+                for modern families.
+              </p>
+              <div class="hero-cta">
+                <a class="btn" id="availability-trigger" href="#">Check Date Availability</a>
+                <a class="btn btn-ghost" href="#characters">Meet the Characters</a>
+              </div>
+              <div class="booking-flow" id="booking-flow" hidden>
+            <div class="hero-calendar" id="hero-calendar">
+              <div class="hero-calendar-head">
+                <button type="button" class="calendar-nav-btn" id="calendar-prev" aria-label="Previous month">
+                  &#8249;
+                </button>
+                <p class="calendar-month" id="calendar-month-label"></p>
+                <button type="button" class="calendar-nav-btn" id="calendar-next" aria-label="Next month">
+                  &#8250;
+                </button>
+              </div>
+              <div class="calendar-weekdays" aria-hidden="true">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+              <p class="calendar-selection" id="calendar-selection-text">Select a date to continue your booking.</p>
+            </div>
+            <div class="availability-panel" id="availability-panel" hidden>
+              <p class="availability-title">Details</p>
+              <p class="availability-status" id="availability-status">Choose a package and time for this date.</p>
+              <div class="availability-fields">
+                <label>
+                  Package
+                  <select id="availability-package">
+                    <option value="">Select package</option>
+                  </select>
+                </label>
+                <label>
+                  Time
+                  <select id="availability-time" disabled>
+                    <option value="">Select time</option>
+                  </select>
+                </label>
+                <label>
+                  Character(s)
+                  <select id="availability-characters" multiple size="4" disabled></select>
+                </label>
+              </div>
+              <p class="availability-note" id="availability-note">
+                Character multi-select unlocks automatically for packages that include multiple characters.
+              </p>
+              <button type="button" class="btn availability-continue-btn" id="availability-continue" disabled>
+                Continue
+              </button>
+            </div>
+              </div>
+            </div>
+
+            <section class="hero-purpose reveal" aria-label="What we stand for">
+              <p class="hero-purpose-eyebrow">What We Stand For</p>
+              <p class="hero-purpose-statement">
+                Dream Entertainment was built for families who want more than a quick photo op. We
+                create polished, in-character experiences where every child feels welcomed,
+                included, and truly part of the magic. Serving the Newburgh-Hudson Valley for
+                private and public celebrations, we plan with care, adapt to your child's needs,
+                and show up ready to make the day feel effortless for you and unforgettable for
+                them.
+              </p>
+              <ul class="hero-purpose-pillars">
+                <li>
+                  <strong>Hudson Valley rooted</strong>
+                  <span>Home parties, venues, and community events across NY</span>
+                </li>
+                <li>
+                  <strong>Inclusive by design</strong>
+                  <span>Sensory-friendly options and custom needs welcomed</span>
+                </li>
+                <li>
+                  <strong>Planning made clear</strong>
+                  <span>Personalized guidance from first inquiry to showtime</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section characters-section">
+        <div class="container">
+          <p class="eyebrow center" id="characters">Meet the Characters</p>
+          <h2 class="center">Choose Your Party’s Star Of The Show</h2>
+          <p class="center characters-intro">
+            From royal kingdoms to heroic adventures, each character brings their own sparkle,
+            songs, and storybook magic to your celebration.
+          </p>
+          <div class="characters-grid reveal">
+            <article class="character-window">
+              <img src="./assets/characters/ice-queen.png" alt="The Ice Queen character portrait" />
+              <h3>The Ice Queen</h3>
+              <p>Cool, kind, and full of sparkle. She turns any party into a winter wonderland of fun.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/desert-princess.png" alt="The Desert Princess character portrait" />
+              <h3>The Desert Princess</h3>
+              <p>Brave, bright, and adventurous. Ready to lead little guests on a magical journey.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/bayou-princess.png" alt="The Bayou Princess character portrait" />
+              <h3>The Bayou Princess</h3>
+              <p>Hardworking and joyful. She believes dreams come true with music, laughter, and heart.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/tower-princess.png" alt="The Tower Princess character portrait" />
+              <h3>The Tower Princess</h3>
+              <p>Sunny, playful, and creative. She brings art, imagination, and royal charm to every visit.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/sea-song-princess.png" alt="The Mermaid Princess character portrait" />
+              <h3>The Mermaid Princess</h3>
+              <p>Curious and bubbly. She loves splashy games, sea stories, and sing-along moments.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/golden-belle.png" alt="The Golden Belle character portrait" />
+              <h3>The Golden Belle</h3>
+              <p>Warm and graceful. She makes every child feel like royalty at the celebration.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/ballroom-princess.png" alt="The Ballroom Princess character portrait" />
+              <h3>The Ballroom Princess</h3>
+              <p>
+                Graceful, warm, and magical. She hosts elegant dancing, sing-alongs, and fairytale moments
+                that make every child feel like royalty.
+              </p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/island-voyager.png" alt="The Island Voyager character portrait" />
+              <h3>The Island Voyager</h3>
+              <p>Bold and free-spirited. She inspires courage, laughter, and ocean-themed adventure.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/miracle-girl.png" alt="The Miracle Girl character portrait" />
+              <h3>The Miracle Girl</h3>
+              <p>Full of heart and family spirit. She turns every moment into a colorful celebration.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/rescue-captain.png" alt="The Rescue Captain character portrait" />
+              <h3>The Rescue Captain</h3>
+              <p>Helpful and upbeat. He brings junior rescue squad energy with action missions and teamwork games.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/web-hero.png" alt="The Web Hero character portrait" />
+              <h3>The Web Hero</h3>
+              <p>Quick, funny, and heroic. He brings high-energy training games and big smiles.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/jumpman-hero.png" alt="The Jumpman Hero character portrait" />
+              <h3>The Jumpman Hero</h3>
+              <p>Cheerful and playful. He loves jumping challenges, party games, and victory dances.</p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/sky-guardian.png" alt="The Sky Guardian character portrait" />
+              <h3>The Sky Guardian</h3>
+              <p>
+                Bold, inspiring, and full of heroic energy. He brings action poses, teamwork challenges,
+                and soaring confidence to every celebration.
+              </p>
+            </article>
+            <article class="character-window">
+              <img src="./assets/characters/kingdom-guardian.png" alt="The Kingdom Guardian character portrait" />
+              <h3>The Kingdom Guardian</h3>
+              <p>
+                Noble, powerful, and protective. He leads young guests through royal missions, agility games,
+                and unforgettable celebration moments.
+              </p>
+            </article>
+            <article class="character-window character-window-custom">
+              <img
+                class="character-logo"
+                src="./assets/characters/custom-characters.png"
+                alt="D and J Dream Entertainment logo"
+              />
+              <h3>Custom Characters</h3>
+              <p>
+                Have someone special in mind? Share your theme and we will craft a matching character-style experience.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="value-strip">
+        <div class="container">
+          <p class="eyebrow center" id="experience">Experience</p>
+          <div class="strip-grid reveal">
+          <article>
+            <h3>Elevated Performers</h3>
+            <p>
+              High-quality wigs, costumes, and in-character performances create an
+              immersive atmosphere from the first entrance.
+            </p>
+          </article>
+          <article>
+            <h3>Structured Party Flow</h3>
+            <p>
+              Our packages are designed so each activity transitions smoothly and keeps
+              children engaged from start to finish.
+            </p>
+          </article>
+          <article>
+            <h3>Truly Personalized</h3>
+            <p>
+              We tailor interactions to your child’s age, personality, and needs,
+              including sensory-aware adaptations.
+            </p>
+          </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="eyebrow center" id="prep">Party Prep Guide</p>
+          <h2 class="center">How To Set Up A Smooth, Stress-Free Celebration</h2>
+          <div class="prep-grid reveal">
+            <article class="prep-card">
+              <h3>Space Setup</h3>
+              <p>
+                Keep one clear activity area where children can gather, move, and see the
+                performer comfortably.
+              </p>
+              <ul class="prep-list">
+                <li>Open floor area for games and dancing</li>
+                <li>Chairs moved back for safe movement</li>
+              </ul>
+            </article>
+            <article class="prep-card">
+              <h3>Timing Window</h3>
+              <p>
+                Schedule character entertainment before cake so energy and attention stay
+                high during activities.
+              </p>
+              <ul class="prep-list">
+                <li>Character set starts early in the event</li>
+                <li>Cake and gifts follow after guided activities</li>
+              </ul>
+            </article>
+            <article class="prep-card">
+              <h3>Guest Readiness</h3>
+              <p>
+                Let parents know the party includes interactive segments so kids arrive
+                ready to participate.
+              </p>
+              <ul class="prep-list">
+                <li>Comfortable clothes for active moments</li>
+                <li>Any sensory preferences shared in advance</li>
+              </ul>
+            </article>
+            <article class="prep-card">
+              <h3>Photo Plan</h3>
+              <p>
+                Choose one dedicated photo moment so every child gets a picture without
+                interrupting the flow.
+              </p>
+              <ul class="prep-list">
+                <li>Designate a quick lineup order</li>
+                <li>Keep one adult as photo coordinator</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt icon-highlights-section">
+        <div class="container">
+          <p class="eyebrow center" id="highlights">Highlights</p>
+          <h2 class="center">Everything Needed For A Smooth, Magical Event</h2>
+          <div class="icon-highlights-grid reveal">
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-1.png" alt="" />
+              </span>
+              <h3>In-Character Performances</h3>
+              <p>Immersive interactions that keep children engaged throughout the celebration.</p>
+            </article>
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-2.png" alt="" />
+              </span>
+              <h3>Guided Activity Flow</h3>
+              <p>Organized transitions between games, story moments, and celebration highlights.</p>
+            </article>
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-3.png" alt="" />
+              </span>
+              <h3>Theme-Matched Styling</h3>
+              <p>Costume and character presentation that supports your party vision.</p>
+            </article>
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-4.png" alt="" />
+              </span>
+              <h3>Sensory-Aware Options</h3>
+              <p>Flexible interaction styles to support each child’s comfort preferences.</p>
+            </article>
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-5.png" alt="" />
+              </span>
+              <h3>Multi-Location Service</h3>
+              <p>Private and public event coverage across Newburgh-Hudson Valley, NY.</p>
+            </article>
+            <article class="icon-highlight-card">
+              <span class="icon-badge" aria-hidden="true">
+                <img class="highlight-icon-image" src="./assets/icons/highlight-6.png" alt="" />
+              </span>
+              <h3>Clear Booking Steps</h3>
+              <p>Simple inquiry, quote, confirmation, and final preparation timeline.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <p class="eyebrow center" id="packages">Simple Package Ladder</p>
+          <h2 class="center">Choose The Experience Level That Fits Your Party</h2>
+          <div class="pricing-grid reveal">
+            <article class="price-card">
+              <span class="price-card-badge-slot" aria-hidden="true"></span>
+              <h3>Enchant Starter</h3>
+              <p class="price">$195+</p>
+              <ul>
+                <li>30-minute character visit</li>
+                <li>Storytime, song, and celebration moment</li>
+                <li>Photo opportunities with each child</li>
+              </ul>
+              <a class="btn btn-outline" href="#booking" data-package="starter">Book Starter</a>
+            </article>
+            <article class="price-card featured">
+              <p class="badge">Best Value</p>
+              <h3>Dream Signature</h3>
+              <p class="price">$325+</p>
+              <ul>
+                <li>60-minute immersive character experience</li>
+                <li>Interactive games + themed activities</li>
+                <li>Coronation, hero oath, or custom ceremony</li>
+                <li>Group photos and keepsake spotlight moment</li>
+              </ul>
+              <a class="btn" href="#booking" data-package="signature">Book Signature</a>
+            </article>
+            <article class="price-card">
+              <span class="price-card-badge-slot" aria-hidden="true"></span>
+              <h3>Grand Celebration</h3>
+              <p class="price">$595+</p>
+              <ul>
+                <li>90+ minutes with 2+ characters</li>
+                <li>Large group facilitation and activity flow</li>
+                <li>School, HOA, and festival-ready entertainment</li>
+              </ul>
+              <a class="btn btn-outline" href="#booking" data-package="grand">Build Grand Event</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="eyebrow center" id="reviews">What To Expect</p>
+          <h2 class="center">What Makes The Experience Stand Out</h2>
+          <div class="testimonials reveal">
+            <blockquote>
+              "High-quality character entertainment designed to keep children engaged
+              from arrival to final photo."
+            </blockquote>
+            <blockquote>
+              "Structured activity flow helps celebrations feel smooth, interactive, and
+              age-appropriate."
+            </blockquote>
+            <blockquote>
+              "Customizable interactions support different comfort levels, including
+              sensory-aware preferences."
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <p class="eyebrow center" id="process">Fast Booking Process</p>
+          <h2 class="center">How It Works In Four Simple Steps</h2>
+          <div class="process-grid reveal">
+            <article>
+              <h3>1. Share your event details</h3>
+              <p>Tell us your date, theme, location, and child’s favorites.</p>
+            </article>
+            <article>
+              <h3>2. Get your custom quote</h3>
+              <p>We send package recommendations and optional enhancements.</p>
+            </article>
+            <article>
+              <h3>3. Confirm your booking</h3>
+              <p>Secure your date with a deposit and signed service agreement.</p>
+            </article>
+            <article>
+              <h3>4. Enjoy the magic</h3>
+              <p>Our team handles the entertainment flow so you enjoy the moment.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section booking">
+        <div class="container booking-grid">
+          <div class="booking-intro">
+            <p class="eyebrow" id="booking">Book D&J Dream Entertainment</p>
+            <h2>Reserve A Date For Your Big Day</h2>
+            <p>
+              Complete the inquiry and we will send your custom package path. If your
+              preferred date is open, we will hold it while you finalize details.
+            </p>
+            <ul class="booking-points">
+              <li>Simple booking and planning process</li>
+              <li>Flexible package customization</li>
+              <li>Newburgh-Hudson Valley, NY private and public event service</li>
+            </ul>
+          </div>
+          <form class="booking-form" action="#" method="post">
+            <label>
+              Parent/Organizer Name
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Email Address
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Event Date
+              <input id="event-date" type="date" name="event-date" required />
+            </label>
+            <label>
+              Preferred Package
+              <select id="event-package" name="event-package" required>
+                <option value="">Select package</option>
+                <option value="starter">Enchant Starter</option>
+                <option value="signature">Dream Signature</option>
+                <option value="grand">Grand Celebration</option>
+              </select>
+            </label>
+            <label>
+              Preferred Time
+              <select id="event-time" name="event-time" required>
+                <option value="">Select time</option>
+              </select>
+            </label>
+            <label>
+              Event Type
+              <select name="event-type" required>
+                <option value="">Select event type</option>
+                <option>Birthday Party</option>
+                <option>School Event</option>
+                <option>Community Event</option>
+                <option>Corporate Family Event</option>
+                <option>Private Hosted Event</option>
+              </select>
+            </label>
+            <label>
+              Dream Characters
+              <select id="event-characters" name="characters" multiple size="6">
+                <option value="ice-queen">The Ice Queen</option>
+                <option value="desert-princess">The Desert Princess</option>
+                <option value="bayou-princess">The Bayou Princess</option>
+                <option value="tower-princess">The Tower Princess</option>
+                <option value="sea-song-princess">The Mermaid Princess</option>
+                <option value="golden-belle">The Golden Belle</option>
+                <option value="ballroom-princess">The Ballroom Princess</option>
+                <option value="island-voyager">The Island Voyager</option>
+                <option value="miracle-girl">The Miracle Girl</option>
+                <option value="rescue-captain">The Rescue Captain</option>
+                <option value="web-hero">The Web Hero</option>
+                <option value="jumpman-hero">The Jumpman Hero</option>
+                <option value="sky-guardian">The Sky Guardian</option>
+                <option value="kingdom-guardian">The Kingdom Guardian</option>
+                <option value="custom-characters">Custom Characters</option>
+              </select>
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="4" placeholder="Tell us about your vision..."></textarea>
+            </label>
+            <button class="btn" type="submit">Send Inquiry</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <img class="footer-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <p class="brand-footer">D&J Dream Entertainment</p>
+          <p>Bringing premium character magic to birthdays and celebrations.</p>
+          <p><strong>Phone:</strong> (202) 417-7238</p>
+          <p><strong>Email:</strong> hello@djdreamentertainment.com</p>
+          <p><strong>Service Area:</strong> Newburgh-Hudson Valley, NY</p>
+        </div>
+      </div>
+      <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
