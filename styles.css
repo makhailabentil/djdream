@@ -760,6 +760,12 @@ h1 {
   color: #c9b8f2;
 }
 
+@media (min-width: 901px) {
+  .character-window-custom {
+    grid-column: 1 / -1;
+  }
+}
+
 .character-window-custom .character-logo {
   object-fit: contain;
   object-position: 8% center;
@@ -768,7 +774,7 @@ h1 {
   border-color: rgba(236, 72, 153, 0.45);
   box-shadow: none;
   margin-inline: auto;
-  transform: scale(0.9);
+  transform: scale(0.86);
 }
 
 .prep-grid {

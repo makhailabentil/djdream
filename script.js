@@ -113,8 +113,8 @@ if (
 
   const characterCatalog = [
     { value: "ice-queen", label: "The Ice Queen" },
-    { value: "desert-princess", label: "The Desert Princess" },
     { value: "bayou-princess", label: "The Bayou Princess" },
+    { value: "desert-princess", label: "The Desert Princess" },
     { value: "tower-princess", label: "The Tower Princess" },
     { value: "sea-song-princess", label: "The Mermaid Princess" },
     { value: "golden-belle", label: "The Golden Belle" },
