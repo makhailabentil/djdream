@@ -766,15 +766,33 @@ h1 {
   }
 }
 
-.character-window-custom .character-logo {
-  object-fit: contain;
-  object-position: 8% center;
+.character-window-custom .character-logo-ring {
+  width: min(100%, 132px);
+  max-width: 132px;
+  aspect-ratio: 1;
+  margin: 0 auto 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   background: #f4f0ea;
-  padding: 0.45rem 0.9rem 0.45rem 0.05rem;
-  border-color: rgba(236, 72, 153, 0.45);
+  border: 2px solid rgba(236, 72, 153, 0.45);
+  overflow: hidden;
+}
+
+.character-window-custom .character-logo {
+  width: 72%;
+  height: 72%;
+  max-width: none;
+  aspect-ratio: auto;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  object-position: center center;
+  border: none;
+  border-radius: 0;
   box-shadow: none;
-  margin-inline: auto;
-  transform: scale(0.86);
+  transform: none;
 }
 
 .prep-grid {
@@ -1288,6 +1306,10 @@ textarea:focus {
   }
 
   .character-window img {
+    max-width: 108px;
+  }
+
+  .character-window-custom .character-logo-ring {
     max-width: 108px;
   }
 }
