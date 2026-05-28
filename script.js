@@ -126,6 +126,7 @@ if (
     { value: "jumpman-hero", label: "The Jumpman Hero" },
     { value: "sky-guardian", label: "The Sky Guardian" },
     { value: "kingdom-guardian", label: "The Kingdom Guardian" },
+    { value: "night-sentinel", label: "The Night Sentinel" },
     { value: "custom-characters", label: "Custom Characters" },
   ];
 
@@ -567,6 +568,7 @@ if (heroRotator) {
     "./assets/party-12.png",
     "./assets/party-13.png",
     "./assets/party-14.png",
+    "./assets/party-15.png",
   ];
 
   const shuffleImages = (images) => {

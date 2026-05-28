@@ -762,12 +762,13 @@ h1 {
 
 .character-window-custom .character-logo {
   object-fit: contain;
-  object-position: 22% center;
+  object-position: 8% center;
   background: #f4f0ea;
-  padding: 0.45rem 0.75rem 0.45rem 0.1rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.05rem;
   border-color: rgba(236, 72, 153, 0.45);
   box-shadow: none;
-  transform: translateX(-18px) scale(0.86);
+  margin-inline: auto;
+  transform: scale(0.9);
 }
 
 .prep-grid {
@@ -1153,15 +1154,25 @@ textarea:focus {
 
   .menu-btn {
     display: block;
+    flex-shrink: 0;
+    order: 2;
+    margin-left: auto;
   }
 
   .nav {
     position: relative;
+    display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem 0.65rem;
+    min-height: 64px;
   }
 
   .nav-links {
     display: none;
+    order: 3;
+    flex-basis: 100%;
     position: absolute;
     top: 100%;
     left: 0;
@@ -1214,22 +1225,44 @@ textarea:focus {
   }
 
   .brand {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 2.5rem);
+    gap: clamp(0.3rem, 1.8vw, 0.45rem);
     transform: none;
+    margin-left: 0;
   }
 
   .brand-logo {
-    width: 94px;
-    height: 38px;
-  }
-
-  .brand-text,
-  .hero-brand-text {
-    font-size: 1rem;
-    letter-spacing: 0.13em;
+    width: clamp(68px, 20vw, 88px);
+    height: auto;
+    aspect-ratio: 118 / 48;
+    flex-shrink: 0;
+    object-position: left center;
   }
 
   .brand-text {
+    font-size: clamp(0.56rem, 2.45vw, 0.8rem);
+    letter-spacing: clamp(0.04em, 0.3vw, 0.1em);
+    line-height: 1.1;
+    white-space: nowrap;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 400px) {
+  .brand-logo {
+    width: 62px;
+  }
+
+  .brand-text {
+    font-size: 0.52rem;
+    letter-spacing: 0.05em;
+  }
+
+  .site-header .container {
+    padding-inline: 0.75rem;
   }
 }
 
