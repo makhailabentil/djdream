@@ -178,9 +178,6 @@ const yearSpan = document.querySelector("#year");
 const bookingForm = document.querySelector(".booking-form");
 const heroCarousel = document.querySelector("#hero-carousel");
 const heroCarouselTrack = document.querySelector("#hero-carousel-track");
-const heroCarouselNav = document.querySelector("#hero-carousel-nav");
-const heroCarouselPrev = document.querySelector("#hero-carousel-prev");
-const heroCarouselNext = document.querySelector("#hero-carousel-next");
 const eventDateInput = document.querySelector("#event-date");
 const availabilityTrigger = document.querySelector("#availability-trigger");
 const bookingFlow = document.querySelector("#booking-flow");
@@ -699,7 +696,7 @@ if (packageButtons.length > 0) {
   });
 }
 
-if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && heroCarouselNext) {
+if (heroCarousel && heroCarouselTrack) {
   const CAROUSEL_INDEX_KEY = "djdream-carousel-index";
   const heroImages = [
     "./assets/party-01.png",
@@ -729,7 +726,7 @@ if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && 
   let autoPlayTimer = 0;
   let autoPlayResumeTimer = 0;
   let lastScrollLeft = 0;
-  const AUTO_PLAY_INTERVAL = 3800;
+  const AUTO_PLAY_INTERVAL = 2800;
   const AUTO_PLAY_RESUME_DELAY = 6000;
 
   const getSavedCarouselIndex = () => {
@@ -800,18 +797,6 @@ if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && 
     syncCarouselIndex(index);
   };
 
-  const scrollCarouselBy = (direction, behavior = "smooth") => {
-    slideWidth = getSlideWidth();
-    if (!slideWidth) {
-      return;
-    }
-
-    heroCarouselTrack.scrollTo({
-      left: heroCarouselTrack.scrollLeft + direction * slideWidth,
-      behavior,
-    });
-  };
-
   const repositionIfNeeded = () => {
     if (isRepositioning) {
       return;
@@ -869,7 +854,6 @@ if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && 
 
   const revealCarousel = () => {
     heroCarousel.classList.add("is-ready");
-    heroCarouselNav.classList.add("is-ready");
     isInitializing = false;
     startAutoPlay();
   };
@@ -956,16 +940,6 @@ if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && 
     if (heroCarousel.classList.contains("is-ready")) {
       startAutoPlay();
     }
-  });
-
-  heroCarouselPrev.addEventListener("click", () => {
-    pauseAutoPlay();
-    scrollCarouselBy(-1);
-  });
-
-  heroCarouselNext.addEventListener("click", () => {
-    pauseAutoPlay();
-    scrollCarouselBy(1);
   });
 
   window.addEventListener("resize", () => {

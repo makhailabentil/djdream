@@ -230,51 +230,6 @@ p {
   -webkit-user-drag: none;
 }
 
-.hero-carousel-nav:not(.is-ready) {
-  visibility: hidden;
-}
-
-.hero-carousel-nav {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.hero-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(2.2rem, 4.5vw, 2.75rem);
-  height: clamp(2.2rem, 4.5vw, 2.75rem);
-  border: 1px solid rgba(168, 120, 255, 0.45);
-  border-radius: 50%;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  background: rgba(7, 6, 18, 0.58);
-  color: #f4ecff;
-  font-size: clamp(1.35rem, 2.8vw, 1.75rem);
-  line-height: 1;
-  cursor: pointer;
-  pointer-events: auto;
-  backdrop-filter: blur(4px);
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.hero-carousel-arrow:hover {
-  background: rgba(18, 14, 40, 0.82);
-  border-color: rgba(168, 120, 255, 0.75);
-}
-
-.hero-carousel-arrow-prev {
-  left: clamp(0.55rem, 2vw, 1rem);
-}
-
-.hero-carousel-arrow-next {
-  right: clamp(0.55rem, 2vw, 1rem);
-}
-
 .hero-screen {
   position: absolute;
   inset: 0;
