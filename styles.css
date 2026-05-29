@@ -207,10 +207,6 @@ p {
   visibility: hidden;
 }
 
-.hero-dots:not(.is-ready) {
-  visibility: hidden;
-}
-
 .hero-carousel-track::-webkit-scrollbar {
   display: none;
 }
@@ -234,36 +230,49 @@ p {
   -webkit-user-drag: none;
 }
 
-.hero-dots {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(0.65rem, 2vw, 1rem);
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  z-index: 5;
-  padding: 0.35rem 0.65rem;
-  border-radius: 999px;
-  background: rgba(7, 6, 18, 0.5);
-  backdrop-filter: blur(4px);
-  pointer-events: auto;
+.hero-carousel-nav:not(.is-ready) {
+  visibility: hidden;
 }
 
-.hero-dot {
-  width: 0.55rem;
-  height: 0.55rem;
-  border: none;
+.hero-carousel-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(2.2rem, 4.5vw, 2.75rem);
+  height: clamp(2.2rem, 4.5vw, 2.75rem);
+  border: 1px solid rgba(168, 120, 255, 0.45);
   border-radius: 50%;
   padding: 0;
-  background: rgba(244, 236, 255, 0.42);
+  display: grid;
+  place-items: center;
+  background: rgba(7, 6, 18, 0.58);
+  color: #f4ecff;
+  font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+  line-height: 1;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.hero-dot.active {
-  background: #f4ecff;
-  transform: scale(1.15);
+.hero-carousel-arrow:hover {
+  background: rgba(18, 14, 40, 0.82);
+  border-color: rgba(168, 120, 255, 0.75);
+}
+
+.hero-carousel-arrow-prev {
+  left: clamp(0.55rem, 2vw, 1rem);
+}
+
+.hero-carousel-arrow-next {
+  right: clamp(0.55rem, 2vw, 1rem);
 }
 
 .hero-screen {

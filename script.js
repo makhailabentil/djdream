@@ -178,7 +178,9 @@ const yearSpan = document.querySelector("#year");
 const bookingForm = document.querySelector(".booking-form");
 const heroCarousel = document.querySelector("#hero-carousel");
 const heroCarouselTrack = document.querySelector("#hero-carousel-track");
-const heroDots = document.querySelector("#hero-dots");
+const heroCarouselNav = document.querySelector("#hero-carousel-nav");
+const heroCarouselPrev = document.querySelector("#hero-carousel-prev");
+const heroCarouselNext = document.querySelector("#hero-carousel-next");
 const eventDateInput = document.querySelector("#event-date");
 const availabilityTrigger = document.querySelector("#availability-trigger");
 const bookingFlow = document.querySelector("#booking-flow");
@@ -697,7 +699,7 @@ if (packageButtons.length > 0) {
   });
 }
 
-if (heroCarousel && heroCarouselTrack && heroDots) {
+if (heroCarousel && heroCarouselTrack && heroCarouselNav && heroCarouselPrev && heroCarouselNext) {
   const CAROUSEL_INDEX_KEY = "djdream-carousel-index";
   const heroImages = [
     "./assets/party-01.png",
@@ -719,7 +721,7 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
 
   const carouselSets = 3;
   let slideWidth = 0;
-  let activeDotIndex = 0;
+  let activeCarouselIndex = 0;
   let isRepositioning = false;
   let isInitializing = true;
   let isAutoAdvancing = false;
@@ -764,17 +766,6 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     });
   }
 
-  heroImages.forEach((_, imageIndex) => {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "hero-dot";
-    dot.dataset.index = String(imageIndex);
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-label", `Go to slide ${imageIndex + 1}`);
-    dot.setAttribute("aria-selected", imageIndex === 0 ? "true" : "false");
-    heroDots.append(dot);
-  });
-
   const getSlideWidth = () => {
     const slide = heroCarouselTrack.querySelector(".hero-carousel-slide");
     return slide ? slide.offsetWidth : heroCarouselTrack.clientWidth;
@@ -790,17 +781,12 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     return ((rawIndex % heroImages.length) + heroImages.length) % heroImages.length;
   };
 
-  const updateDots = (index = getLogicalIndex()) => {
-    activeDotIndex = index;
+  const syncCarouselIndex = (index = getLogicalIndex()) => {
+    activeCarouselIndex = index;
     sessionStorage.setItem(CAROUSEL_INDEX_KEY, String(index));
-    heroDots.querySelectorAll(".hero-dot").forEach((dot, dotIndex) => {
-      const isActive = dotIndex === index;
-      dot.classList.toggle("active", isActive);
-      dot.setAttribute("aria-selected", isActive ? "true" : "false");
-    });
   };
 
-  const scrollToLogicalIndex = (index, behavior = "smooth") => {
+  const scrollToCarouselIndex = (index, behavior = "smooth") => {
     slideWidth = getSlideWidth();
     if (!slideWidth) {
       return;
@@ -811,7 +797,19 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
       left: middleSetOffset + index * slideWidth,
       behavior,
     });
-    updateDots(index);
+    syncCarouselIndex(index);
+  };
+
+  const scrollCarouselBy = (direction, behavior = "smooth") => {
+    slideWidth = getSlideWidth();
+    if (!slideWidth) {
+      return;
+    }
+
+    heroCarouselTrack.scrollTo({
+      left: heroCarouselTrack.scrollLeft + direction * slideWidth,
+      behavior,
+    });
   };
 
   const repositionIfNeeded = () => {
@@ -835,7 +833,7 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     }
 
     if (offset === 0) {
-      updateDots();
+      syncCarouselIndex();
       return;
     }
 
@@ -845,7 +843,7 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     heroCarouselTrack.scrollLeft += offset;
     heroCarouselTrack.style.scrollBehavior = previousBehavior;
     isRepositioning = false;
-    updateDots();
+    syncCarouselIndex();
   };
 
   const setCarouselScrollLeft = (left) => {
@@ -865,13 +863,13 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     isRepositioning = true;
     setCarouselScrollLeft(heroImages.length * slideWidth + startCarouselIndex * slideWidth);
     isRepositioning = false;
-    updateDots(startCarouselIndex);
+    syncCarouselIndex(startCarouselIndex);
     return true;
   };
 
   const revealCarousel = () => {
     heroCarousel.classList.add("is-ready");
-    heroDots.classList.add("is-ready");
+    heroCarouselNav.classList.add("is-ready");
     isInitializing = false;
     startAutoPlay();
   };
@@ -926,7 +924,7 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
       }
 
       if (!isRepositioning) {
-        window.requestAnimationFrame(updateDots);
+        window.requestAnimationFrame(syncCarouselIndex);
       }
 
       const currentScrollLeft = heroCarouselTrack.scrollLeft;
@@ -960,18 +958,18 @@ if (heroCarousel && heroCarouselTrack && heroDots) {
     }
   });
 
-  heroDots.addEventListener("click", (event) => {
-    const dot = event.target.closest(".hero-dot");
-    if (!dot) {
-      return;
-    }
-
+  heroCarouselPrev.addEventListener("click", () => {
     pauseAutoPlay();
-    scrollToLogicalIndex(Number(dot.dataset.index));
+    scrollCarouselBy(-1);
+  });
+
+  heroCarouselNext.addEventListener("click", () => {
+    pauseAutoPlay();
+    scrollCarouselBy(1);
   });
 
   window.addEventListener("resize", () => {
-    scrollToLogicalIndex(activeDotIndex, "auto");
+    scrollToCarouselIndex(activeCarouselIndex, "auto");
   });
 
   if (initCarouselPosition()) {
