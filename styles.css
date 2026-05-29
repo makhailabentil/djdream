@@ -1050,8 +1050,8 @@ blockquote cite {
     padding: 1.35rem 1.5rem;
   }
 
-  .booking-form label:nth-child(7),
   .booking-form label:nth-child(8),
+  .booking-form label:nth-child(9),
   .booking-form button[type="submit"] {
     grid-column: 1 / -1;
   }
