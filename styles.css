@@ -181,16 +181,89 @@ p {
   background: #070612;
 }
 
-.hero-rotator-bg {
+.hero-carousel {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-carousel-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.hero-carousel.is-ready .hero-carousel-track {
+  scroll-behavior: smooth;
+}
+
+.hero-carousel:not(.is-ready) .hero-carousel-track {
+  visibility: hidden;
+}
+
+.hero-dots:not(.is-ready) {
+  visibility: hidden;
+}
+
+.hero-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.hero-carousel-slide img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
-  opacity: 1;
-  transition: opacity 1.2s ease-in-out;
-  z-index: 1;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.65rem, 2vw, 1rem);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  z-index: 5;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(7, 6, 18, 0.5);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+.hero-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  background: rgba(244, 236, 255, 0.42);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-dot.active {
+  background: #f4ecff;
+  transform: scale(1.15);
 }
 
 .hero-screen {
@@ -201,6 +274,7 @@ p {
     radial-gradient(circle at 20% 18%, rgba(239, 78, 179, 0.12), transparent 40%),
     radial-gradient(circle at 80% 14%, rgba(106, 79, 216, 0.14), transparent 40%);
   z-index: 2;
+  pointer-events: none;
 }
 
 .hero-inner {
@@ -212,6 +286,7 @@ p {
   justify-content: flex-end;
   padding-top: 5.8rem;
   padding-bottom: 1.2rem;
+  pointer-events: none;
 }
 
 .hero-preview-tag {

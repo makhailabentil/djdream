@@ -52,13 +52,16 @@
 
     <main>
       <section class="hero">
-        <img
-          id="hero-rotator"
-          class="hero-rotator-bg"
-          src="./assets/party-01.png"
-          alt="Animated themed birthday party scene"
-        />
+        <div class="hero-carousel" id="hero-carousel">
+          <div
+            class="hero-carousel-track"
+            id="hero-carousel-track"
+            tabindex="0"
+            aria-label="Party photo gallery"
+          ></div>
+        </div>
         <div class="hero-screen"></div>
+        <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Carousel pagination"></div>
         <div class="container hero-inner"></div>
       </section>
 
