@@ -1127,6 +1127,15 @@ textarea:focus {
   margin-bottom: 0;
 }
 
+.footer-grid a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-grid a:hover {
+  text-decoration: underline;
+}
+
 .brand-footer {
   color: var(--text);
   font-weight: 800;
