@@ -263,6 +263,25 @@ const clearBookingFormDraft = () => {
   sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
 };
 
+const isHardReload = () => {
+  const nav = performance.getEntriesByType("navigation")[0];
+  if (!nav || nav.type !== "reload") {
+    return false;
+  }
+
+  if (typeof nav.transferSize === "number" && nav.transferSize > 0) {
+    return true;
+  }
+
+  return nav.deliveryType !== "cache";
+};
+
+const shouldRestoreBookingFormDraft = !isHardReload();
+
+if (!shouldRestoreBookingFormDraft) {
+  clearBookingFormDraft();
+};
+
 const applySimpleBookingFormDraft = (draft) => {
   if (!bookingForm) {
     return;
@@ -866,9 +885,9 @@ if (bookingForm) {
   bookingForm.addEventListener("change", saveBookingFormDraft);
   window.addEventListener("pagehide", saveBookingFormDraft);
 
-  if (restoreBookingFormDraft) {
+  if (restoreBookingFormDraft && shouldRestoreBookingFormDraft) {
     restoreBookingFormDraft();
-  } else {
+  } else if (shouldRestoreBookingFormDraft) {
     const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
     if (rawDraft) {
       try {
@@ -877,6 +896,9 @@ if (bookingForm) {
         sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
       }
     }
+  } else {
+    bookingForm.reset();
+    eventPackageInput?.dispatchEvent(new Event("change"));
   }
 
   syncEventTypeOtherField();
