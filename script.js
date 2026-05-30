@@ -623,23 +623,55 @@ if (
 }
 
 if (bookingForm) {
-  bookingForm.addEventListener("submit", (event) => {
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const submitButton = bookingForm.querySelector('button[type="submit"]');
+    const defaultButtonText = submitButton?.textContent || "Send Inquiry";
 
     if (submitButton) {
-      submitButton.textContent = "Inquiry Sent";
+      submitButton.textContent = "Sending...";
       submitButton.setAttribute("disabled", "true");
     }
 
-    setTimeout(() => {
+    const formData = new FormData(bookingForm);
+    const selectedCharacters = formData.getAll("characters");
+    formData.delete("characters");
+    formData.append("characters", selectedCharacters.join(", ") || "None selected");
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/dandjdream@gmail.com", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Booking inquiry submission failed");
+      }
+
       bookingForm.reset();
       if (submitButton) {
-        submitButton.textContent = "Send Inquiry";
+        submitButton.textContent = "Inquiry Sent";
+      }
+
+      alert("Thanks! Your inquiry has been received. We will reach out within 24-48 hours.");
+
+      window.setTimeout(() => {
+        if (submitButton) {
+          submitButton.textContent = defaultButtonText;
+          submitButton.removeAttribute("disabled");
+        }
+      }, 2500);
+    } catch {
+      if (submitButton) {
+        submitButton.textContent = defaultButtonText;
         submitButton.removeAttribute("disabled");
       }
-      alert("Thanks! Your inquiry has been received. We will reach out within 24-48 hours.");
-    }, 500);
+
+      alert("Something went wrong sending your inquiry. Please email dandjdream@gmail.com or call (845) 645-1534.");
+    }
   });
 }
 
