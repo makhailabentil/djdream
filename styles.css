@@ -1049,27 +1049,39 @@ blockquote cite {
   min-width: 0;
 }
 
-.booking-form input,
+.booking-form input:not([type="hidden"]),
 .booking-form select,
 .booking-form textarea {
+  width: 100%;
   max-width: 100%;
   min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid #4b3b82;
+  border-radius: 10px;
+  padding: 0.7rem;
+  font: inherit;
+  line-height: 1.4;
+  color: #f3ecff;
+  background: #120d28;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .booking-form input[type="date"] {
   display: block;
-  width: 100%;
-  overflow: hidden;
+  min-height: 2.75rem;
 }
 
 .booking-form input[type="date"]::-webkit-date-and-time-value {
   min-width: 0;
   text-align: left;
+  color: #f3ecff;
 }
 
 .booking-form input[type="date"]::-webkit-calendar-picker-indicator {
-  margin: 0;
-  padding: 0;
+  filter: invert(0.9);
+  opacity: 0.9;
+  cursor: pointer;
 }
 
 @media (min-width: 901px) {
@@ -1376,11 +1388,6 @@ textarea:focus {
 @media (max-width: 640px) {
   .booking-form {
     padding: 1rem;
-  }
-
-  .booking-form input[type="date"] {
-    padding: 0.65rem 0.55rem;
-    font-size: 0.92rem;
   }
 
   .booking-flow {
