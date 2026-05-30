@@ -123,14 +123,7 @@
                 </label>
                 <label class="character-field">
                   Character(s)
-                  <select id="availability-characters" disabled></select>
-                  <div
-                    id="availability-character-picker"
-                    class="character-picker"
-                    hidden
-                    role="group"
-                    aria-label="Choose characters"
-                  ></div>
+                  <div id="availability-characters-fields" class="character-dropdowns"></div>
                 </label>
               </div>
               <p class="availability-note" id="availability-note">
@@ -577,14 +570,7 @@
             </label>
             <label class="character-field">
               Dream Characters
-              <select id="event-characters" name="characters" size="1" disabled></select>
-              <div
-                id="event-character-picker"
-                class="character-picker"
-                hidden
-                role="group"
-                aria-label="Choose characters"
-              ></div>
+              <div id="event-characters-fields" class="character-dropdowns"></div>
             </label>
             <p class="form-field-note" id="event-characters-note" hidden>
               Select a package to choose your character(s).
@@ -613,6 +599,6 @@
       <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
     </footer>
 
-    <script src="./script.js?v=character-picker-v2"></script>
+    <script src="./script.js?v=character-dropdowns"></script>
   </body>
 </html>
