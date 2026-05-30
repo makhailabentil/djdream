@@ -789,21 +789,32 @@ if (bookingForm) {
     }
 
     const formData = new FormData(bookingForm);
-    const selectedCharacters = formData.getAll("characters");
-    formData.delete("characters");
-    formData.append("characters", selectedCharacters.join(", ") || "None selected");
+    const payload = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      phone: String(formData.get("phone") || ""),
+      eventDate: String(formData.get("event-date") || ""),
+      eventPackage: String(formData.get("event-package") || ""),
+      eventTime: String(formData.get("event-time") || ""),
+      eventType: String(formData.get("event-type") || ""),
+      characters: formData.getAll("characters"),
+      message: String(formData.get("message") || ""),
+    };
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/dandjdream@gmail.com", {
+      const response = await fetch("/api/booking", {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body: formData,
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error("Booking inquiry submission failed");
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Booking inquiry submission failed");
       }
 
       bookingForm.reset();
