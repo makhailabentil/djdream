@@ -285,7 +285,7 @@ const syncEventTypeOtherField = () => {
   }
 
   const isOther = eventTypeInput.value === "other";
-  eventTypeOtherWrap.hidden = !isOther;
+  eventTypeOtherWrap.classList.toggle("is-visible", isOther);
   eventTypeOtherInput.required = isOther;
 
   if (!isOther) {
