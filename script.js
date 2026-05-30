@@ -200,7 +200,11 @@ const availabilityContinueButton = document.querySelector("#availability-continu
 const bookingSection = document.querySelector("#booking");
 const eventPackageInput = document.querySelector("#event-package");
 const eventTimeInput = document.querySelector("#event-time");
+const eventTypeInput = document.querySelector("#event-type");
+const eventTypeOtherWrap = document.querySelector("#event-type-other-wrap");
+const eventTypeOtherInput = document.querySelector("#event-type-other");
 const eventCharactersInput = document.querySelector("#event-characters");
+const eventCharactersNote = document.querySelector("#event-characters-note");
 const packageButtons = document.querySelectorAll(".pricing-grid .price-card .btn");
 const siteHeader = document.querySelector(".site-header");
 const brandLinks = document.querySelectorAll(".brand, .hero-brand");
@@ -224,6 +228,7 @@ const getBookingFormDraft = () => {
     "event-package": bookingForm.elements.namedItem("event-package")?.value || "",
     "event-time": bookingForm.elements.namedItem("event-time")?.value || "",
     "event-type": bookingForm.elements.namedItem("event-type")?.value || "",
+    "event-type-other": bookingForm.elements.namedItem("event-type-other")?.value || "",
     characters,
     message: bookingForm.elements.namedItem("message")?.value || "",
   };
@@ -243,6 +248,7 @@ const saveBookingFormDraft = () => {
     draft["event-package"] ||
     draft["event-time"] ||
     draft["event-type"] ||
+    draft["event-type-other"] ||
     draft.characters.length > 0 ||
     draft.message;
 
@@ -263,12 +269,28 @@ const applySimpleBookingFormDraft = (draft) => {
     return;
   }
 
-  ["name", "email", "phone", "event-date", "event-type", "message"].forEach((fieldName) => {
+  ["name", "email", "phone", "event-date", "event-type", "event-type-other", "message"].forEach((fieldName) => {
     const field = bookingForm.elements.namedItem(fieldName);
     if (field && draft[fieldName]) {
       field.value = draft[fieldName];
     }
   });
+
+  syncEventTypeOtherField();
+};
+
+const syncEventTypeOtherField = () => {
+  if (!eventTypeInput || !eventTypeOtherWrap || !eventTypeOtherInput) {
+    return;
+  }
+
+  const isOther = eventTypeInput.value === "other";
+  eventTypeOtherWrap.hidden = !isOther;
+  eventTypeOtherInput.required = isOther;
+
+  if (!isOther) {
+    eventTypeOtherInput.value = "";
+  }
 };
 
 let restoreBookingFormDraft = null;
@@ -436,6 +458,26 @@ if (
     });
   };
 
+  const setCharacterSelectMode = (selectEl, allowMultiple) => {
+    const listSize = selectEl.id === "availability-characters" ? 4 : 6;
+
+    if (allowMultiple) {
+      selectEl.setAttribute("multiple", "");
+      selectEl.size = listSize;
+      return;
+    }
+
+    selectEl.removeAttribute("multiple");
+    selectEl.size = 1;
+
+    const selected = Array.from(selectEl.selectedOptions);
+    if (selected.length > 1) {
+      selected.slice(1).forEach((option) => {
+        option.selected = false;
+      });
+    }
+  };
+
   const syncCharacterSelections = (sourceSelect, targetSelect) => {
     const selectedValues = new Set(Array.from(sourceSelect.selectedOptions).map((option) => option.value));
     Array.from(targetSelect.options).forEach((option) => {
@@ -484,19 +526,36 @@ if (
     if (!selectedPackage) {
       availabilityCharacters.disabled = true;
       eventCharactersInput.disabled = true;
+      setCharacterSelectMode(availabilityCharacters, false);
+      setCharacterSelectMode(eventCharactersInput, false);
       availabilityNote.textContent = "Select a package to unlock character options.";
+      if (eventCharactersNote) {
+        eventCharactersNote.hidden = false;
+        eventCharactersNote.textContent = "Select a package to choose your character(s).";
+      }
       return;
     }
 
+    const allowMultiple = selectedPackage.maxCharacters > 1;
+
     availabilityCharacters.disabled = false;
     eventCharactersInput.disabled = false;
+    setCharacterSelectMode(availabilityCharacters, allowMultiple);
+    setCharacterSelectMode(eventCharactersInput, allowMultiple);
     applyCharacterSelectionLimit(availabilityCharacters, selectedPackage.maxCharacters);
     applyCharacterSelectionLimit(eventCharactersInput, selectedPackage.maxCharacters);
     syncCharacterSelections(availabilityCharacters, eventCharactersInput);
-    availabilityNote.textContent =
-      selectedPackage.maxCharacters > 1
-        ? `This package allows up to ${selectedPackage.maxCharacters} characters.`
+
+    availabilityNote.textContent = allowMultiple
+      ? `This package allows up to ${selectedPackage.maxCharacters} characters. Hold Ctrl (Windows) or Cmd (Mac) to select more than one.`
+      : "This package includes one character selection.";
+
+    if (eventCharactersNote) {
+      eventCharactersNote.hidden = false;
+      eventCharactersNote.textContent = allowMultiple
+        ? `This package allows up to ${selectedPackage.maxCharacters} characters. Hold Ctrl (Windows) or Cmd (Mac) to select more than one.`
         : "This package includes one character selection.";
+    }
   };
 
   const updateTimeOptionsByPackage = (packageId) => {
@@ -710,6 +769,7 @@ if (
     }
 
     applySimpleBookingFormDraft(draft);
+    syncEventTypeOtherField();
 
     if (draft["event-date"]) {
       selectedDateKey = draft["event-date"];
@@ -754,12 +814,15 @@ if (
       }
     }
   };
-
-  restoreBookingFormDraft();
 }
 
 if (bookingForm) {
   let draftSaveTimer = 0;
+
+  eventTypeInput?.addEventListener("change", () => {
+    syncEventTypeOtherField();
+    saveBookingFormDraft();
+  });
 
   bookingForm.addEventListener("input", () => {
     window.clearTimeout(draftSaveTimer);
@@ -769,7 +832,9 @@ if (bookingForm) {
   bookingForm.addEventListener("change", saveBookingFormDraft);
   window.addEventListener("pagehide", saveBookingFormDraft);
 
-  if (!restoreBookingFormDraft) {
+  if (restoreBookingFormDraft) {
+    restoreBookingFormDraft();
+  } else {
     const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
     if (rawDraft) {
       try {
@@ -779,6 +844,8 @@ if (bookingForm) {
       }
     }
   }
+
+  syncEventTypeOtherField();
 
   const submitBookingInquiry = async () => {
     if (!bookingForm.checkValidity()) {
@@ -795,6 +862,8 @@ if (bookingForm) {
     }
 
     const formData = new FormData(bookingForm);
+    const eventType = String(formData.get("event-type") || "");
+    const eventTypeOther = String(formData.get("event-type-other") || "").trim();
     const payload = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
@@ -802,10 +871,20 @@ if (bookingForm) {
       eventDate: String(formData.get("event-date") || ""),
       eventPackage: String(formData.get("event-package") || ""),
       eventTime: String(formData.get("event-time") || ""),
-      eventType: String(formData.get("event-type") || ""),
+      eventType: eventType === "other" ? `Other: ${eventTypeOther}` : eventType,
       characters: formData.getAll("characters"),
       message: String(formData.get("message") || ""),
     };
+
+    if (eventType === "other" && !eventTypeOther) {
+      eventTypeOtherInput?.focus();
+      bookingForm.reportValidity();
+      if (submitButton) {
+        submitButton.textContent = defaultButtonText;
+        submitButton.removeAttribute("disabled");
+      }
+      return;
+    }
 
     try {
       const response = await fetch(BOOKING_INBOX_ENDPOINT, {
@@ -824,6 +903,8 @@ if (bookingForm) {
       }
 
       bookingForm.reset();
+      syncEventTypeOtherField();
+      eventPackageInput?.dispatchEvent(new Event("change"));
       clearBookingFormDraft();
       if (submitButton) {
         submitButton.textContent = "Inquiry Sent";

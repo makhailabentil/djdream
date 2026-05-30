@@ -549,18 +549,28 @@
             </label>
             <label>
               Event Type
-              <select name="event-type" required>
+              <select id="event-type" name="event-type" required>
                 <option value="">Select event type</option>
                 <option>Birthday Party</option>
                 <option>School Event</option>
                 <option>Community Event</option>
                 <option>Corporate Family Event</option>
                 <option>Private Hosted Event</option>
+                <option value="other">Other</option>
               </select>
+            </label>
+            <label id="event-type-other-wrap" hidden>
+              Describe Your Event Type
+              <input
+                id="event-type-other"
+                type="text"
+                name="event-type-other"
+                placeholder="Tell us what kind of event this is"
+              />
             </label>
             <label>
               Dream Characters
-              <select id="event-characters" name="characters" multiple size="6">
+              <select id="event-characters" name="characters" size="1" disabled>
                 <option value="ice-queen">The Ice Queen</option>
                 <option value="bayou-princess">The Bayou Princess</option>
                 <option value="desert-princess">The Desert Princess</option>
@@ -579,6 +589,9 @@
                 <option value="custom-characters">Custom Characters</option>
               </select>
             </label>
+            <p class="form-field-note" id="event-characters-note" hidden>
+              Select a package to choose your character(s).
+            </p>
             <label>
               Message
               <textarea name="message" rows="4" placeholder="Tell us about your vision..."></textarea>
@@ -603,6 +616,6 @@
       <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
     </footer>
 
-    <script src="./script.js?v=gmail-api"></script>
+    <script src="./script.js?v=booking-form-v2"></script>
   </body>
 </html>
