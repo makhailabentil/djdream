@@ -195,6 +195,7 @@ const availabilityStatus = document.querySelector("#availability-status");
 const availabilityPackage = document.querySelector("#availability-package");
 const availabilityTime = document.querySelector("#availability-time");
 const availabilityCharacters = document.querySelector("#availability-characters");
+const availabilityCharacterPicker = document.querySelector("#availability-character-picker");
 const availabilityNote = document.querySelector("#availability-note");
 const availabilityContinueButton = document.querySelector("#availability-continue");
 const bookingSection = document.querySelector("#booking");
@@ -204,6 +205,7 @@ const eventTypeInput = document.querySelector("#event-type");
 const eventTypeOtherWrap = document.querySelector("#event-type-other-wrap");
 const eventTypeOtherInput = document.querySelector("#event-type-other");
 const eventCharactersInput = document.querySelector("#event-characters");
+const eventCharacterPicker = document.querySelector("#event-character-picker");
 const eventCharactersNote = document.querySelector("#event-characters-note");
 const packageButtons = document.querySelectorAll(".pricing-grid .price-card .btn");
 const siteHeader = document.querySelector(".site-header");
@@ -217,7 +219,9 @@ const getBookingFormDraft = () => {
   const charactersField = bookingForm.elements.namedItem("characters");
   const characters =
     charactersField instanceof HTMLSelectElement
-      ? Array.from(charactersField.selectedOptions).map((option) => option.value)
+      ? Array.from(charactersField.selectedOptions)
+          .map((option) => option.value)
+          .filter(Boolean)
       : [];
 
   return {
@@ -341,12 +345,14 @@ if (
   availabilityPackage &&
   availabilityTime &&
   availabilityCharacters &&
+  availabilityCharacterPicker &&
   availabilityNote &&
   availabilityContinueButton &&
   eventDateInput &&
   eventPackageInput &&
   eventTimeInput &&
-  eventCharactersInput
+  eventCharactersInput &&
+  eventCharacterPicker
 ) {
   const packageCatalog = {
     starter: {
@@ -408,6 +414,87 @@ if (
   let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let selectedDateKey = "";
   let selectedPackageId = "";
+  let activeMaxCharacters = 1;
+  let characterPickerDisabled = true;
+
+  const getSelectedCharacterValues = (selectEl) =>
+    Array.from(selectEl.selectedOptions)
+      .map((option) => option.value)
+      .filter(Boolean);
+
+  const setSelectedCharacterValues = (selectEl, values) => {
+    const filteredValues = values.filter(Boolean);
+    const valueSet = new Set(filteredValues);
+    const isMultiple = selectEl.hasAttribute("multiple");
+
+    Array.from(selectEl.options).forEach((option) => {
+      if (option.value === "") {
+        option.selected = !isMultiple && filteredValues.length === 0;
+        return;
+      }
+
+      option.selected = valueSet.has(option.value);
+    });
+  };
+
+  const buildCharacterPicker = (pickerEl, onChipSelect) => {
+    pickerEl.innerHTML = "";
+    characterCatalog.forEach((character) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "character-chip";
+      chip.dataset.value = character.value;
+      chip.textContent = character.label;
+      chip.setAttribute("aria-pressed", "false");
+      chip.addEventListener("click", () => onChipSelect(character.value, pickerEl));
+      pickerEl.append(chip);
+    });
+  };
+
+  const renderCharacterPickers = () => {
+    [availabilityCharacterPicker, eventCharacterPicker].forEach((pickerEl, index) => {
+      const selectEl = index === 0 ? availabilityCharacters : eventCharactersInput;
+      const selected = new Set(getSelectedCharacterValues(selectEl));
+      const atMax = selected.size >= activeMaxCharacters;
+
+      pickerEl.querySelectorAll(".character-chip").forEach((chip) => {
+        const value = chip.dataset.value || "";
+        const isSelected = selected.has(value);
+        chip.classList.toggle("is-selected", isSelected);
+        chip.classList.toggle("is-at-limit", !isSelected && atMax && activeMaxCharacters > 1);
+        chip.setAttribute("aria-pressed", isSelected ? "true" : "false");
+        chip.disabled = characterPickerDisabled;
+      });
+    });
+  };
+
+  const handleCharacterChipSelect = (value, sourcePicker) => {
+    if (characterPickerDisabled) {
+      return;
+    }
+
+    const sourceSelect =
+      sourcePicker === availabilityCharacterPicker ? availabilityCharacters : eventCharactersInput;
+    const targetSelect =
+      sourceSelect === availabilityCharacters ? eventCharactersInput : availabilityCharacters;
+    let selected = getSelectedCharacterValues(sourceSelect);
+    const isSelected = selected.includes(value);
+
+    if (isSelected) {
+      selected = selected.filter((entry) => entry !== value);
+    } else if (activeMaxCharacters === 1) {
+      selected = [value];
+    } else if (selected.length < activeMaxCharacters) {
+      selected = [...selected, value];
+    } else {
+      return;
+    }
+
+    setSelectedCharacterValues(sourceSelect, selected);
+    setSelectedCharacterValues(targetSelect, selected);
+    renderCharacterPickers();
+    saveBookingFormDraft();
+  };
 
   const setOptions = (selectEl, options, defaultLabel) => {
     selectEl.innerHTML = "";
@@ -425,6 +512,10 @@ if (
 
   const setCharacterOptions = (selectEl) => {
     selectEl.innerHTML = "";
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select character";
+    selectEl.append(defaultOption);
     characterCatalog.forEach((character) => {
       const opt = document.createElement("option");
       opt.value = character.value;
@@ -451,38 +542,37 @@ if (
   };
 
   const applyCharacterSelectionLimit = (selectEl, maxAllowed) => {
-    const selected = Array.from(selectEl.selectedOptions);
-    if (selected.length <= maxAllowed) return;
-    selected.slice(maxAllowed).forEach((option) => {
-      option.selected = false;
-    });
-  };
-
-  const setCharacterSelectMode = (selectEl, allowMultiple) => {
-    const listSize = selectEl.id === "availability-characters" ? 4 : 6;
-
-    if (allowMultiple) {
-      selectEl.setAttribute("multiple", "");
-      selectEl.size = listSize;
+    const selected = getSelectedCharacterValues(selectEl);
+    if (selected.length <= maxAllowed) {
       return;
     }
 
-    selectEl.removeAttribute("multiple");
-    selectEl.size = 1;
+    setSelectedCharacterValues(selectEl, selected.slice(0, maxAllowed));
+  };
 
-    const selected = Array.from(selectEl.selectedOptions);
-    if (selected.length > 1) {
-      selected.slice(1).forEach((option) => {
-        option.selected = false;
-      });
-    }
+  const setCharacterPickerMode = (allowMultiple) => {
+    [availabilityCharacters, eventCharactersInput].forEach((selectEl) => {
+      if (allowMultiple) {
+        selectEl.setAttribute("multiple", "");
+        selectEl.hidden = true;
+        selectEl.size = 1;
+        return;
+      }
+
+      selectEl.removeAttribute("multiple");
+      selectEl.hidden = false;
+      selectEl.size = 1;
+      applyCharacterSelectionLimit(selectEl, 1);
+    });
+
+    availabilityCharacterPicker.hidden = !allowMultiple || characterPickerDisabled;
+    eventCharacterPicker.hidden = !allowMultiple || characterPickerDisabled;
+    renderCharacterPickers();
   };
 
   const syncCharacterSelections = (sourceSelect, targetSelect) => {
-    const selectedValues = new Set(Array.from(sourceSelect.selectedOptions).map((option) => option.value));
-    Array.from(targetSelect.options).forEach((option) => {
-      option.selected = selectedValues.has(option.value);
-    });
+    setSelectedCharacterValues(targetSelect, getSelectedCharacterValues(sourceSelect));
+    renderCharacterPickers();
   };
 
   const syncAvailabilityToForm = () => {
@@ -524,10 +614,11 @@ if (
   const updateCharactersByPackage = (packageId) => {
     const selectedPackage = packageCatalog[packageId];
     if (!selectedPackage) {
+      activeMaxCharacters = 1;
+      characterPickerDisabled = true;
       availabilityCharacters.disabled = true;
       eventCharactersInput.disabled = true;
-      setCharacterSelectMode(availabilityCharacters, false);
-      setCharacterSelectMode(eventCharactersInput, false);
+      setCharacterPickerMode(false);
       availabilityNote.textContent = "Select a package to unlock character options.";
       if (eventCharactersNote) {
         eventCharactersNote.hidden = false;
@@ -537,23 +628,24 @@ if (
     }
 
     const allowMultiple = selectedPackage.maxCharacters > 1;
+    activeMaxCharacters = selectedPackage.maxCharacters;
+    characterPickerDisabled = false;
 
     availabilityCharacters.disabled = false;
     eventCharactersInput.disabled = false;
-    setCharacterSelectMode(availabilityCharacters, allowMultiple);
-    setCharacterSelectMode(eventCharactersInput, allowMultiple);
     applyCharacterSelectionLimit(availabilityCharacters, selectedPackage.maxCharacters);
     applyCharacterSelectionLimit(eventCharactersInput, selectedPackage.maxCharacters);
+    setCharacterPickerMode(allowMultiple);
     syncCharacterSelections(availabilityCharacters, eventCharactersInput);
 
     availabilityNote.textContent = allowMultiple
-      ? `This package allows up to ${selectedPackage.maxCharacters} characters. Hold Ctrl (Windows) or Cmd (Mac) to select more than one.`
+      ? `Tap up to ${selectedPackage.maxCharacters} characters to select them.`
       : "This package includes one character selection.";
 
     if (eventCharactersNote) {
       eventCharactersNote.hidden = false;
       eventCharactersNote.textContent = allowMultiple
-        ? `This package allows up to ${selectedPackage.maxCharacters} characters. Hold Ctrl (Windows) or Cmd (Mac) to select more than one.`
+        ? `Tap up to ${selectedPackage.maxCharacters} characters to select them.`
         : "This package includes one character selection.";
     }
   };
@@ -576,6 +668,8 @@ if (
 
   setCharacterOptions(availabilityCharacters);
   setCharacterOptions(eventCharactersInput);
+  buildCharacterPicker(availabilityCharacterPicker, handleCharacterChipSelect);
+  buildCharacterPicker(eventCharacterPicker, handleCharacterChipSelect);
   setOptions(availabilityTime, [], "Select time");
   setOptions(eventTimeInput, [], "Select time");
   bookingFlow.hidden = true;
@@ -699,15 +793,15 @@ if (
   });
 
   availabilityCharacters.addEventListener("change", () => {
-    const maxCharacters = packageCatalog[selectedPackageId]?.maxCharacters || 1;
-    applyCharacterSelectionLimit(availabilityCharacters, maxCharacters);
+    applyCharacterSelectionLimit(availabilityCharacters, activeMaxCharacters);
     syncCharacterSelections(availabilityCharacters, eventCharactersInput);
+    saveBookingFormDraft();
   });
 
   eventCharactersInput.addEventListener("change", () => {
-    const maxCharacters = packageCatalog[selectedPackageId]?.maxCharacters || 1;
-    applyCharacterSelectionLimit(eventCharactersInput, maxCharacters);
+    applyCharacterSelectionLimit(eventCharactersInput, activeMaxCharacters);
     syncCharacterSelections(eventCharactersInput, availabilityCharacters);
+    saveBookingFormDraft();
   });
 
   availabilityTrigger.addEventListener("click", (event) => {
@@ -803,9 +897,7 @@ if (
       updateCharactersByPackage(packageId);
 
       if (draft.characters?.length) {
-        Array.from(eventCharactersInput.options).forEach((option) => {
-          option.selected = draft.characters.includes(option.value);
-        });
+        setSelectedCharacterValues(eventCharactersInput, draft.characters);
         applyCharacterSelectionLimit(
           eventCharactersInput,
           packageCatalog[packageId].maxCharacters,

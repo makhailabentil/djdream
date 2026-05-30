@@ -121,13 +121,20 @@
                     <option value="">Select time</option>
                   </select>
                 </label>
-                <label>
+                <label class="character-field">
                   Character(s)
-                  <select id="availability-characters" multiple size="4" disabled></select>
+                  <select id="availability-characters" disabled></select>
+                  <div
+                    id="availability-character-picker"
+                    class="character-picker"
+                    hidden
+                    role="group"
+                    aria-label="Choose characters"
+                  ></div>
                 </label>
               </div>
               <p class="availability-note" id="availability-note">
-                Character multi-select unlocks automatically for packages that include multiple characters.
+                Character options unlock after you choose a package.
               </p>
               <button type="button" class="btn availability-continue-btn" id="availability-continue" disabled>
                 Continue
@@ -568,26 +575,16 @@
                 placeholder="Tell us what kind of event this is"
               />
             </label>
-            <label>
+            <label class="character-field">
               Dream Characters
-              <select id="event-characters" name="characters" size="1" disabled>
-                <option value="ice-queen">The Ice Queen</option>
-                <option value="bayou-princess">The Bayou Princess</option>
-                <option value="desert-princess">The Desert Princess</option>
-                <option value="tower-princess">The Tower Princess</option>
-                <option value="sea-song-princess">The Mermaid Princess</option>
-                <option value="golden-belle">The Golden Belle</option>
-                <option value="ballroom-princess">The Ballroom Princess</option>
-                <option value="island-voyager">The Island Voyager</option>
-                <option value="miracle-girl">The Miracle Girl</option>
-                <option value="rescue-captain">The Rescue Captain</option>
-                <option value="web-hero">The Web Hero</option>
-                <option value="jumpman-hero">The Jumpman Hero</option>
-                <option value="sky-guardian">The Sky Guardian</option>
-                <option value="kingdom-guardian">The Kingdom Guardian</option>
-                <option value="night-sentinel">The Night Sentinel</option>
-                <option value="custom-characters">Custom Characters</option>
-              </select>
+              <select id="event-characters" name="characters" size="1" disabled></select>
+              <div
+                id="event-character-picker"
+                class="character-picker"
+                hidden
+                role="group"
+                aria-label="Choose characters"
+              ></div>
             </label>
             <p class="form-field-note" id="event-characters-note" hidden>
               Select a package to choose your character(s).
@@ -616,6 +613,6 @@
       <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
     </footer>
 
-    <script src="./script.js?v=booking-form-v3"></script>
+    <script src="./script.js?v=character-picker-v2"></script>
   </body>
 </html>
