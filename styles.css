@@ -1093,11 +1093,11 @@ blockquote cite {
 
   .booking-form label:nth-child(8),
   .booking-form label:nth-child(9),
-  .booking-form button[type="submit"] {
+  .booking-form #booking-submit {
     grid-column: 1 / -1;
   }
 
-  .booking-form button[type="submit"] {
+  .booking-form #booking-submit {
     justify-self: start;
     min-width: 12rem;
   }

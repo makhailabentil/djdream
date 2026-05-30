@@ -173,6 +173,8 @@ const scrollToTopInstant = () => {
   sessionStorage.setItem(SCROLL_POSITION_KEY, "0");
 };
 
+const BOOKING_INBOX_ENDPOINT = "/api/booking";
+
 const menuButton = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 const yearSpan = document.querySelector("#year");
@@ -778,9 +780,13 @@ if (bookingForm) {
     }
   }
 
-  bookingForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const submitButton = bookingForm.querySelector('button[type="submit"]');
+  const submitBookingInquiry = async () => {
+    if (!bookingForm.checkValidity()) {
+      bookingForm.reportValidity();
+      return;
+    }
+
+    const submitButton = bookingForm.querySelector("#booking-submit");
     const defaultButtonText = submitButton?.textContent || "Send Inquiry";
 
     if (submitButton) {
@@ -802,7 +808,7 @@ if (bookingForm) {
     };
 
     try {
-      const response = await fetch("/api/booking", {
+      const response = await fetch(BOOKING_INBOX_ENDPOINT, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -831,15 +837,29 @@ if (bookingForm) {
           submitButton.removeAttribute("disabled");
         }
       }, 2500);
-    } catch {
+    } catch (error) {
       if (submitButton) {
         submitButton.textContent = defaultButtonText;
         submitButton.removeAttribute("disabled");
       }
 
-      alert("Something went wrong sending your inquiry. Please email dandjdream@gmail.com or call (845) 645-1534.");
+      const errorMessage =
+        error instanceof Error && error.message
+          ? error.message
+          : "Something went wrong sending your inquiry.";
+
+      alert(`${errorMessage} Please email dandjdream@gmail.com or call (845) 645-1534.`);
     }
+  };
+
+  bookingForm.addEventListener("submit", (event) => {
+    event.preventDefault();
   });
+
+  const bookingSubmitButton = bookingForm.querySelector("#booking-submit");
+  if (bookingSubmitButton) {
+    bookingSubmitButton.addEventListener("click", submitBookingInquiry);
+  }
 }
 
 if (packageButtons.length > 0) {
