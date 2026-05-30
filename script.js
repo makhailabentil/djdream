@@ -106,6 +106,41 @@ const shouldRestoreScrollPosition = () => {
   return navEntry?.type === "reload" || navEntry?.type === "back_forward";
 };
 
+const getNavigationType = () => performance.getEntriesByType("navigation")[0]?.type || "navigate";
+
+const shouldRestoreBookingFormDraft = () => getNavigationType() === "back_forward";
+
+const initBookingFormDraftOnLoad = () => {
+  if (getNavigationType() === "reload") {
+    clearBookingFormDraft();
+    return;
+  }
+
+  if (!shouldRestoreBookingFormDraft()) {
+    return;
+  }
+
+  if (restoreBookingFormDraft) {
+    restoreBookingFormDraft();
+    return;
+  }
+
+  if (!bookingForm) {
+    return;
+  }
+
+  const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
+  if (!rawDraft) {
+    return;
+  }
+
+  try {
+    applySimpleBookingFormDraft(JSON.parse(rawDraft));
+  } catch {
+    sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
+  }
+};
+
 const initScrollRestore = () => {
   if (!shouldRestoreScrollPosition()) {
     return;
@@ -261,25 +296,6 @@ const saveBookingFormDraft = () => {
 
 const clearBookingFormDraft = () => {
   sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
-};
-
-const isHardReload = () => {
-  const nav = performance.getEntriesByType("navigation")[0];
-  if (!nav || nav.type !== "reload") {
-    return false;
-  }
-
-  if (typeof nav.transferSize === "number" && nav.transferSize > 0) {
-    return true;
-  }
-
-  return nav.deliveryType !== "cache";
-};
-
-const shouldRestoreBookingFormDraft = !isHardReload();
-
-if (!shouldRestoreBookingFormDraft) {
-  clearBookingFormDraft();
 };
 
 const applySimpleBookingFormDraft = (draft) => {
@@ -885,22 +901,7 @@ if (bookingForm) {
   bookingForm.addEventListener("change", saveBookingFormDraft);
   window.addEventListener("pagehide", saveBookingFormDraft);
 
-  if (restoreBookingFormDraft && shouldRestoreBookingFormDraft) {
-    restoreBookingFormDraft();
-  } else if (shouldRestoreBookingFormDraft) {
-    const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
-    if (rawDraft) {
-      try {
-        applySimpleBookingFormDraft(JSON.parse(rawDraft));
-      } catch {
-        sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
-      }
-    }
-  } else {
-    bookingForm.reset();
-    eventPackageInput?.dispatchEvent(new Event("change"));
-  }
-
+  initBookingFormDraftOnLoad();
   syncEventTypeOtherField();
 
   const submitBookingInquiry = async () => {
