@@ -1,4 +1,5 @@
 const SCROLL_POSITION_KEY = "djdream-scroll-y";
+const BOOKING_FORM_DRAFT_KEY = "djdream-booking-draft";
 const revealItems = document.querySelectorAll(".reveal");
 
 const revealElement = (element) => {
@@ -202,6 +203,74 @@ const packageButtons = document.querySelectorAll(".pricing-grid .price-card .btn
 const siteHeader = document.querySelector(".site-header");
 const brandLinks = document.querySelectorAll(".brand, .hero-brand");
 
+const getBookingFormDraft = () => {
+  if (!bookingForm) {
+    return null;
+  }
+
+  const charactersField = bookingForm.elements.namedItem("characters");
+  const characters =
+    charactersField instanceof HTMLSelectElement
+      ? Array.from(charactersField.selectedOptions).map((option) => option.value)
+      : [];
+
+  return {
+    name: bookingForm.elements.namedItem("name")?.value || "",
+    email: bookingForm.elements.namedItem("email")?.value || "",
+    phone: bookingForm.elements.namedItem("phone")?.value || "",
+    "event-date": bookingForm.elements.namedItem("event-date")?.value || "",
+    "event-package": bookingForm.elements.namedItem("event-package")?.value || "",
+    "event-time": bookingForm.elements.namedItem("event-time")?.value || "",
+    "event-type": bookingForm.elements.namedItem("event-type")?.value || "",
+    characters,
+    message: bookingForm.elements.namedItem("message")?.value || "",
+  };
+};
+
+const saveBookingFormDraft = () => {
+  if (!bookingForm) {
+    return;
+  }
+
+  const draft = getBookingFormDraft();
+  const hasContent =
+    draft.name ||
+    draft.email ||
+    draft.phone ||
+    draft["event-date"] ||
+    draft["event-package"] ||
+    draft["event-time"] ||
+    draft["event-type"] ||
+    draft.characters.length > 0 ||
+    draft.message;
+
+  if (hasContent) {
+    sessionStorage.setItem(BOOKING_FORM_DRAFT_KEY, JSON.stringify(draft));
+    return;
+  }
+
+  sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
+};
+
+const clearBookingFormDraft = () => {
+  sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
+};
+
+const applySimpleBookingFormDraft = (draft) => {
+  if (!bookingForm) {
+    return;
+  }
+
+  ["name", "email", "phone", "event-date", "event-type", "message"].forEach((fieldName) => {
+    const field = bookingForm.elements.namedItem(fieldName);
+    if (field && draft[fieldName]) {
+      field.value = draft[fieldName];
+    }
+  });
+};
+
+let restoreBookingFormDraft = null;
+
 brandLinks.forEach((brandLink) => {
   brandLink.addEventListener("click", (event) => {
     event.preventDefault();
@@ -394,6 +463,8 @@ if (
       updateTimeOptionsByPackage("");
       updateCharactersByPackage("");
     }
+
+    saveBookingFormDraft();
   };
 
   const updateContinueButton = () => {
@@ -508,6 +579,7 @@ if (
         selectedDateKey = dateKey;
         selectedPackageId = "";
         eventDateInput.value = selectedDateKey;
+        saveBookingFormDraft();
         calendarSelectionText.textContent = `Selected date: ${monthNames[month]} ${day}, ${year}`;
         openDetails();
 
@@ -617,12 +689,95 @@ if (
         selectedPackageId = packageId;
         updateTimeOptionsByPackage(packageId);
         updateCharactersByPackage(packageId);
+        saveBookingFormDraft();
       }
     });
   });
+
+  restoreBookingFormDraft = () => {
+    const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
+    if (!rawDraft) {
+      return;
+    }
+
+    let draft;
+    try {
+      draft = JSON.parse(rawDraft);
+    } catch {
+      return;
+    }
+
+    applySimpleBookingFormDraft(draft);
+
+    if (draft["event-date"]) {
+      selectedDateKey = draft["event-date"];
+      eventDateInput.value = draft["event-date"];
+    }
+
+    const packageId = draft["event-package"];
+    if (packageId && eventPackageInput.querySelector(`option[value="${packageId}"]`)) {
+      eventPackageInput.value = packageId;
+      selectedPackageId = packageId;
+
+      if (!availabilityPackage.querySelector(`option[value="${packageId}"]`)) {
+        setOptions(
+          availabilityPackage,
+          Object.entries(packageCatalog).map(([id, pkg]) => ({
+            value: id,
+            label: pkg.label,
+          })),
+          "Select package",
+        );
+      }
+
+      availabilityPackage.value = packageId;
+      updateTimeOptionsByPackage(packageId);
+
+      if (draft["event-time"]) {
+        eventTimeInput.value = draft["event-time"];
+        availabilityTime.value = draft["event-time"];
+      }
+
+      updateCharactersByPackage(packageId);
+
+      if (draft.characters?.length) {
+        Array.from(eventCharactersInput.options).forEach((option) => {
+          option.selected = draft.characters.includes(option.value);
+        });
+        applyCharacterSelectionLimit(
+          eventCharactersInput,
+          packageCatalog[packageId].maxCharacters,
+        );
+        syncCharacterSelections(eventCharactersInput, availabilityCharacters);
+      }
+    }
+  };
+
+  restoreBookingFormDraft();
 }
 
 if (bookingForm) {
+  let draftSaveTimer = 0;
+
+  bookingForm.addEventListener("input", () => {
+    window.clearTimeout(draftSaveTimer);
+    draftSaveTimer = window.setTimeout(saveBookingFormDraft, 200);
+  });
+
+  bookingForm.addEventListener("change", saveBookingFormDraft);
+  window.addEventListener("pagehide", saveBookingFormDraft);
+
+  if (!restoreBookingFormDraft) {
+    const rawDraft = sessionStorage.getItem(BOOKING_FORM_DRAFT_KEY);
+    if (rawDraft) {
+      try {
+        applySimpleBookingFormDraft(JSON.parse(rawDraft));
+      } catch {
+        sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
+      }
+    }
+  }
+
   bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const submitButton = bookingForm.querySelector('button[type="submit"]');
@@ -652,6 +807,7 @@ if (bookingForm) {
       }
 
       bookingForm.reset();
+      clearBookingFormDraft();
       if (submitButton) {
         submitButton.textContent = "Inquiry Sent";
       }
