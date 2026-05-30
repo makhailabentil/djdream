@@ -1027,6 +1027,7 @@ blockquote cite {
   grid-template-columns: 1fr;
   gap: 1.5rem;
   align-items: start;
+  min-width: 0;
 }
 
 .booking-intro {
@@ -1035,12 +1036,40 @@ blockquote cite {
 
 .booking-form {
   width: 100%;
+  min-width: 0;
   background: linear-gradient(180deg, #171233, #120f29);
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 1.2rem;
   display: grid;
   gap: 0.8rem;
+}
+
+.booking-form label {
+  min-width: 0;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.booking-form input[type="date"] {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.booking-form input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
+}
+
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 901px) {
@@ -1345,6 +1374,15 @@ textarea:focus {
 }
 
 @media (max-width: 640px) {
+  .booking-form {
+    padding: 1rem;
+  }
+
+  .booking-form input[type="date"] {
+    padding: 0.65rem 0.55rem;
+    font-size: 0.92rem;
+  }
+
   .booking-flow {
     grid-template-columns: 1fr;
   }
