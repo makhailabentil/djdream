@@ -321,6 +321,7 @@ const selectServiceLocation = (locationId) => {
   localStorage.setItem(SERVICE_LOCATION_KEY, locationId);
   applyServiceLocation(locationId);
   closeLocationModal();
+  scrollToTopInstant();
 };
 
 const initServiceLocationPicker = () => {
@@ -518,9 +519,9 @@ if (
   ];
 
   const baltimoreCharacterCatalog = [
-    { value: "goggle-crew", label: "The Goggle Crew" },
-    { value: "goggle-pal", label: "The Goggle Pal" },
+    { value: "goggle-pal-devin", label: "Goggle Pal - Devin" },
     { value: "azure-pup", label: "The Azure Pup" },
+    { value: "goggle-pal-rob", label: "Goggle Pal - Rob" },
   ];
 
   const getCharacterCatalog = () => {
@@ -1199,10 +1200,7 @@ if (heroCarousel && heroCarouselTrack) {
   ];
   const BALTIMORE_HERO_IMAGES = [
     "./assets/baltimore-azure-party.png",
-    "./assets/baltimore-goggle-crew.png",
     "./assets/baltimore-goggle-party.png",
-    "./assets/baltimore-azure-pup.png",
-    "./assets/baltimore-goggle-pal.png",
   ];
 
   const interleaveHeroImages = (baseImages, extraImages) => {
