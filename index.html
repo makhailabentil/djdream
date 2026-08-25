@@ -26,6 +26,21 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="location-modal" id="location-modal" hidden>
+      <div class="location-modal-card" role="dialog" aria-modal="true" aria-labelledby="location-modal-title">
+        <img class="location-modal-logo" src="./assets/logo-dj-dream.png" alt="" />
+        <h2 id="location-modal-title">Where Are You Booking?</h2>
+        <p>Choose your service area so we can show the right details for your event.</p>
+        <div class="location-choices">
+          <button type="button" class="btn" data-location="newburgh-hudson">
+            Newburgh-Hudson Valley, NY
+          </button>
+          <button type="button" class="btn btn-outline" data-location="baltimore">
+            Baltimore, MD
+          </button>
+        </div>
+      </div>
+    </div>
     <a id="top" class="page-top-anchor" aria-hidden="true" tabindex="-1"></a>
     <header class="site-header">
       <nav class="container nav">
@@ -141,15 +156,16 @@
               <p class="hero-purpose-statement">
                 Dream Entertainment was built for families who want more than a quick photo op. We
                 create polished, in-character experiences where every child feels welcomed,
-                included, and truly part of the moment. Serving the Newburgh-Hudson Valley for
+                included, and truly part of the moment. Serving
+                <span data-location-copy="servingArea">the Newburgh-Hudson Valley</span> for
                 private and public celebrations, we plan with care, adapt to your child's needs,
                 and show up ready to make the day feel effortless for you and unforgettable for
                 them.
               </p>
               <ul class="hero-purpose-pillars">
                 <li>
-                  <strong>Hudson Valley rooted</strong>
-                  <span>Home parties, venues, and community events across NY</span>
+                  <strong data-location-copy="pillarTitle">Hudson Valley rooted</strong>
+                  <span data-location-copy="pillarText">Home parties, venues, and community events across NY</span>
                 </li>
                 <li>
                   <strong>Inclusive by design</strong>
@@ -259,6 +275,30 @@
               <p>
                 Mysterious, brave, and always watching. He brings stealth missions, clever puzzles, and
                 high-energy hero training that keeps every party on its toes.
+              </p>
+            </article>
+            <article class="character-window location-baltimore-only">
+              <img src="./assets/characters/goggle-crew.png" alt="The Goggle Crew character portrait" />
+              <h3>The Goggle Crew</h3>
+              <p>
+                Cheerful yellow helpers with oversized goggles and big giggles. They bring banana games,
+                silly dances, and nonstop party energy.
+              </p>
+            </article>
+            <article class="character-window location-baltimore-only">
+              <img src="./assets/characters/goggle-pal.png" alt="The Goggle Pal character portrait" />
+              <h3>The Goggle Pal</h3>
+              <p>
+                A sunny sidekick in overalls who loves snacks, giggles, and making every child feel included
+                in the fun.
+              </p>
+            </article>
+            <article class="character-window location-baltimore-only">
+              <img src="./assets/characters/azure-pup.png" alt="The Azure Pup character portrait" />
+              <h3>The Azure Pup</h3>
+              <p>
+                A playful blue pup who loves games, family time, and backyard adventures. Perfect for
+                high-energy playdates and birthday fun.
               </p>
             </article>
             <article class="character-window character-window-custom">
@@ -398,7 +438,7 @@
                 <img class="highlight-icon-image" src="./assets/icons/highlight-5.png" alt="" />
               </span>
               <h3>Multi-Location Service</h3>
-              <p>Private and public event coverage across Newburgh-Hudson Valley, NY.</p>
+              <p data-location-copy="coverage">Private and public event coverage across Newburgh-Hudson Valley, NY.</p>
             </article>
             <article class="icon-highlight-card">
               <span class="icon-badge" aria-hidden="true">
@@ -512,10 +552,11 @@
             <ul class="booking-points">
               <li>Simple booking and planning process</li>
               <li>Flexible package customization</li>
-              <li>Newburgh-Hudson Valley, NY private and public event service</li>
+              <li data-location-copy="bookingPoint">Newburgh-Hudson Valley, NY private and public event service</li>
             </ul>
           </div>
           <form class="booking-form" id="booking-form">
+            <input type="hidden" id="service-location" name="service-location" value="newburgh-hudson" />
             <label>
               Parent/Organizer Name
               <input type="text" name="name" required />
@@ -593,12 +634,20 @@
           <p>Bringing premium character entertainment to birthdays and celebrations.</p>
           <p><strong>Phone:</strong> <a href="tel:+18456451534">(845) 645-1534</a></p>
           <p><strong>Email:</strong> <a href="mailto:dandjdream@gmail.com">dandjdream@gmail.com</a></p>
-          <p><strong>Service Area:</strong> Newburgh-Hudson Valley, NY</p>
+          <p>
+            <strong>Service Area:</strong>
+            <span data-location-copy="label">Newburgh-Hudson Valley, NY</span>
+          </p>
+          <p>
+            <button type="button" class="location-switch-btn" id="location-switch-btn">
+              Change location
+            </button>
+          </p>
         </div>
       </div>
       <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
     </footer>
 
-    <script src="./script.js?v=form-reload-clear"></script>
+    <script src="./script.js?v=baltimore-characters"></script>
   </body>
 </html>

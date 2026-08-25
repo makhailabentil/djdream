@@ -1,5 +1,6 @@
 const SCROLL_POSITION_KEY = "djdream-scroll-y";
 const BOOKING_FORM_DRAFT_KEY = "djdream-booking-draft";
+const SERVICE_LOCATION_KEY = "djdream-service-location";
 const revealItems = document.querySelectorAll(".reveal");
 
 const revealElement = (element) => {
@@ -243,6 +244,103 @@ const eventCharactersNote = document.querySelector("#event-characters-note");
 const packageButtons = document.querySelectorAll(".pricing-grid .price-card .btn");
 const siteHeader = document.querySelector(".site-header");
 const brandLinks = document.querySelectorAll(".brand, .hero-brand");
+const locationModal = document.querySelector("#location-modal");
+const locationSwitchButton = document.querySelector("#location-switch-btn");
+const serviceLocationInput = document.querySelector("#service-location");
+const serviceLocationChangeHandlers = [];
+
+const SERVICE_LOCATIONS = {
+  "newburgh-hudson": {
+    label: "Newburgh-Hudson Valley, NY",
+    servingArea: "the Newburgh-Hudson Valley",
+    pillarTitle: "Hudson Valley rooted",
+    pillarText: "Home parties, venues, and community events across NY",
+    coverage: "Private and public event coverage across Newburgh-Hudson Valley, NY.",
+    bookingPoint: "Newburgh-Hudson Valley, NY private and public event service",
+  },
+  baltimore: {
+    label: "Baltimore, MD",
+    servingArea: "Baltimore, MD",
+    pillarTitle: "Baltimore rooted",
+    pillarText: "Home parties, venues, and community events across MD",
+    coverage: "Private and public event coverage across Baltimore, MD.",
+    bookingPoint: "Baltimore, MD private and public event service",
+  },
+};
+
+const getSavedServiceLocation = () => {
+  const saved = localStorage.getItem(SERVICE_LOCATION_KEY);
+  return saved && SERVICE_LOCATIONS[saved] ? saved : "";
+};
+
+const applyServiceLocation = (locationId) => {
+  const location = SERVICE_LOCATIONS[locationId];
+  if (!location) {
+    return;
+  }
+
+  document.querySelectorAll("[data-location-copy]").forEach((element) => {
+    const key = element.dataset.locationCopy;
+    if (location[key]) {
+      element.textContent = location[key];
+    }
+  });
+
+  if (serviceLocationInput) {
+    serviceLocationInput.value = locationId;
+  }
+
+  document.documentElement.dataset.serviceLocation = locationId;
+  serviceLocationChangeHandlers.forEach((handler) => handler(locationId));
+};
+
+const closeLocationModal = () => {
+  if (!locationModal) {
+    return;
+  }
+
+  locationModal.hidden = true;
+  document.body.classList.remove("location-modal-open");
+};
+
+const openLocationModal = () => {
+  if (!locationModal) {
+    return;
+  }
+
+  locationModal.hidden = false;
+  document.body.classList.add("location-modal-open");
+  locationModal.querySelector("button[data-location]")?.focus();
+};
+
+const selectServiceLocation = (locationId) => {
+  if (!SERVICE_LOCATIONS[locationId]) {
+    return;
+  }
+
+  localStorage.setItem(SERVICE_LOCATION_KEY, locationId);
+  applyServiceLocation(locationId);
+  closeLocationModal();
+};
+
+const initServiceLocationPicker = () => {
+  const savedLocation = getSavedServiceLocation();
+  if (savedLocation) {
+    applyServiceLocation(savedLocation);
+  } else {
+    openLocationModal();
+  }
+
+  locationModal?.querySelectorAll("button[data-location]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectServiceLocation(button.dataset.location);
+    });
+  });
+
+  locationSwitchButton?.addEventListener("click", openLocationModal);
+};
+
+initServiceLocationPicker();
 
 const getBookingFormDraft = () => {
   if (!bookingForm) {
@@ -400,7 +498,7 @@ if (
     },
   };
 
-  const characterCatalog = [
+  const baseCharacterCatalog = [
     { value: "ice-queen", label: "The Ice Queen" },
     { value: "bayou-princess", label: "The Bayou Princess" },
     { value: "desert-princess", label: "The Desert Princess" },
@@ -418,6 +516,22 @@ if (
     { value: "night-sentinel", label: "The Night Sentinel" },
     { value: "custom-characters", label: "Custom Characters" },
   ];
+
+  const baltimoreCharacterCatalog = [
+    { value: "goggle-crew", label: "The Goggle Crew" },
+    { value: "goggle-pal", label: "The Goggle Pal" },
+    { value: "azure-pup", label: "The Azure Pup" },
+  ];
+
+  const getCharacterCatalog = () => {
+    if (document.documentElement.dataset.serviceLocation !== "baltimore") {
+      return baseCharacterCatalog;
+    }
+
+    const catalog = [...baseCharacterCatalog];
+    catalog.splice(catalog.length - 1, 0, ...baltimoreCharacterCatalog);
+    return catalog;
+  };
 
   const blackoutDates = new Set(["2026-11-27", "2026-12-25"]);
   const unavailableWeekdays = new Set([1]); // Mondays
@@ -449,7 +563,7 @@ if (
     defaultOption.value = "";
     defaultOption.textContent = "Select character";
     selectEl.append(defaultOption);
-    characterCatalog.forEach((character) => {
+    getCharacterCatalog().forEach((character) => {
       const opt = document.createElement("option");
       opt.value = character.value;
       opt.textContent = character.label;
@@ -883,6 +997,14 @@ if (
       }
     }
   };
+
+  serviceLocationChangeHandlers.push(() => {
+    const allowedValues = new Set(getCharacterCatalog().map((character) => character.value));
+    const currentSelections = getCharacterDropdownSelections(eventCharactersFields).map((value) =>
+      allowedValues.has(value) ? value : "",
+    );
+    updateCharactersByPackage(selectedPackageId, currentSelections);
+  });
 }
 
 if (bookingForm) {
@@ -929,6 +1051,9 @@ if (bookingForm) {
       eventPackage: String(formData.get("event-package") || ""),
       eventTime: String(formData.get("event-time") || ""),
       eventType: eventType === "other" ? `Other: ${eventTypeOther}` : eventType,
+      serviceLocation:
+        SERVICE_LOCATIONS[String(formData.get("service-location") || "")]?.label ||
+        String(formData.get("service-location") || ""),
       characters: formData.getAll("characters"),
       message: String(formData.get("message") || ""),
     };
@@ -1055,7 +1180,7 @@ if (packageButtons.length > 0) {
 
 if (heroCarousel && heroCarouselTrack) {
   const CAROUSEL_INDEX_KEY = "djdream-carousel-index";
-  const heroImages = [
+  const BASE_HERO_IMAGES = [
     "./assets/party-01.png",
     "./assets/party-02.png",
     "./assets/party-03.png",
@@ -1072,6 +1197,30 @@ if (heroCarousel && heroCarouselTrack) {
     "./assets/party-14.png",
     "./assets/party-15.png",
   ];
+  const BALTIMORE_HERO_IMAGES = [
+    "./assets/baltimore-azure-party.png",
+    "./assets/baltimore-goggle-crew.png",
+    "./assets/baltimore-goggle-party.png",
+    "./assets/baltimore-azure-pup.png",
+    "./assets/baltimore-goggle-pal.png",
+  ];
+
+  const interleaveHeroImages = (baseImages, extraImages) => {
+    const mixed = [...baseImages];
+    extraImages.forEach((src, index) => {
+      const slot = Math.min((index + 1) * 3 - 1 + index, mixed.length);
+      mixed.splice(slot, 0, src);
+    });
+    return mixed;
+  };
+
+  const getHeroImagesForLocation = (locationId) =>
+    locationId === "baltimore"
+      ? interleaveHeroImages(BASE_HERO_IMAGES, BALTIMORE_HERO_IMAGES)
+      : [...BASE_HERO_IMAGES];
+
+  let heroImages = getHeroImagesForLocation(document.documentElement.dataset.serviceLocation);
+  let currentCarouselLocation = document.documentElement.dataset.serviceLocation || "";
 
   const carouselSets = 3;
   let slideWidth = 0;
@@ -1102,23 +1251,27 @@ if (heroCarousel && heroCarouselTrack) {
 
   let startCarouselIndex = getSavedCarouselIndex();
 
-  heroCarouselTrack.innerHTML = "";
+  const buildCarouselSlides = () => {
+    heroCarouselTrack.innerHTML = "";
 
-  for (let setIndex = 0; setIndex < carouselSets; setIndex += 1) {
-    heroImages.forEach((src, imageIndex) => {
-      const slide = document.createElement("div");
-      slide.className = "hero-carousel-slide";
-      slide.dataset.index = String(imageIndex);
+    for (let setIndex = 0; setIndex < carouselSets; setIndex += 1) {
+      heroImages.forEach((src, imageIndex) => {
+        const slide = document.createElement("div");
+        slide.className = "hero-carousel-slide";
+        slide.dataset.index = String(imageIndex);
 
-      const image = document.createElement("img");
-      image.src = src;
-      image.alt = `Themed birthday party scene ${imageIndex + 1}`;
-      image.loading = setIndex === 1 && imageIndex < 2 ? "eager" : "lazy";
-      image.decoding = "async";
-      slide.append(image);
-      heroCarouselTrack.append(slide);
-    });
-  }
+        const image = document.createElement("img");
+        image.src = src;
+        image.alt = `Themed birthday party scene ${imageIndex + 1}`;
+        image.loading = setIndex === 1 && imageIndex < 2 ? "eager" : "lazy";
+        image.decoding = "async";
+        slide.append(image);
+        heroCarouselTrack.append(slide);
+      });
+    }
+  };
+
+  buildCarouselSlides();
 
   const getSlideWidth = () => {
     const slide = heroCarouselTrack.querySelector(".hero-carousel-slide");
@@ -1316,4 +1469,21 @@ if (heroCarousel && heroCarouselTrack) {
       { once: true },
     );
   }
+
+  serviceLocationChangeHandlers.push((locationId) => {
+    if (locationId === currentCarouselLocation) {
+      return;
+    }
+
+    currentCarouselLocation = locationId;
+    heroImages = getHeroImagesForLocation(locationId);
+    isInitializing = true;
+    startCarouselIndex = 0;
+    activeCarouselIndex = 0;
+    sessionStorage.setItem(CAROUSEL_INDEX_KEY, "0");
+    buildCarouselSlides();
+    if (initCarouselPosition()) {
+      revealCarousel();
+    }
+  });
 }

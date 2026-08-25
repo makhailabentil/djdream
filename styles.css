@@ -742,6 +742,70 @@ h1 {
   border-color: var(--primary);
 }
 
+.location-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(6, 4, 16, 0.78);
+  backdrop-filter: blur(10px);
+}
+
+.location-modal[hidden] {
+  display: none;
+}
+
+.location-modal-card {
+  width: min(28rem, 100%);
+  padding: 1.6rem 1.4rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #1a1538, #120f29);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.location-modal-logo {
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit: contain;
+  margin-bottom: 0.7rem;
+}
+
+.location-modal-card h2 {
+  margin-bottom: 0.45rem;
+}
+
+.location-modal-card p {
+  margin-bottom: 1.2rem;
+}
+
+.location-choices {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.location-choices .btn {
+  width: 100%;
+}
+
+.location-switch-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+body.location-modal-open {
+  overflow: hidden;
+}
+
 .value-strip {
   padding: 4.8rem 0 1rem;
 }
@@ -841,6 +905,14 @@ h1 {
   font-size: 0.82rem;
   line-height: 1.45;
   color: #c9b8f2;
+}
+
+.location-baltimore-only {
+  display: none;
+}
+
+html[data-service-location="baltimore"] .location-baltimore-only {
+  display: block;
 }
 
 @media (min-width: 901px) {

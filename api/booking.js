@@ -46,6 +46,7 @@ module.exports = async (req, res) => {
     eventPackage = "",
     eventTime = "",
     eventType = "",
+    serviceLocation = "",
     characters = "",
     message = "",
   } = req.body || {};
@@ -67,6 +68,7 @@ module.exports = async (req, res) => {
     `Preferred Package: ${packageLabel}`,
     `Preferred Time: ${eventTime || "Not selected"}`,
     `Event Type: ${eventType || "Not selected"}`,
+    `Service Location: ${serviceLocation || "Not selected"}`,
     `Dream Characters: ${characterList}`,
     "",
     "Message:",
@@ -83,6 +85,7 @@ module.exports = async (req, res) => {
       <tr><td><strong>Preferred Package</strong></td><td>${escapeHtml(packageLabel)}</td></tr>
       <tr><td><strong>Preferred Time</strong></td><td>${escapeHtml(eventTime || "Not selected")}</td></tr>
       <tr><td><strong>Event Type</strong></td><td>${escapeHtml(eventType || "Not selected")}</td></tr>
+      <tr><td><strong>Service Location</strong></td><td>${escapeHtml(serviceLocation || "Not selected")}</td></tr>
       <tr><td><strong>Dream Characters</strong></td><td>${escapeHtml(characterList)}</td></tr>
     </table>
     <p><strong>Message</strong></p>
