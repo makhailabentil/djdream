@@ -519,9 +519,9 @@ if (
   ];
 
   const baltimoreCharacterCatalog = [
-    { value: "goggle-pal-devin", label: "The Goggle Pal - Devin" },
+    { value: "goggle-pal-devin", label: "The Goggle Pal (Devin)" },
     { value: "azure-pup", label: "The Azure Pup" },
-    { value: "goggle-pal-rob", label: "The Goggle Pal - Rob" },
+    { value: "goggle-pal-rob", label: "The Goggle Pal (Rob)" },
   ];
 
   const getCharacterCatalog = () => {
