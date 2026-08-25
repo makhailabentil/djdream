@@ -791,6 +791,13 @@ h1 {
   width: 100%;
 }
 
+.location-choices .btn:hover,
+.location-choices .btn:active {
+  background: linear-gradient(130deg, var(--accent), var(--primary));
+  color: #fff;
+  border-color: transparent;
+}
+
 .location-switch-btn {
   padding: 0;
   border: 0;
