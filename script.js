@@ -1230,6 +1230,7 @@ if (heroCarousel && heroCarouselTrack) {
   let autoPlayTimer = 0;
   let autoPlayResumeTimer = 0;
   let lastScrollLeft = 0;
+  let carouselRebuildToken = 0;
   const AUTO_PLAY_INTERVAL = 2800;
   const AUTO_PLAY_RESUME_DELAY = 6000;
 
@@ -1341,9 +1342,12 @@ if (heroCarousel && heroCarouselTrack) {
 
   const setCarouselScrollLeft = (left) => {
     const previousBehavior = heroCarouselTrack.style.scrollBehavior;
+    const previousSnap = heroCarouselTrack.style.scrollSnapType;
     heroCarouselTrack.style.scrollBehavior = "auto";
+    heroCarouselTrack.style.scrollSnapType = "none";
     heroCarouselTrack.scrollLeft = left;
     heroCarouselTrack.style.scrollBehavior = previousBehavior;
+    heroCarouselTrack.style.scrollSnapType = previousSnap;
     lastScrollLeft = left;
   };
 
@@ -1360,15 +1364,61 @@ if (heroCarousel && heroCarouselTrack) {
     return true;
   };
 
+  const clearAutoPlay = () => {
+    window.clearInterval(autoPlayTimer);
+    autoPlayTimer = 0;
+  };
+
+  const stopCarouselActivity = () => {
+    clearAutoPlay();
+    window.clearTimeout(autoPlayResumeTimer);
+    autoPlayResumeTimer = 0;
+    window.clearTimeout(scrollStopTimer);
+    scrollStopTimer = 0;
+    isAutoAdvancing = false;
+    // Interrupt any in-flight smooth scroll before rebuild.
+    setCarouselScrollLeft(heroCarouselTrack.scrollLeft);
+  };
+
   const revealCarousel = () => {
     heroCarousel.classList.add("is-ready");
     isInitializing = false;
     startAutoPlay();
   };
 
-  const clearAutoPlay = () => {
-    window.clearInterval(autoPlayTimer);
-    autoPlayTimer = 0;
+  const settleCarouselAfterRebuild = (rebuildToken) => {
+    const tryReveal = () => {
+      if (rebuildToken !== carouselRebuildToken) {
+        return true;
+      }
+
+      if (!initCarouselPosition()) {
+        return false;
+      }
+
+      revealCarousel();
+      return true;
+    };
+
+    // Layout after DOM rebuild can lag one frame; confirm position twice.
+    window.requestAnimationFrame(() => {
+      if (rebuildToken !== carouselRebuildToken) {
+        return;
+      }
+
+      initCarouselPosition();
+      window.requestAnimationFrame(() => {
+        if (!tryReveal()) {
+          window.addEventListener(
+            "load",
+            () => {
+              tryReveal();
+            },
+            { once: true },
+          );
+        }
+      });
+    });
   };
 
   const advanceCarousel = () => {
@@ -1475,13 +1525,17 @@ if (heroCarousel && heroCarouselTrack) {
 
     currentCarouselLocation = locationId;
     heroImages = getHeroImagesForLocation(locationId);
+    const rebuildToken = ++carouselRebuildToken;
+
+    stopCarouselActivity();
     isInitializing = true;
+    heroCarousel.classList.remove("is-ready");
     startCarouselIndex = 0;
     activeCarouselIndex = 0;
     sessionStorage.setItem(CAROUSEL_INDEX_KEY, "0");
     buildCarouselSlides();
-    if (initCarouselPosition()) {
-      revealCarousel();
-    }
+    // Sync position immediately when possible, then settle after layout.
+    initCarouselPosition();
+    settleCarouselAfterRebuild(rebuildToken);
   });
 }
