@@ -105,6 +105,17 @@ p {
   filter: drop-shadow(0 0 6px rgba(155, 131, 255, 0.3));
 }
 
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 0;
+  /* Keep stacked brand + location within logo height so --nav-height / .nav stay fixed */
+  max-height: 48px;
+}
+
 .brand-text,
 .hero-brand-text {
   font-size: 1.2rem;
@@ -121,8 +132,37 @@ p {
 }
 
 .brand-text {
-  display: inline-block;
+  display: block;
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
   transform: translateY(0);
+}
+
+.brand-location {
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: Manrope, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  color: var(--muted);
+  text-align: left;
+  text-transform: none;
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.brand-location:hover,
+.brand-location:focus-visible {
+  color: #e8dfff;
 }
 
 .nav-links {
@@ -1479,12 +1519,22 @@ textarea:focus {
     object-position: left center;
   }
 
+  .brand-copy {
+    max-height: 38px;
+    gap: 0.06rem;
+  }
+
   .brand-text {
-    font-size: 1rem;
-    letter-spacing: 0.12em;
-    line-height: 1.1;
+    font-size: 0.92rem;
+    letter-spacing: 0.1em;
+    line-height: 1.05;
     white-space: nowrap;
     transform: translateY(0);
+  }
+
+  .brand-location {
+    font-size: 0.62rem;
+    max-width: 11.5rem;
   }
 }
 
@@ -1494,9 +1544,18 @@ textarea:focus {
     height: 35px;
   }
 
+  .brand-copy {
+    max-height: 35px;
+  }
+
   .brand-text {
-    font-size: 0.88rem;
-    letter-spacing: 0.1em;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-location {
+    font-size: 0.58rem;
+    max-width: 9.75rem;
   }
 
   .site-header .container {

@@ -252,6 +252,7 @@ const serviceLocationChangeHandlers = [];
 const SERVICE_LOCATIONS = {
   "newburgh-hudson": {
     label: "Newburgh-Hudson Valley, NY",
+    navLabel: "Newburgh-Hudson Valley",
     servingArea: "the Newburgh-Hudson Valley",
     pillarTitle: "Hudson Valley rooted",
     pillarText: "Home parties, venues, and community events across NY",
@@ -260,6 +261,7 @@ const SERVICE_LOCATIONS = {
   },
   baltimore: {
     label: "Baltimore, MD",
+    navLabel: "Baltimore, MD",
     servingArea: "Baltimore, MD",
     pillarTitle: "Baltimore rooted",
     pillarText: "Home parties, venues, and community events across MD",
@@ -283,6 +285,9 @@ const applyServiceLocation = (locationId) => {
     const key = element.dataset.locationCopy;
     if (location[key]) {
       element.textContent = location[key];
+      if (element.classList.contains("brand-location")) {
+        element.hidden = false;
+      }
     }
   });
 
@@ -430,6 +435,13 @@ let restoreBookingFormDraft = null;
 
 brandLinks.forEach((brandLink) => {
   brandLink.addEventListener("click", (event) => {
+    if (event.target.closest(".brand-location")) {
+      event.preventDefault();
+      openLocationModal();
+      closeMobileNav();
+      return;
+    }
+
     event.preventDefault();
     scrollToTopInstant();
     closeMobileNav();
