@@ -1301,6 +1301,21 @@ textarea:focus {
   outline-offset: 1px;
 }
 
+.casting-section .casting-layout {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.casting-copy {
+  margin: 0.75rem auto 1.5rem;
+  color: #d9cbff;
+}
+
+.casting-cta {
+  display: flex;
+  justify-content: center;
+}
+
 .site-footer {
   padding: 2.5rem 0 1rem;
   border-top: 1px solid var(--border);
