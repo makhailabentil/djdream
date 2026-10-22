@@ -217,7 +217,7 @@ const yearSpan = document.querySelector("#year");
 const bookingForm = document.querySelector(".booking-form");
 const heroCarousel = document.querySelector("#hero-carousel");
 const heroCarouselTrack = document.querySelector("#hero-carousel-track");
-const eventDateInput = document.querySelector("#event-date");
+const eventDateInput = document.querySelector("#event-date") || document.createElement("input");
 const availabilityTrigger = document.querySelector("#availability-trigger");
 const bookingFlow = document.querySelector("#booking-flow");
 const heroCalendar = document.querySelector("#hero-calendar");
@@ -234,12 +234,13 @@ const availabilityCharactersFields = document.querySelector("#availability-chara
 const availabilityNote = document.querySelector("#availability-note");
 const availabilityContinueButton = document.querySelector("#availability-continue");
 const bookingSection = document.querySelector("#booking");
-const eventPackageInput = document.querySelector("#event-package");
-const eventTimeInput = document.querySelector("#event-time");
+const eventPackageInput = document.querySelector("#event-package") || document.createElement("select");
+const eventTimeInput = document.querySelector("#event-time") || document.createElement("select");
 const eventTypeInput = document.querySelector("#event-type");
 const eventTypeOtherWrap = document.querySelector("#event-type-other-wrap");
 const eventTypeOtherInput = document.querySelector("#event-type-other");
-const eventCharactersFields = document.querySelector("#event-characters-fields");
+const eventCharactersFields =
+  document.querySelector("#event-characters-fields") || document.createElement("div");
 const eventCharactersNote = document.querySelector("#event-characters-note");
 const packageButtons = document.querySelectorAll(".pricing-grid .price-card .btn");
 const siteHeader = document.querySelector(".site-header");
@@ -348,27 +349,325 @@ const initServiceLocationPicker = () => {
 
 initServiceLocationPicker();
 
+const INQUIRY_EVENT_TYPES = [
+  "birthday",
+  "school",
+  "corporate",
+  "playdate",
+  "private",
+  "wedding",
+  "dance",
+  "other",
+];
+const INQUIRY_NO_PACKAGE = ["dance", "other", "wedding"];
+const INQUIRY_EVENT_LABELS = {
+  birthday: "Birthday Party",
+  school: "School Event",
+  corporate: "Corporate / Community Event",
+  playdate: "Children's Playdate",
+  private: "Private Event",
+  wedding: "Wedding / Vow Renewal",
+  dance: "Dance Class / Workshop / Performance",
+  other: "Other",
+};
+const BALTIMORE_INQUIRY_CHARACTERS = [
+  "The Goggle Pal (Devin)",
+  "The Goggle Pal (Rob)",
+  "The Azure Pup",
+];
+const INQUIRY_LOCATION_FIELDS = {
+  birthday: "b-venue",
+  school: "s-venue",
+  corporate: "c-venue",
+  playdate: "p-location",
+  private: "pr-venue",
+  wedding: "w-venue",
+  dance: "d-location",
+  other: "o-location",
+};
+const INQUIRY_DATE_FIELDS = {
+  birthday: "b-date",
+  school: "s-date",
+  corporate: "c-date",
+  playdate: "p-date",
+  private: "pr-date",
+  wedding: "w-date",
+  dance: "d-date",
+  other: "o-date",
+};
+const INQUIRY_TIME_FIELDS = {
+  birthday: "b-time",
+  school: "s-time",
+  corporate: "c-time",
+  playdate: "p-time",
+  private: "pr-time",
+  wedding: "w-ceremony",
+  dance: "d-time",
+  other: "o-time",
+};
+const INQUIRY_DETAIL_FIELDS = {
+  birthday: [
+    ["Celebrant's Name", "b-child-name"],
+    ["Celebrant's Age", "b-child-age"],
+    ["Event Date", "b-date"],
+    ["Preferred Start Time", "b-time"],
+    ["Estimated Total Guests", "b-guests"],
+    ["Estimated Number of Children", "b-children"],
+    ["Age Range of Children", "b-age-range"],
+    ["Location (Venue Name and Address)", "b-venue"],
+    ["Indoor or Outdoor", "b-indoor"],
+    ["Is this a surprise?", "b-surprise"],
+  ],
+  school: [
+    ["School Name", "s-school"],
+    ["Your Title or Role", "s-title"],
+    ["Event Date", "s-date"],
+    ["Preferred Start Time", "s-time"],
+    ["Event Format", "s-format"],
+    ["Number of Classrooms or Students", "s-classrooms"],
+    ["Grade Levels", "s-grades"],
+    ["During school hours or after school?", "s-hours"],
+    ["Location (Venue Name and Address)", "s-venue"],
+    ["Setup or access restrictions at the school?", "s-restrictions"],
+    ["Will media or press be present?", "s-media"],
+  ],
+  corporate: [
+    ["Organization or Company Name", "c-org"],
+    ["Your Title or Role", "c-role"],
+    ["Event Date", "c-date"],
+    ["Preferred Start Time", "c-time"],
+    ["Preferred End Time", "c-endtime"],
+    ["Event Type", "c-type"],
+    ["Expected Attendance", "c-attendance"],
+    ["Is this event open to the public?", "c-public"],
+    ["Interested in bilingual programming?", "c-bilingual"],
+    ["Budget Range", "c-budget"],
+    ["Location (Venue Name and Address)", "c-venue"],
+    ["Will a coordinator be on-site day of?", "c-coordinator"],
+    ["Will media or press be present?", "c-media"],
+    ["Setup or venue restrictions?", "c-restrictions"],
+  ],
+  playdate: [
+    ["Child's Name and Age", "p-child"],
+    ["Number of Children", "p-count"],
+    ["Event Date", "p-date"],
+    ["Preferred Start Time", "p-time"],
+    ["Location (Venue Name and Address)", "p-location"],
+    ["Indoor or Outdoor", "p-indoor"],
+    ["Any special themes or activities requested?", "p-theme"],
+  ],
+  private: [
+    ["Event Type", "pr-subtype"],
+    ["Event Date", "pr-date"],
+    ["Preferred Start Time", "pr-time"],
+    ["Estimated Total Guests", "pr-guests"],
+    ["Estimated Number of Children", "pr-children"],
+    ["Age Range of Children", "pr-age-range"],
+    ["Location (Venue Name and Address)", "pr-venue"],
+    ["Indoor or Outdoor", "pr-indoor"],
+    ["Is there a theme?", "pr-theme"],
+  ],
+  wedding: [
+    ["Partner Names", "w-names"],
+    ["Event Date", "w-date"],
+    ["Ceremony Start Time", "w-ceremony"],
+    ["Reception Start Time", "w-reception"],
+    ["Expected Number of Guests", "w-guests"],
+    ["What role would you like D&J DREAM to play?", "w-role"],
+    ["Children attending?", "w-children"],
+    ["Budget Range", "w-budget"],
+    ["Location (Venue Name and Address)", "w-venue"],
+    ["Do you have a wedding coordinator?", "w-coordinator"],
+    ["Venue restrictions we should know about?", "w-restrictions"],
+  ],
+  dance: [
+    ["Type of Engagement", "d-type"],
+    ["Date", "d-date"],
+    ["Preferred Start Time", "d-time"],
+    ["Age Group of Participants", "d-age"],
+    ["Number of Participants", "d-participants"],
+    ["Duration per Session", "d-duration"],
+    ["Location", "d-location"],
+    ["Is this for a recital, showcase, or specific event?", "d-recital"],
+    ["Do you need costumes or props?", "d-costumes"],
+    ["Performer appearance preference", "d-appearance"],
+  ],
+  other: [
+    ["Please describe your event", "o-describe"],
+    ["Event Date", "o-date"],
+    ["Preferred Start Time", "o-time"],
+    ["Location (Venue Name and Address)", "o-location"],
+    ["Budget Range", "o-budget"],
+  ],
+};
+const INQUIRY_DETAIL_TITLES = {
+  birthday: "Birthday Details",
+  school: "School Event Details",
+  corporate: "Corporate / Community Event Details",
+  playdate: "Playdate Details",
+  private: "Private Event Details",
+  wedding: "Wedding / Vow Renewal Details",
+  dance: "Dance Event Details",
+  other: "Other Event Details",
+};
+
+const readInquiryValue = (id) => {
+  const element = id ? document.getElementById(id) : null;
+  if (!element) {
+    return "";
+  }
+  return String(element.value || "").trim();
+};
+
+const displayInquiryValue = (value) => (value ? value : "Not provided");
+
+const checkedInquiryLabels = (selector) =>
+  Array.from(document.querySelectorAll(selector))
+    .filter((input) => input.checked)
+    .map((input) => input.closest("label")?.textContent.replace(/\s+/g, " ").trim() || input.value);
+
+const inquiryFieldsFromPairs = (pairs) =>
+  pairs.map(([label, id]) => ({ label, value: displayInquiryValue(readInquiryValue(id)) }));
+
+const showInquiryEventType = (type, { scroll = true } = {}) => {
+  if (!INQUIRY_EVENT_TYPES.includes(type)) {
+    return;
+  }
+
+  document.querySelectorAll(".booking-form .event-btn").forEach((button) => {
+    const selected = button.dataset.type === type;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", selected ? "true" : "false");
+  });
+
+  const eventTypeValue = document.getElementById("event-type-value");
+  if (eventTypeValue) {
+    eventTypeValue.value = type;
+  }
+
+  INQUIRY_EVENT_TYPES.forEach((eventName) => {
+    document.getElementById(`section-${eventName}`)?.classList.add("inquiry-hidden");
+  });
+  document.getElementById(`section-${type}`)?.classList.remove("inquiry-hidden");
+
+  const packageSection = document.getElementById("section-package");
+  const corpSection = document.getElementById("section-corp-chars");
+  if (INQUIRY_NO_PACKAGE.includes(type)) {
+    packageSection?.classList.add("inquiry-hidden");
+    corpSection?.classList.add("inquiry-hidden");
+  } else if (type === "corporate") {
+    packageSection?.classList.add("inquiry-hidden");
+    corpSection?.classList.remove("inquiry-hidden");
+  } else {
+    packageSection?.classList.remove("inquiry-hidden");
+    corpSection?.classList.add("inquiry-hidden");
+  }
+
+  document.getElementById("details-section")?.classList.remove("inquiry-hidden");
+  document.getElementById("section-additional")?.classList.remove("inquiry-hidden");
+
+  const additionalStep = document.getElementById("additional-step");
+  if (additionalStep) {
+    additionalStep.textContent = INQUIRY_NO_PACKAGE.includes(type) ? "4" : "5";
+  }
+
+  if (scroll) {
+    window.setTimeout(() => {
+      document.getElementById("details-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  }
+};
+
+const syncInquiryCharacters = () => {
+  const isBaltimore = document.documentElement.dataset.serviceLocation === "baltimore";
+
+  document.querySelectorAll(".booking-form select.inquiry-character").forEach((select) => {
+    const current = select.value;
+    select.querySelectorAll("option[data-baltimore-character]").forEach((option) => option.remove());
+    if (isBaltimore) {
+      const customOption = Array.from(select.options).find((option) => option.value === "Custom Character");
+      BALTIMORE_INQUIRY_CHARACTERS.forEach((name) => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        option.dataset.baltimoreCharacter = "true";
+        if (customOption) {
+          select.insertBefore(option, customOption);
+        } else {
+          select.append(option);
+        }
+      });
+    }
+    const stillThere = Array.from(select.options).some((option) => option.value === current);
+    select.value = stillThere ? current : "";
+  });
+
+  const corpGrid = document.getElementById("corp-char-grid");
+  if (!corpGrid) {
+    return;
+  }
+
+  const preserved = new Set(
+    Array.from(corpGrid.querySelectorAll("input[data-baltimore-character]:checked")).map((input) => input.value),
+  );
+  corpGrid.querySelectorAll("[data-baltimore-character]").forEach((element) => element.remove());
+  if (!isBaltimore) {
+    return;
+  }
+
+  const customLabel = corpGrid.querySelector("[data-custom-char]");
+  BALTIMORE_INQUIRY_CHARACTERS.forEach((name) => {
+    const label = document.createElement("label");
+    label.className = "dance-style-item";
+    label.dataset.baltimoreCharacter = "true";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.name = "corp-char";
+    input.value = name;
+    input.dataset.baltimoreCharacter = "true";
+    input.checked = preserved.has(name);
+    label.append(input, document.createTextNode(` ${name}`));
+    if (customLabel) {
+      corpGrid.insertBefore(label, customLabel);
+    } else {
+      corpGrid.append(label);
+    }
+  });
+};
+
+syncInquiryCharacters();
+serviceLocationChangeHandlers.push(syncInquiryCharacters);
+
 const getBookingFormDraft = () => {
   if (!bookingForm) {
     return null;
   }
 
-  const characterSelects = bookingForm.querySelectorAll("#event-characters-fields select[name='characters']");
-  const characters = Array.from(characterSelects)
-    .map((select) => select.value)
-    .filter(Boolean);
+  const fields = [];
+  bookingForm.querySelectorAll("input, select, textarea").forEach((element) => {
+    if (element.id === "service-location") {
+      return;
+    }
+    if (element.type === "checkbox" || element.type === "radio") {
+      fields.push({
+        id: element.id || "",
+        name: element.name || "",
+        value: element.value,
+        checked: element.checked,
+      });
+      return;
+    }
+    fields.push({
+      id: element.id || "",
+      name: element.name || "",
+      value: element.value,
+    });
+  });
 
   return {
-    name: bookingForm.elements.namedItem("name")?.value || "",
-    email: bookingForm.elements.namedItem("email")?.value || "",
-    phone: bookingForm.elements.namedItem("phone")?.value || "",
-    "event-date": bookingForm.elements.namedItem("event-date")?.value || "",
-    "event-package": bookingForm.elements.namedItem("event-package")?.value || "",
-    "event-time": bookingForm.elements.namedItem("event-time")?.value || "",
-    "event-type": bookingForm.elements.namedItem("event-type")?.value || "",
-    "event-type-other": bookingForm.elements.namedItem("event-type-other")?.value || "",
-    characters,
-    message: bookingForm.elements.namedItem("message")?.value || "",
+    version: 2,
+    eventType: readInquiryValue("event-type-value"),
+    fields,
   };
 };
 
@@ -379,16 +678,8 @@ const saveBookingFormDraft = () => {
 
   const draft = getBookingFormDraft();
   const hasContent =
-    draft.name ||
-    draft.email ||
-    draft.phone ||
-    draft["event-date"] ||
-    draft["event-package"] ||
-    draft["event-time"] ||
-    draft["event-type"] ||
-    draft["event-type-other"] ||
-    draft.characters.length > 0 ||
-    draft.message;
+    Boolean(draft?.eventType) ||
+    Boolean(draft?.fields?.some((field) => field.checked || Boolean(field.value)));
 
   if (hasContent) {
     sessionStorage.setItem(BOOKING_FORM_DRAFT_KEY, JSON.stringify(draft));
@@ -402,14 +693,54 @@ const clearBookingFormDraft = () => {
   sessionStorage.removeItem(BOOKING_FORM_DRAFT_KEY);
 };
 
+const applyInquiryDraft = (draft) => {
+  if (!bookingForm || !draft || draft.version !== 2 || !Array.isArray(draft.fields)) {
+    return false;
+  }
+
+  draft.fields.forEach((field) => {
+    if (field.id === "service-location") {
+      return;
+    }
+    if (field.id) {
+      const element = document.getElementById(field.id);
+      if (!element) {
+        return;
+      }
+      if (element.type === "checkbox" || element.type === "radio") {
+        element.checked = Boolean(field.checked);
+        return;
+      }
+      element.value = field.value || "";
+      return;
+    }
+    if (!field.name) {
+      return;
+    }
+    const matches = bookingForm.querySelectorAll(`[name="${CSS.escape(field.name)}"]`);
+    const element = Array.from(matches).find((candidate) => candidate.value === field.value);
+    if (element && (element.type === "checkbox" || element.type === "radio")) {
+      element.checked = Boolean(field.checked);
+    }
+  });
+
+  if (draft.eventType) {
+    showInquiryEventType(draft.eventType, { scroll: false });
+  }
+  return true;
+};
+
 const applySimpleBookingFormDraft = (draft) => {
-  if (!bookingForm) {
+  if (applyInquiryDraft(draft)) {
+    return;
+  }
+  if (!bookingForm || !draft) {
     return;
   }
 
   ["name", "email", "phone", "event-date", "event-type", "event-type-other", "message"].forEach((fieldName) => {
     const field = bookingForm.elements.namedItem(fieldName);
-    if (field && draft[fieldName]) {
+    if (field && draft[fieldName] && field.type !== "checkbox" && field.type !== "radio") {
       field.value = draft[fieldName];
     }
   });
@@ -1023,9 +1354,186 @@ if (
 if (bookingForm) {
   let draftSaveTimer = 0;
 
-  eventTypeInput?.addEventListener("change", () => {
-    syncEventTypeOtherField();
-    saveBookingFormDraft();
+  const inquiryFieldsFromEvent = (eventType) => {
+    const fields = inquiryFieldsFromPairs(INQUIRY_DETAIL_FIELDS[eventType] || []);
+    if (eventType === "dance") {
+      const styles = checkedInquiryLabels('#section-dance input[name="dance-style"]');
+      const typeIndex = fields.findIndex((field) => field.label === "Type of Engagement");
+      fields.splice(typeIndex + 1, 0, {
+        label: "Dance Style",
+        value: styles.join(", ") || "Not provided",
+      });
+    }
+    return fields;
+  };
+
+  const selectedInquiryCharacters = (eventType) => {
+    if (INQUIRY_NO_PACKAGE.includes(eventType)) {
+      return [];
+    }
+    if (eventType === "corporate") {
+      return checkedInquiryLabels('#corp-char-grid input[name="corp-char"]');
+    }
+    return ["char1", "char2", "char3"].map((id) => readInquiryValue(id)).filter(Boolean);
+  };
+
+  const buildInquirySections = (eventType) => {
+    const locationId = serviceLocationInput?.value || "";
+    const sections = [
+      {
+        title: "Your Information",
+        fields: [
+          { label: "Name", value: displayInquiryValue(readInquiryValue("name")) },
+          { label: "Email", value: displayInquiryValue(readInquiryValue("email")) },
+          { label: "Phone Number", value: displayInquiryValue(readInquiryValue("phone")) },
+          { label: "Preferred Contact Method", value: displayInquiryValue(readInquiryValue("contact-pref")) },
+          { label: "How did you hear about us?", value: displayInquiryValue(readInquiryValue("referral")) },
+          {
+            label: "Service Location",
+            value: displayInquiryValue(SERVICE_LOCATIONS[locationId]?.label || locationId),
+          },
+        ],
+      },
+      {
+        title: "Event Type",
+        fields: [{ label: "Event Type", value: INQUIRY_EVENT_LABELS[eventType] || eventType || "Not provided" }],
+      },
+      {
+        title: INQUIRY_DETAIL_TITLES[eventType] || "Event Details",
+        fields: inquiryFieldsFromEvent(eventType),
+      },
+    ];
+
+    if (!INQUIRY_NO_PACKAGE.includes(eventType)) {
+      if (eventType === "corporate") {
+        const characters = selectedInquiryCharacters(eventType);
+        sections.push({
+          title: "Package & Characters",
+          fields: [
+            { label: "Preferred Package", value: displayInquiryValue(readInquiryValue("corp-package")) },
+            { label: "DREAM Characters", value: characters.join(", ") || "Not provided" },
+            {
+              label: "Performer appearance preference",
+              value: displayInquiryValue(readInquiryValue("corp-appearance")),
+            },
+          ],
+        });
+      } else {
+        sections.push({
+          title: "Package & Characters",
+          fields: [
+            { label: "Preferred Package", value: displayInquiryValue(readInquiryValue("package")) },
+            { label: "Character 1", value: displayInquiryValue(readInquiryValue("char1")) },
+            { label: "Character 2", value: displayInquiryValue(readInquiryValue("char2")) },
+            { label: "Character 3", value: displayInquiryValue(readInquiryValue("char3")) },
+            { label: "Performer appearance preference", value: displayInquiryValue(readInquiryValue("appearance")) },
+          ],
+        });
+      }
+    }
+
+    sections.push({
+      title: "A Little More",
+      fields: [
+        { label: "Referral or Discount Code", value: displayInquiryValue(readInquiryValue("referral-code")) },
+        { label: "Additional Notes", value: displayInquiryValue(readInquiryValue("notes")) },
+      ],
+    });
+
+    return sections;
+  };
+
+  const validateInquiry = (eventType) => {
+    if (!readInquiryValue("name")) {
+      alert("Please enter your name.");
+      document.getElementById("name")?.focus();
+      return false;
+    }
+    if (!readInquiryValue("email")) {
+      alert("Please enter your email address.");
+      document.getElementById("email")?.focus();
+      return false;
+    }
+    if (!readInquiryValue("phone")) {
+      alert("Please enter your phone number.");
+      document.getElementById("phone")?.focus();
+      return false;
+    }
+    if (!readInquiryValue("referral")) {
+      alert("Please tell us how you heard about us.");
+      document.getElementById("referral")?.focus();
+      return false;
+    }
+    if (!eventType) {
+      alert("Please select an event type.");
+      return false;
+    }
+
+    const locationField = document.getElementById(INQUIRY_LOCATION_FIELDS[eventType] || "");
+    if (locationField && !String(locationField.value || "").trim()) {
+      alert(
+        locationField.tagName === "SELECT"
+          ? "Please select the event location."
+          : "Please enter the event location.",
+      );
+      locationField.focus();
+      return false;
+    }
+
+    if (!INQUIRY_NO_PACKAGE.includes(eventType)) {
+      if (eventType === "corporate") {
+        const corpChars = document.querySelectorAll('#corp-char-grid input[name="corp-char"]:checked');
+        if (corpChars.length === 0) {
+          alert("Please select at least one character.");
+          return false;
+        }
+        if (!readInquiryValue("corp-package")) {
+          alert("Please select a package.");
+          document.getElementById("corp-package")?.focus();
+          return false;
+        }
+      } else if (!readInquiryValue("char1")) {
+        alert("Please select at least one character.");
+        document.getElementById("char1")?.focus();
+        return false;
+      } else if (!readInquiryValue("package")) {
+        alert("Please select a package.");
+        document.getElementById("package")?.focus();
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const resetInquiryForm = () => {
+    const locationId = document.documentElement.dataset.serviceLocation || serviceLocationInput?.value || "";
+    bookingForm.reset();
+    if (serviceLocationInput && locationId) {
+      serviceLocationInput.value = locationId;
+    }
+    const eventTypeValue = document.getElementById("event-type-value");
+    if (eventTypeValue) {
+      eventTypeValue.value = "";
+    }
+    document.querySelectorAll(".booking-form .event-btn").forEach((button) => {
+      button.classList.remove("selected");
+      button.setAttribute("aria-pressed", "false");
+    });
+    INQUIRY_EVENT_TYPES.forEach((eventName) => {
+      document.getElementById(`section-${eventName}`)?.classList.add("inquiry-hidden");
+    });
+    ["details-section", "section-package", "section-corp-chars", "section-additional"].forEach((id) => {
+      document.getElementById(id)?.classList.add("inquiry-hidden");
+    });
+    syncInquiryCharacters();
+  };
+
+  document.querySelectorAll(".booking-form .event-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      showInquiryEventType(button.dataset.type);
+      saveBookingFormDraft();
+    });
   });
 
   bookingForm.addEventListener("input", () => {
@@ -1037,49 +1545,41 @@ if (bookingForm) {
   window.addEventListener("pagehide", saveBookingFormDraft);
 
   initBookingFormDraftOnLoad();
-  syncEventTypeOtherField();
 
   const submitBookingInquiry = async () => {
-    if (!bookingForm.checkValidity()) {
-      bookingForm.reportValidity();
+    const eventType = readInquiryValue("event-type-value");
+    if (!validateInquiry(eventType)) {
       return;
     }
 
     const submitButton = bookingForm.querySelector("#booking-submit");
-    const defaultButtonText = submitButton?.textContent || "Send Inquiry";
-
+    const defaultButtonText = submitButton?.textContent || "Submit Booking Request";
     if (submitButton) {
       submitButton.textContent = "Sending...";
       submitButton.setAttribute("disabled", "true");
     }
 
-    const formData = new FormData(bookingForm);
-    const eventType = String(formData.get("event-type") || "");
-    const eventTypeOther = String(formData.get("event-type-other") || "").trim();
+    const locationId = serviceLocationInput?.value || "";
+    const characters = selectedInquiryCharacters(eventType);
+    const eventPackage =
+      eventType === "corporate"
+        ? readInquiryValue("corp-package")
+        : INQUIRY_NO_PACKAGE.includes(eventType)
+          ? ""
+          : readInquiryValue("package");
     const payload = {
-      name: String(formData.get("name") || ""),
-      email: String(formData.get("email") || ""),
-      phone: String(formData.get("phone") || ""),
-      eventDate: String(formData.get("event-date") || ""),
-      eventPackage: String(formData.get("event-package") || ""),
-      eventTime: String(formData.get("event-time") || ""),
-      eventType: eventType === "other" ? `Other: ${eventTypeOther}` : eventType,
-      serviceLocation:
-        SERVICE_LOCATIONS[String(formData.get("service-location") || "")]?.label ||
-        String(formData.get("service-location") || ""),
-      characters: formData.getAll("characters"),
-      message: String(formData.get("message") || ""),
+      name: readInquiryValue("name"),
+      email: readInquiryValue("email"),
+      phone: readInquiryValue("phone"),
+      eventDate: readInquiryValue(INQUIRY_DATE_FIELDS[eventType] || ""),
+      eventPackage,
+      eventTime: readInquiryValue(INQUIRY_TIME_FIELDS[eventType] || ""),
+      eventType: INQUIRY_EVENT_LABELS[eventType] || eventType,
+      serviceLocation: SERVICE_LOCATIONS[locationId]?.label || locationId,
+      characters,
+      message: readInquiryValue("notes"),
+      sections: buildInquirySections(eventType),
     };
-
-    if (eventType === "other" && !eventTypeOther) {
-      eventTypeOtherInput?.focus();
-      bookingForm.reportValidity();
-      if (submitButton) {
-        submitButton.textContent = defaultButtonText;
-        submitButton.removeAttribute("disabled");
-      }
-      return;
-    }
 
     try {
       const response = await fetch(BOOKING_INBOX_ENDPOINT, {
@@ -1092,20 +1592,19 @@ if (bookingForm) {
       });
 
       const result = await response.json().catch(() => ({}));
-
       if (!response.ok || !result.ok) {
         throw new Error(result.error || "Booking inquiry submission failed");
       }
 
-      bookingForm.reset();
-      syncEventTypeOtherField();
-      eventPackageInput?.dispatchEvent(new Event("change"));
+      resetInquiryForm();
       clearBookingFormDraft();
       if (submitButton) {
         submitButton.textContent = "Inquiry Sent";
       }
 
-      alert("Thanks! Your inquiry has been received. We will reach out within 24-48 hours.");
+      alert(
+        `Thank you, ${payload.name}! Your inquiry has been received. A member of the D&J DREAM team will be in touch within 24-48 hours.\n\nDREAMing is for everyone.`,
+      );
 
       window.setTimeout(() => {
         if (submitButton) {
@@ -1130,12 +1629,10 @@ if (bookingForm) {
 
   bookingForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    submitBookingInquiry();
   });
 
-  const bookingSubmitButton = bookingForm.querySelector("#booking-submit");
-  if (bookingSubmitButton) {
-    bookingSubmitButton.addEventListener("click", submitBookingInquiry);
-  }
+  bookingForm.querySelector("#booking-submit")?.addEventListener("click", submitBookingInquiry);
 }
 
 if (packageButtons.length > 0) {

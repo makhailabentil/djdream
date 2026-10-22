@@ -38,6 +38,52 @@ const formatCharacters = (characters) => {
   return characters ? String(characters) : "None selected";
 };
 
+const normalizeSections = (sections) => {
+  if (!Array.isArray(sections)) {
+    return null;
+  }
+
+  const normalized = sections
+    .filter((section) => section && typeof section === "object")
+    .slice(0, 12)
+    .map((section) => ({
+      title: String(section.title || "Details").slice(0, 160),
+      fields: Array.isArray(section.fields)
+        ? section.fields
+            .filter((field) => field && typeof field === "object")
+            .slice(0, 40)
+            .map((field) => ({
+              label: String(field.label || "Field").slice(0, 180),
+              value: String(field.value ?? "Not provided").slice(0, 4000),
+            }))
+        : [],
+    }))
+    .filter((section) => section.fields.length > 0);
+
+  return normalized.length ? normalized : null;
+};
+
+const renderSectionsText = (sections) =>
+  sections
+    .map((section) => {
+      const rows = section.fields.map((field) => `${field.label}: ${field.value}`).join("\n");
+      return `${section.title}\n${rows}`;
+    })
+    .join("\n\n");
+
+const renderSectionsHtml = (sections) =>
+  sections
+    .map((section) => {
+      const rows = section.fields
+        .map(
+          (field) =>
+            `<tr><td style="vertical-align:top;padding:4px 12px 4px 0;"><strong>${escapeHtml(field.label)}</strong></td><td style="padding:4px 0;">${escapeHtml(field.value).replace(/\n/g, "<br>")}</td></tr>`,
+        )
+        .join("");
+      return `<h3 style="margin:1.25rem 0 0.4rem;color:#6B21A8;">${escapeHtml(section.title)}</h3><table cellpadding="0" cellspacing="0" border="0">${rows}</table>`;
+    })
+    .join("");
+
 const normalizeLocationKey = (value = "") =>
   String(value)
     .trim()
@@ -144,9 +190,10 @@ module.exports = async (req, res) => {
     serviceLocation = "",
     characters = "",
     message = "",
+    sections = null,
   } = req.body || {};
 
-  if (!name.trim() || !email.trim() || !phone.trim() || !eventDate.trim()) {
+  if (!String(name).trim() || !String(email).trim() || !String(phone).trim() || !String(eventType).trim()) {
     return res.status(400).json({ ok: false, error: "Missing required fields." });
   }
 
@@ -166,25 +213,40 @@ module.exports = async (req, res) => {
 
   const packageLabel = PACKAGE_LABELS[eventPackage] || eventPackage || "Not selected";
   const characterList = formatCharacters(characters);
+  const groupedSections = normalizeSections(sections);
 
-  const plainText = [
-    "New booking inquiry - D&J Dream Entertainment",
-    "",
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Phone: ${phone}`,
-    `Event Date: ${eventDate}`,
-    `Preferred Package: ${packageLabel}`,
-    `Preferred Time: ${eventTime || "Not selected"}`,
-    `Event Type: ${eventType || "Not selected"}`,
-    `Service Location: ${locationLabel}`,
-    `Dream Characters: ${characterList}`,
-    "",
-    "Message:",
-    message || "(No message provided)",
-  ].join("\n");
+  const plainText = groupedSections
+    ? [
+        "New booking inquiry - D&J Dream Entertainment",
+        "",
+        `Service Location: ${locationLabel}`,
+        "",
+        renderSectionsText(groupedSections),
+      ].join("\n")
+    : [
+        "New booking inquiry - D&J Dream Entertainment",
+        "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Phone: ${phone}`,
+        `Event Date: ${eventDate}`,
+        `Preferred Package: ${packageLabel}`,
+        `Preferred Time: ${eventTime || "Not selected"}`,
+        `Event Type: ${eventType || "Not selected"}`,
+        `Service Location: ${locationLabel}`,
+        `Dream Characters: ${characterList}`,
+        "",
+        "Message:",
+        message || "(No message provided)",
+      ].join("\n");
 
-  const html = `
+  const html = groupedSections
+    ? `
+    <h2>New booking inquiry - D&amp;J Dream Entertainment</h2>
+    <p><strong>Service Location:</strong> ${escapeHtml(locationLabel)}</p>
+    ${renderSectionsHtml(groupedSections)}
+  `
+    : `
     <h2>New booking inquiry - D&amp;J Dream Entertainment</h2>
     <table cellpadding="6" cellspacing="0" border="0">
       <tr><td><strong>Name</strong></td><td>${escapeHtml(name)}</td></tr>
