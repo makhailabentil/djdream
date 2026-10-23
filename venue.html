@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Newburgh-Hudson Valley venue rental for celebrations and gatherings." />
+    <title>Venue Rental | D&J Dream Entertainment</title>
+    <link rel="icon" href="./assets/logo-dj-dream.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/logo-dj-dream.png" />
+    <link rel="canonical" href="https://dandjdream.com/venue.html" />
+    <meta property="og:url" content="https://dandjdream.com/venue.html" />
+    <meta property="og:title" content="Venue Rental | D&J Dream Entertainment" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=pages-v1" />
+  </head>
+  <body data-page="venue">
+    <div class="location-modal" id="location-modal" hidden>
+      <div class="location-modal-card" role="dialog" aria-modal="true" aria-labelledby="location-modal-title">
+        <img class="location-modal-logo" src="./assets/logo-dj-dream.png" alt="" />
+        <h2 id="location-modal-title">Where Are You Booking?</h2>
+        <p>Choose your service area so we can show the right details for your event.</p>
+        <div class="location-choices">
+          <button type="button" class="btn btn-outline" data-location="newburgh-hudson">
+            Newburgh-Hudson Valley, NY
+          </button>
+          <button type="button" class="btn btn-outline" data-location="baltimore">
+            Baltimore, MD
+          </button>
+        </div>
+      </div>
+    </div>
+    <a id="top" class="page-top-anchor" aria-hidden="true" tabindex="-1"></a>
+    <header class="site-header">
+      <nav class="container nav">
+        <a class="brand" href="./index.html">
+          <img class="brand-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <span class="brand-copy">
+            <span class="brand-text">Dream Entertainment</span>
+            <span
+              class="brand-location"
+              data-location-copy="navLabel"
+              title="Change service location"
+              hidden
+            ></span>
+          </span>
+        </a>
+        <button class="menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./characters.html">Characters</a></li>
+          <li><a href="./experience.html">Experience</a></li>
+          <li><a href="./packages.html">Packages</a></li>
+          <li><a href="./gallery.html">Gallery</a></li>
+          <li><a href="./casting.html">Casting</a></li>
+          <li class="nav-venue" hidden><a href="./venue.html" aria-current="page">Venue</a></li>
+          <li class="nav-book-menu-item">
+            <a class="btn btn-small" href="./packages.html#booking">BOOK NOW</a>
+          </li>
+        </ul>
+        <a class="btn btn-small nav-book-btn" href="./packages.html#booking">BOOK NOW</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container venue-page">
+          <p class="eyebrow center">Venue Rental</p>
+          <div id="venue-pending">
+            <h2 class="center">Newburgh-Hudson Valley</h2>
+            <p class="center">Choose your service location to see venue rental details.</p>
+            <p class="center"><button type="button" class="btn" id="venue-switch">Choose a location</button></p>
+          </div>
+          <div id="venue-other" hidden>
+            <h2 class="center">Available In Newburgh</h2>
+            <p class="center">
+              Venue rental is offered at our Newburgh-Hudson Valley location.
+              Switch your service location to Newburgh-Hudson Valley to see the space.
+            </p>
+            <p class="center"><button type="button" class="btn" id="venue-switch-other">Switch location</button></p>
+          </div>
+          <div id="venue-rental" hidden>
+            <h2 class="center">Host Your Gathering With Us</h2>
+            <p class="center">
+              This page is for the Newburgh-Hudson Valley location. Email or call us directly to inquire
+              about renting the space.
+            </p>
+            <p class="center venue-contact">
+              <a class="btn" href="tel:+18456451534">Call (845) 645-1534</a>
+              <a class="btn btn-outline" href="mailto:dandjdream@gmail.com">Email dandjdream@gmail.com</a>
+            </p>
+            <h3>Amenities</h3>
+            <ul class="venue-amenities">
+              <li>Smoke-free</li>
+              <li>Parking</li>
+              <li>Restrooms</li>
+              <li>Kitchen space</li>
+              <li>Space for parties and community gatherings</li>
+            </ul>
+            <p class="venue-warning"><strong>The sanctuary is off limits.</strong></p>
+            <h3>Photos</h3>
+            <div class="venue-photo-grid" aria-label="Space photos coming soon">
+              <div class="venue-photo-slot">Photo coming soon</div>
+              <div class="venue-photo-slot">Photo coming soon</div>
+              <div class="venue-photo-slot">Photo coming soon</div>
+            </div>
+            <h3>Videos</h3>
+            <p>Video links can be added here.</p>
+            <ul class="venue-videos">
+              <li>Video link coming soon</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <img class="footer-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <p class="brand-footer">D&J Dream Entertainment</p>
+          <p>Bringing premium character entertainment to birthdays and celebrations.</p>
+          <p><strong>Phone:</strong> <a href="tel:+18456451534">(845) 645-1534</a></p>
+          <p><strong>Email:</strong> <a href="mailto:dandjdream@gmail.com">dandjdream@gmail.com</a></p>
+          <p>
+            <strong>Service Area:</strong>
+            <span data-location-copy="label">Newburgh-Hudson Valley, NY</span>
+          </p>
+          <p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfKbD1vgyusRQVZfN3ZX8kvw1VDtYgZtgT_dXKDUmZeM94wnw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Casting Call / Careers
+            </a>
+          </p>
+          <p>
+            <button type="button" class="location-switch-btn" id="location-switch-btn">
+              Change location
+            </button>
+          </p>
+        </div>
+      </div>
+      <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
+    </footer>
+
+    <script src="./script.js?v=pages-v1"></script>
+  </body>
+</html>

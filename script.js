@@ -773,9 +773,11 @@ brandLinks.forEach((brandLink) => {
       return;
     }
 
-    event.preventDefault();
-    scrollToTopInstant();
-    closeMobileNav();
+    if (document.body.dataset.page === "home") {
+      event.preventDefault();
+      scrollToTopInstant();
+      closeMobileNav();
+    }
   });
 });
 
@@ -826,8 +828,13 @@ if (
 ) {
   const packageCatalog = {
     starter: {
-      label: "Enchant Starter",
+      label: "Sprinkle of Joy",
       maxCharacters: 1,
+      times: ["10:00 AM", "12:30 PM", "3:00 PM"],
+    },
+    duo: {
+      label: "Dynamic Duo Pop-In",
+      maxCharacters: 2,
       times: ["10:00 AM", "12:30 PM", "3:00 PM"],
     },
     signature: {
@@ -858,6 +865,7 @@ if (
     { value: "sky-guardian", label: "The Sky Guardian" },
     { value: "kingdom-guardian", label: "The Kingdom Guardian" },
     { value: "night-sentinel", label: "The Night Sentinel" },
+    { value: "prima-ballerina", label: "The Prima Ballerina" },
     { value: "custom-characters", label: "Custom Characters" },
   ];
 
@@ -1026,8 +1034,8 @@ if (
 
   const getAvailablePackagesByDate = (dateObj) => {
     const weekday = dateObj.getDay();
-    if (weekday === 0 || weekday === 6) return ["starter", "signature", "grand"];
-    return ["starter", "signature"];
+    if (weekday === 0 || weekday === 6) return ["starter", "duo", "signature", "grand"];
+    return ["starter", "duo", "signature"];
   };
 
   const syncAvailabilityToForm = () => {
@@ -1250,6 +1258,9 @@ if (
 
     if (bookingSection) {
       bookingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.location.href = "./packages.html#booking";
+      return;
     }
 
     const firstEmptyField = bookingForm?.querySelector(
@@ -2047,4 +2058,108 @@ if (heroCarousel && heroCarouselTrack) {
     initCarouselPosition();
     settleCarouselAfterRebuild(rebuildToken);
   });
+}
+
+const syncVenueVisibility = () => {
+  const locationId = document.documentElement.dataset.serviceLocation || "";
+  const isNewburgh = locationId === "newburgh-hudson";
+
+  document.querySelectorAll(".nav-venue").forEach((item) => {
+    item.hidden = !isNewburgh;
+  });
+
+  const rental = document.getElementById("venue-rental");
+  const other = document.getElementById("venue-other");
+  const pending = document.getElementById("venue-pending");
+  if (!rental && !other && !pending) {
+    return;
+  }
+
+  const known = Boolean(locationId);
+  if (pending) pending.hidden = known;
+  if (rental) rental.hidden = !isNewburgh;
+  if (other) other.hidden = !known || isNewburgh;
+};
+
+serviceLocationChangeHandlers.push(syncVenueVisibility);
+syncVenueVisibility();
+
+document.querySelectorAll("#venue-switch, #venue-switch-other").forEach((button) => {
+  button.addEventListener("click", openLocationModal);
+});
+
+const galleryRoot = document.querySelector("#gallery-slideshow");
+if (galleryRoot) {
+  const images = Array.isArray(window.DREAM_GALLERY)
+    ? window.DREAM_GALLERY.filter((item) => item && item.src)
+    : [];
+  const empty = document.querySelector("#gallery-empty");
+  const frame = document.querySelector("#gallery-frame");
+  const galleryImage = document.querySelector("#gallery-image");
+  const caption = document.querySelector("#gallery-caption");
+  const controls = document.querySelector("#gallery-controls");
+  const dots = document.querySelector("#gallery-dots");
+  const prev = document.querySelector("#gallery-prev");
+  const next = document.querySelector("#gallery-next");
+
+  if (images.length && galleryImage && frame && controls) {
+    if (empty) empty.hidden = true;
+    frame.hidden = false;
+    controls.hidden = false;
+
+    let index = 0;
+    let timerId = 0;
+
+    const renderGallery = () => {
+      const item = images[index];
+      galleryImage.src = item.src;
+      galleryImage.alt = item.alt || "Gallery photo";
+      if (caption) {
+        caption.textContent = item.caption || "";
+        caption.hidden = !item.caption;
+      }
+      dots?.querySelectorAll("button").forEach((dot, dotIndex) => {
+        dot.setAttribute("aria-current", dotIndex === index ? "true" : "false");
+      });
+    };
+
+    images.forEach((_, dotIndex) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "gallery-dot";
+      dot.setAttribute("aria-label", `Show photo ${dotIndex + 1}`);
+      dot.addEventListener("click", () => {
+        index = dotIndex;
+        renderGallery();
+      });
+      dots?.append(dot);
+    });
+
+    prev?.addEventListener("click", () => {
+      index = (index - 1 + images.length) % images.length;
+      renderGallery();
+    });
+
+    next?.addEventListener("click", () => {
+      index = (index + 1) % images.length;
+      renderGallery();
+    });
+
+    renderGallery();
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion && images.length > 1) {
+      const startGalleryTimer = () => {
+        window.clearInterval(timerId);
+        timerId = window.setInterval(() => {
+          index = (index + 1) % images.length;
+          renderGallery();
+        }, 4000);
+      };
+
+      startGalleryTimer();
+      galleryRoot.addEventListener("mouseenter", () => window.clearInterval(timerId));
+      galleryRoot.addEventListener("mouseleave", startGalleryTimer);
+    }
+  }
 }

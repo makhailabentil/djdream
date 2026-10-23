@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sprinkle of Joy, Dynamic Duo Pop-In, Dream Signature, and Grand Celebration packages." />
+    <title>Packages | D&J Dream Entertainment</title>
+    <link rel="icon" href="./assets/logo-dj-dream.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/logo-dj-dream.png" />
+    <link rel="canonical" href="https://dandjdream.com/packages.html" />
+    <meta property="og:url" content="https://dandjdream.com/packages.html" />
+    <meta property="og:title" content="Packages | D&J Dream Entertainment" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=pages-v1" />
+  </head>
+  <body data-page="packages">
+    <div class="location-modal" id="location-modal" hidden>
+      <div class="location-modal-card" role="dialog" aria-modal="true" aria-labelledby="location-modal-title">
+        <img class="location-modal-logo" src="./assets/logo-dj-dream.png" alt="" />
+        <h2 id="location-modal-title">Where Are You Booking?</h2>
+        <p>Choose your service area so we can show the right details for your event.</p>
+        <div class="location-choices">
+          <button type="button" class="btn btn-outline" data-location="newburgh-hudson">
+            Newburgh-Hudson Valley, NY
+          </button>
+          <button type="button" class="btn btn-outline" data-location="baltimore">
+            Baltimore, MD
+          </button>
+        </div>
+      </div>
+    </div>
+    <a id="top" class="page-top-anchor" aria-hidden="true" tabindex="-1"></a>
+    <header class="site-header">
+      <nav class="container nav">
+        <a class="brand" href="./index.html">
+          <img class="brand-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <span class="brand-copy">
+            <span class="brand-text">Dream Entertainment</span>
+            <span
+              class="brand-location"
+              data-location-copy="navLabel"
+              title="Change service location"
+              hidden
+            ></span>
+          </span>
+        </a>
+        <button class="menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./characters.html">Characters</a></li>
+          <li><a href="./experience.html">Experience</a></li>
+          <li><a href="./packages.html" aria-current="page">Packages</a></li>
+          <li><a href="./gallery.html">Gallery</a></li>
+          <li><a href="./casting.html">Casting</a></li>
+          <li class="nav-venue" hidden><a href="./venue.html">Venue</a></li>
+          <li class="nav-book-menu-item">
+            <a class="btn btn-small" href="./packages.html#booking">BOOK NOW</a>
+          </li>
+        </ul>
+        <a class="btn btn-small nav-book-btn" href="./packages.html#booking">BOOK NOW</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section alt">
+        <div class="container">
+          <p class="eyebrow center" id="packages">Our Packages</p>
+          <h2 class="center">Choose The Experience Level That Fits Your Party</h2>
+          <div class="pricing-grid reveal">
+            <article class="price-card">
+              <span class="price-card-badge-slot" aria-hidden="true"></span>
+              <h3>Sprinkle of Joy</h3>
+              <p class="price">$195+</p>
+              <ul>
+                <li>30-minute single character visit</li>
+                <li>Storytime, song, and celebration moment</li>
+                <li>Photo opportunities with each child</li>
+              </ul>
+              <a class="btn btn-outline" href="#booking" data-package="starter">Book Sprinkle of Joy</a>
+            </article>
+            <article class="price-card">
+              <span class="price-card-badge-slot" aria-hidden="true"></span>
+              <h3>Dynamic Duo Pop-In</h3>
+              <p class="price price-request">Pricing on request</p>
+              <ul>
+                <li>30 minutes with 2 characters</li>
+                <li>A short pop-in visit</li>
+                <li>Photo opportunities</li>
+              </ul>
+              <a class="btn btn-outline" href="#booking" data-package="duo">Book Dynamic Duo</a>
+            </article>
+            <article class="price-card featured">
+              <p class="badge">Best Value</p>
+              <h3>Dream Signature</h3>
+              <p class="price">$325+</p>
+              <ul>
+                <li>60-minute immersive character experience</li>
+                <li>Interactive games + themed activities</li>
+                <li>Coronation, hero oath, or custom ceremony</li>
+                <li>Group photos and keepsake spotlight moment</li>
+              </ul>
+              <a class="btn" href="#booking" data-package="signature">Book Signature</a>
+            </article>
+            <article class="price-card">
+              <span class="price-card-badge-slot" aria-hidden="true"></span>
+              <h3>Grand Celebration</h3>
+              <p class="price">$595+</p>
+              <ul>
+                <li>90+ minutes with 2+ characters</li>
+                <li>Large group facilitation and activity flow</li>
+                <li>School, HOA, and festival-ready entertainment</li>
+              </ul>
+              <a class="btn btn-outline" href="#booking" data-package="grand">Build Grand Event</a>
+            </article>
+          </div>
+          <!--
+            Reviews placeholder (not shown). Later: embed Google reviews here,
+            and leave room for admin-entered quotes and testimonials.
+          -->
+        </div>
+      </section>
+
+<section class="section booking">
+        <div class="container booking-grid">
+          <div class="booking-intro">
+            <p class="eyebrow" id="booking">Book D&J Dream Entertainment</p>
+            <h2>Reserve A Date For Your Big Day</h2>
+            <p>
+              Complete the inquiry and we will email you.
+            </p>
+            <ul class="booking-points">
+              <li>Simple booking and planning process</li>
+              <li>Flexible package customization</li>
+              <li data-location-copy="bookingPoint">Newburgh-Hudson Valley, NY private and public event service</li>
+            </ul>
+          </div>
+          <form class="booking-form" id="booking-form" novalidate>
+            <input type="hidden" id="service-location" name="service-location" value="newburgh-hudson" />
+            <p class="inquiry-required-note"><span class="req">*</span> Required fields</p>
+
+            <div class="inquiry-card">
+              <div class="inquiry-title"><span class="inquiry-step">1</span> Your Information</div>
+              <div class="inquiry-row">
+                <div class="inquiry-field">
+                  <label for="name">Name <span class="req">*</span></label>
+                  <input type="text" id="name" name="name" placeholder="Full name" autocomplete="name" required />
+                </div>
+                <div class="inquiry-field">
+                  <label for="email">Email <span class="req">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+                </div>
+              </div>
+              <div class="inquiry-row">
+                <div class="inquiry-field">
+                  <label for="phone">Phone Number <span class="req">*</span></label>
+                  <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel" required />
+                </div>
+                <div class="inquiry-field">
+                  <label for="contact-pref">Preferred Contact Method <span class="optional-tag">Optional</span></label>
+                  <select id="contact-pref" name="contact-pref">
+                    <option value="">Select one</option>
+                    <option>Email</option>
+                    <option>Phone Call</option>
+                    <option>Text / SMS</option>
+                  </select>
+                </div>
+              </div>
+              <div class="inquiry-field">
+                <label for="referral">How did you hear about us? <span class="req">*</span></label>
+                <select id="referral" name="referral" required>
+                  <option value="">Select one</option>
+                  <option>Instagram</option>
+                  <option>TikTok</option>
+                  <option>Facebook</option>
+                  <option>Google</option>
+                  <option>Word of Mouth</option>
+                  <option>School or PTA</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="inquiry-card">
+              <div class="inquiry-title"><span class="inquiry-step">2</span> Event Type <span class="req">*</span></div>
+              <div class="event-type-grid">
+                <button type="button" class="event-btn" data-type="birthday" aria-pressed="false">🎂 Birthday Party</button>
+                <button type="button" class="event-btn" data-type="school" aria-pressed="false">🏫 School Event</button>
+                <button type="button" class="event-btn" data-type="corporate" aria-pressed="false">🏢 Corporate / Community Event</button>
+                <button type="button" class="event-btn" data-type="playdate" aria-pressed="false">👧 Children's Playdate<span class="sub">1-on-1 or small group</span></button>
+                <button type="button" class="event-btn" data-type="private" aria-pressed="false">🎉 Private Event<span class="sub">Baby Shower / Sleepover / Holiday / etc.</span></button>
+                <button type="button" class="event-btn" data-type="wedding" aria-pressed="false">💍 Wedding / Vow Renewal</button>
+                <button type="button" class="event-btn" data-type="dance" aria-pressed="false">🩰 Dance Class / Workshop / Performance</button>
+                <button type="button" class="event-btn" data-type="other" aria-pressed="false">✨ Other</button>
+              </div>
+              <input type="hidden" id="event-type-value" name="event-type-value" />
+            </div>
+
+            <div id="details-section" class="inquiry-hidden">
+              <div id="section-birthday" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Birthday Details</div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="b-child-name">Celebrant's Name <span class="req">*</span></label>
+                    <input type="text" id="b-child-name" placeholder="Who are we celebrating?" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="b-child-age">Celebrant's Age <span class="req">*</span></label>
+                    <input type="text" id="b-child-age" placeholder="e.g. 5, 30, 50" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="b-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="b-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="b-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="b-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="b-guests">Estimated Total Guests</label>
+                    <input type="text" id="b-guests" placeholder="e.g. 30" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="b-children">Estimated Number of Children</label>
+                    <input type="text" id="b-children" placeholder="e.g. 15" />
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="b-age-range">Age Range of Children</label>
+                  <select id="b-age-range">
+                    <option value="">Select one</option>
+                    <option>Toddlers (1–3)</option>
+                    <option>Young Children (4–7)</option>
+                    <option>Mixed Ages</option>
+                    <option>Older (8–12)</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="b-venue">Location (Venue Name and Address) <span class="req">*</span></label>
+                  <input type="text" id="b-venue" placeholder="Venue name and address" />
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="b-indoor">Indoor or Outdoor</label>
+                    <select id="b-indoor">
+                      <option value="">Select one</option>
+                      <option>Indoor</option>
+                      <option>Outdoor</option>
+                      <option>Both</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="b-surprise">Is this a surprise?</label>
+                    <select id="b-surprise">
+                      <option value="">Select one</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div id="section-school" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> School Event Details</div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="s-school">School Name <span class="req">*</span></label>
+                    <input type="text" id="s-school" placeholder="School name" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="s-title">Your Title or Role</label>
+                    <input type="text" id="s-title" placeholder="e.g. PTA President, Teacher" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="s-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="s-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="s-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="s-time" />
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="s-format">Event Format</label>
+                  <select id="s-format">
+                    <option value="">Select one</option>
+                    <option>Classroom visit (room to room)</option>
+                    <option>Assembly</option>
+                    <option>Outdoor event</option>
+                    <option>After-school program</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="s-classrooms">Number of Classrooms or Students</label>
+                    <input type="text" id="s-classrooms" placeholder="e.g. 4 classrooms / 80 students" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="s-grades">Grade Levels</label>
+                    <input type="text" id="s-grades" placeholder="e.g. K–3" />
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="s-hours">During school hours or after school?</label>
+                  <select id="s-hours">
+                    <option value="">Select one</option>
+                    <option>During school hours</option>
+                    <option>After school</option>
+                    <option>Either works</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="s-venue">Location (Venue Name and Address) <span class="req">*</span></label>
+                  <input type="text" id="s-venue" placeholder="Venue name and address" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="s-restrictions">Setup or access restrictions at the school?</label>
+                  <input type="text" id="s-restrictions" placeholder="e.g. sign-in required, no outside food" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="s-media">Will media or press be present?</label>
+                  <select id="s-media">
+                    <option value="">Select one</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Not sure</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="section-corporate" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Corporate / Community Event Details</div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="c-org">Organization or Company Name <span class="req">*</span></label>
+                    <input type="text" id="c-org" placeholder="Organization name" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="c-role">Your Title or Role</label>
+                    <input type="text" id="c-role" placeholder="e.g. Event Coordinator" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="c-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="c-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="c-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="c-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="c-endtime">Preferred End Time <span class="req">*</span></label>
+                    <input type="time" id="c-endtime" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="c-type">Event Type</label>
+                    <select id="c-type">
+                      <option value="">Select one</option>
+                      <option>Community Event</option>
+                      <option>Corporate Party</option>
+                      <option>Nonprofit Event</option>
+                      <option>Church or Faith Event</option>
+                      <option>Holiday Event</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="c-attendance">Expected Attendance</label>
+                    <input type="text" id="c-attendance" placeholder="e.g. 100 guests" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="c-public">Is this event open to the public?</label>
+                    <select id="c-public">
+                      <option value="">Select one</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="c-bilingual">Interested in bilingual programming?</label>
+                    <select id="c-bilingual">
+                      <option value="">Select one</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Either is fine</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="c-budget">Budget Range</label>
+                    <select id="c-budget">
+                      <option value="">Select one</option>
+                      <option>Under $500</option>
+                      <option>$500 – $1,000</option>
+                      <option>$1,000 – $2,500</option>
+                      <option>$2,500+</option>
+                      <option>Let's discuss</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="c-venue">Location (Venue Name and Address) <span class="req">*</span></label>
+                  <input type="text" id="c-venue" placeholder="Venue name and address" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="c-coordinator">Will a coordinator be on-site day of?</label>
+                  <select id="c-coordinator">
+                    <option value="">Select one</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="c-media">Will media or press be present?</label>
+                  <select id="c-media">
+                    <option value="">Select one</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Not sure</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="c-restrictions">Setup or venue restrictions?</label>
+                  <input type="text" id="c-restrictions" placeholder="e.g. no glitter, loading dock access required" />
+                </div>
+              </div>
+
+              <div id="section-playdate" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Playdate Details</div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="p-child">Child's Name and Age <span class="req">*</span></label>
+                    <input type="text" id="p-child" placeholder="e.g. Mia, age 4" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="p-count">Number of Children</label>
+                    <input type="text" id="p-count" placeholder="e.g. 3" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="p-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="p-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="p-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="p-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="p-location">Location (Venue Name and Address) <span class="req">*</span></label>
+                    <input type="text" id="p-location" placeholder="Address or location name" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="p-indoor">Indoor or Outdoor</label>
+                    <select id="p-indoor">
+                      <option value="">Select one</option>
+                      <option>Indoor</option>
+                      <option>Outdoor</option>
+                      <option>Both</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="p-theme">Any special themes or activities requested?</label>
+                  <input type="text" id="p-theme" placeholder="e.g. ocean theme, superhero training" />
+                </div>
+              </div>
+
+              <div id="section-private" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Private Event Details</div>
+                <div class="inquiry-field">
+                  <label for="pr-subtype">Event Type</label>
+                  <select id="pr-subtype">
+                    <option value="">Select one</option>
+                    <option>Baby Shower</option>
+                    <option>Sleepover</option>
+                    <option>Holiday Party</option>
+                    <option>Family Reunion</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="pr-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="pr-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="pr-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="pr-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="pr-guests">Estimated Total Guests</label>
+                    <input type="text" id="pr-guests" placeholder="e.g. 40" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="pr-children">Estimated Number of Children</label>
+                    <input type="text" id="pr-children" placeholder="e.g. 10" />
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="pr-age-range">Age Range of Children</label>
+                  <select id="pr-age-range">
+                    <option value="">Select one</option>
+                    <option>Toddlers (1–3)</option>
+                    <option>Young Children (4–7)</option>
+                    <option>Mixed Ages</option>
+                    <option>Older (8–12)</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="pr-venue">Location (Venue Name and Address) <span class="req">*</span></label>
+                  <input type="text" id="pr-venue" placeholder="Venue name and address" />
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="pr-indoor">Indoor or Outdoor</label>
+                    <select id="pr-indoor">
+                      <option value="">Select one</option>
+                      <option>Indoor</option>
+                      <option>Outdoor</option>
+                      <option>Both</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="pr-theme">Is there a theme?</label>
+                    <input type="text" id="pr-theme" placeholder="e.g. Under the Sea, Enchanted Forest" />
+                  </div>
+                </div>
+              </div>
+
+              <div id="section-wedding" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Wedding / Vow Renewal Details</div>
+                <div class="inquiry-field">
+                  <label for="w-names">Partner Names <span class="req">*</span></label>
+                  <input type="text" id="w-names" placeholder="e.g. Jordan and Taylor" />
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="w-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="w-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="w-ceremony">Ceremony Start Time</label>
+                    <input type="time" id="w-ceremony" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="w-reception">Reception Start Time</label>
+                    <input type="time" id="w-reception" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="w-guests">Expected Number of Guests</label>
+                    <input type="text" id="w-guests" placeholder="e.g. 120" />
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="w-role">What role would you like D&amp;J DREAM to play?</label>
+                  <select id="w-role">
+                    <option value="">Select one</option>
+                    <option>Character appearance for children in attendance</option>
+                    <option>Entertainment during cocktail hour</option>
+                    <option>Performance during reception</option>
+                    <option>Ceremonial Dancer / Processional Performer</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="w-children">Children attending?</label>
+                    <input type="text" id="w-children" placeholder="How many and what ages" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="w-budget">Budget Range</label>
+                    <select id="w-budget">
+                      <option value="">Select one</option>
+                      <option>Under $500</option>
+                      <option>$500 – $1,000</option>
+                      <option>$1,000 – $2,500</option>
+                      <option>$2,500+</option>
+                      <option>Let's discuss</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="w-venue">Location (Venue Name and Address) <span class="req">*</span></label>
+                  <input type="text" id="w-venue" placeholder="Venue name and address" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="w-coordinator">Do you have a wedding coordinator?</label>
+                  <select id="w-coordinator">
+                    <option value="">Select one</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="w-restrictions">Venue restrictions we should know about?</label>
+                  <input type="text" id="w-restrictions" placeholder="e.g. no outdoor amplified music after 9pm" />
+                </div>
+              </div>
+
+              <div id="section-dance" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Dance Event Details</div>
+                <div class="inquiry-field">
+                  <label for="d-type">Type of Engagement <span class="req">*</span></label>
+                  <select id="d-type">
+                    <option value="">Select one</option>
+                    <option>Single class</option>
+                    <option>Multi-week workshop series</option>
+                    <option>Choreography for an event</option>
+                    <option>Live performance</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label>Dance Style <span class="req">*</span></label>
+                  <div class="dance-styles">
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="ballet-pointe" /> Ballet (En Pointe)</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="ballet-flats" /> Ballet (Flats / Slippers)</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="tap" /> Tap</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="jazz" /> Jazz</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="lyrical" /> Lyrical</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="liturgical" /> Liturgical</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="mixed" /> Mixed / Open Style</label>
+                    <label class="dance-style-item"><input type="checkbox" name="dance-style" value="other" /> Other</label>
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="d-date">Date <span class="req">*</span></label>
+                    <input type="date" id="d-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="d-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="d-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="d-age">Age Group of Participants</label>
+                    <select id="d-age">
+                      <option value="">Select one</option>
+                      <option>Toddlers (1–3)</option>
+                      <option>Young Children (4–7)</option>
+                      <option>Mixed Ages</option>
+                      <option>Older (8–12)</option>
+                      <option>Teens (13–17)</option>
+                      <option>Adults</option>
+                      <option>Mixed / All Ages</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="d-participants">Number of Participants</label>
+                    <input type="text" id="d-participants" placeholder="e.g. 12" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="d-duration">Duration per Session</label>
+                    <select id="d-duration">
+                      <option value="">Select one</option>
+                      <option>30 minutes</option>
+                      <option>45 minutes</option>
+                      <option>1 hour</option>
+                      <option>1.5 hours</option>
+                      <option>2 hours</option>
+                      <option>Custom</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="d-location">Location <span class="req">*</span></label>
+                    <select id="d-location">
+                      <option value="">Select one</option>
+                      <option>Client's space</option>
+                      <option>School or community center</option>
+                      <option>Outdoor</option>
+                      <option>Virtual</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="inquiry-field">
+                  <label for="d-recital">Is this for a recital, showcase, or specific event?</label>
+                  <input type="text" id="d-recital" placeholder="Describe if applicable" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="d-costumes">Do you need costumes or props?</label>
+                  <select id="d-costumes">
+                    <option value="">Select one</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Not sure</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <label for="d-appearance">Performer appearance preference</label>
+                  <div class="appearance-note">To help us select the best performer match for your event, we would love to know if you have a preference for how your dancer/instructor looks. We proudly feature a diverse roster and can do our best to tailor the appearance to reflect your community or celebrant's identity. Please let us know.</div>
+                  <input type="text" id="d-appearance" placeholder="Share any preference here" />
+                </div>
+              </div>
+
+              <div id="section-other" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">3</span> Tell Us About Your Event</div>
+                <div class="inquiry-field">
+                  <label for="o-describe">Please describe your event <span class="req">*</span></label>
+                  <textarea id="o-describe" placeholder="Tell us what you have in mind"></textarea>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="o-date">Event Date <span class="req">*</span></label>
+                    <input type="date" id="o-date" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="o-time">Preferred Start Time <span class="req">*</span></label>
+                    <input type="time" id="o-time" />
+                  </div>
+                </div>
+                <div class="inquiry-row">
+                  <div class="inquiry-field">
+                    <label for="o-location">Location (Venue Name and Address) <span class="req">*</span></label>
+                    <input type="text" id="o-location" placeholder="Address or location name" />
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="o-budget">Budget Range</label>
+                    <select id="o-budget">
+                      <option value="">Select one</option>
+                      <option>Under $500</option>
+                      <option>$500 – $1,000</option>
+                      <option>$1,000 – $2,500</option>
+                      <option>$2,500+</option>
+                      <option>Let's discuss</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div id="section-package" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">4</span> Package &amp; Characters</div>
+                <div class="inquiry-field">
+                  <label for="package">Preferred Package <span class="req">*</span></label>
+                  <select id="package">
+                    <option value="">Select a package</option>
+                    <option>Sprinkle of Joy — 30-min single character visit</option>
+                    <option>Dynamic Duo Pop-In — 30 min with 2 characters</option>
+                    <option>Signature DREAM — 60-min immersive experience</option>
+                    <option>Grand Celebration</option>
+                    <option>Meet &amp; Greet — Photo op, autographs, no activities</option>
+                    <option>Not sure — help me choose</option>
+                  </select>
+                </div>
+                <hr class="inquiry-divider" />
+                <p class="inquiry-group-label">DREAM Characters <span class="req">*</span></p>
+                <div class="char-grid">
+                  <div class="inquiry-field">
+                    <label for="char1">Character 1 <span class="req">*</span></label>
+                    <select id="char1" class="inquiry-character">
+                      <option value="">Select character</option>
+                      <option>The Ice Queen</option>
+                      <option>The Bayou Princess</option>
+                      <option>The Desert Princess</option>
+                      <option>The Tower Princess</option>
+                      <option>The Mermaid Princess</option>
+                      <option>The Golden Belle</option>
+                      <option>The Ballroom Princess</option>
+                      <option>The Island Voyager</option>
+                      <option>The Miracle Girl</option>
+                      <option>The Prima Ballerina</option>
+                      <option>The Rescue Captain</option>
+                      <option>The Web Hero</option>
+                      <option>The Jumpman Hero</option>
+                      <option>The Sky Guardian</option>
+                      <option>The Kingdom Guardian</option>
+                      <option>The Night Sentinel</option>
+                      <option>Custom Character</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="char2">Character 2</label>
+                    <select id="char2" class="inquiry-character">
+                      <option value="">Select character</option>
+                      <option>The Ice Queen</option>
+                      <option>The Bayou Princess</option>
+                      <option>The Desert Princess</option>
+                      <option>The Tower Princess</option>
+                      <option>The Mermaid Princess</option>
+                      <option>The Golden Belle</option>
+                      <option>The Ballroom Princess</option>
+                      <option>The Island Voyager</option>
+                      <option>The Miracle Girl</option>
+                      <option>The Prima Ballerina</option>
+                      <option>The Rescue Captain</option>
+                      <option>The Web Hero</option>
+                      <option>The Jumpman Hero</option>
+                      <option>The Sky Guardian</option>
+                      <option>The Kingdom Guardian</option>
+                      <option>The Night Sentinel</option>
+                      <option>Custom Character</option>
+                    </select>
+                  </div>
+                  <div class="inquiry-field">
+                    <label for="char3">Character 3</label>
+                    <select id="char3" class="inquiry-character">
+                      <option value="">Select character</option>
+                      <option>The Ice Queen</option>
+                      <option>The Bayou Princess</option>
+                      <option>The Desert Princess</option>
+                      <option>The Tower Princess</option>
+                      <option>The Mermaid Princess</option>
+                      <option>The Golden Belle</option>
+                      <option>The Ballroom Princess</option>
+                      <option>The Island Voyager</option>
+                      <option>The Miracle Girl</option>
+                      <option>The Prima Ballerina</option>
+                      <option>The Rescue Captain</option>
+                      <option>The Web Hero</option>
+                      <option>The Jumpman Hero</option>
+                      <option>The Sky Guardian</option>
+                      <option>The Kingdom Guardian</option>
+                      <option>The Night Sentinel</option>
+                      <option>Custom Character</option>
+                    </select>
+                  </div>
+                </div>
+                <hr class="inquiry-divider" />
+                <div class="inquiry-field">
+                  <label for="appearance">Performer appearance preference</label>
+                  <div class="appearance-note">To help us select the best performer match for your celebration, we would love to know if you have a preference for how your character(s) looks. We proudly feature a diverse roster and can do our best to tailor the appearance to reflect your celebrant's identity or their favorite character. Please let us know.</div>
+                  <input type="text" id="appearance" placeholder="Share any preference here" />
+                </div>
+              </div>
+
+              <div id="section-corp-chars" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step">4</span> Package &amp; Characters</div>
+                <div class="inquiry-field">
+                  <label for="corp-package">Preferred Package <span class="req">*</span></label>
+                  <select id="corp-package">
+                    <option value="">Select a package</option>
+                    <option>Sprinkle of Joy — 30-min single character visit</option>
+                    <option>Dynamic Duo Pop-In — 30 min with 2 characters</option>
+                    <option>Signature DREAM — 60-min immersive experience</option>
+                    <option>Grand Celebration</option>
+                    <option>Meet &amp; Greet — Photo op, autographs, no activities</option>
+                    <option>Not sure — help me choose</option>
+                  </select>
+                </div>
+                <div class="inquiry-field">
+                  <p class="inquiry-group-label">DREAM Characters <span class="req">*</span></p>
+                  <p class="inquiry-hint">Select all that apply. For large events, we recommend selecting several to give guests a variety of experiences.</p>
+                  <div class="dance-styles corp-char-grid" id="corp-char-grid">
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Ice Queen" /> The Ice Queen</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Bayou Princess" /> The Bayou Princess</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Desert Princess" /> The Desert Princess</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Tower Princess" /> The Tower Princess</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Mermaid Princess" /> The Mermaid Princess</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Golden Belle" /> The Golden Belle</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Ballroom Princess" /> The Ballroom Princess</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Island Voyager" /> The Island Voyager</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Miracle Girl" /> The Miracle Girl</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Prima Ballerina" /> The Prima Ballerina</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Rescue Captain" /> The Rescue Captain</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Web Hero" /> The Web Hero</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Jumpman Hero" /> The Jumpman Hero</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Sky Guardian" /> The Sky Guardian</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Kingdom Guardian" /> The Kingdom Guardian</label>
+                    <label class="dance-style-item"><input type="checkbox" name="corp-char" value="Night Sentinel" /> The Night Sentinel</label>
+                    <label class="dance-style-item" data-custom-char><input type="checkbox" name="corp-char" value="Custom" /> Custom Character</label>
+                  </div>
+                </div>
+                <hr class="inquiry-divider" />
+                <div class="inquiry-field">
+                  <label for="corp-appearance">Performer appearance preference</label>
+                  <div class="appearance-note">To help us select the best performer match for your celebration, we would love to know if you have a preference for how your character(s) looks. We proudly feature a diverse roster and can do our best to tailor the appearance to reflect your celebrant's identity or their favorite character. Please let us know.</div>
+                  <input type="text" id="corp-appearance" placeholder="Share any preference here" />
+                </div>
+              </div>
+
+              <div id="section-additional" class="inquiry-card inquiry-hidden">
+                <div class="inquiry-title"><span class="inquiry-step" id="additional-step">5</span> A Little More</div>
+                <div class="inquiry-field">
+                  <label for="referral-code">Referral or Discount Code</label>
+                  <input type="text" id="referral-code" placeholder="Enter code if you have one" />
+                </div>
+                <div class="inquiry-field">
+                  <label for="notes">Is there anything else you would like to add?</label>
+                  <textarea id="notes" placeholder="Special requests, accessibility needs, anything at all..."></textarea>
+                </div>
+              </div>
+
+              <button type="button" class="inquiry-submit" id="booking-submit">Submit Booking Request</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <img class="footer-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <p class="brand-footer">D&J Dream Entertainment</p>
+          <p>Bringing premium character entertainment to birthdays and celebrations.</p>
+          <p><strong>Phone:</strong> <a href="tel:+18456451534">(845) 645-1534</a></p>
+          <p><strong>Email:</strong> <a href="mailto:dandjdream@gmail.com">dandjdream@gmail.com</a></p>
+          <p>
+            <strong>Service Area:</strong>
+            <span data-location-copy="label">Newburgh-Hudson Valley, NY</span>
+          </p>
+          <p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfKbD1vgyusRQVZfN3ZX8kvw1VDtYgZtgT_dXKDUmZeM94wnw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Casting Call / Careers
+            </a>
+          </p>
+          <p>
+            <button type="button" class="location-switch-btn" id="location-switch-btn">
+              Change location
+            </button>
+          </p>
+        </div>
+      </div>
+      <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
+    </footer>
+
+    <script src="./script.js?v=pages-v1"></script>
+  </body>
+</html>

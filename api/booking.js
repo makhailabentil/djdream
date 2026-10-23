@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
 
 const PACKAGE_LABELS = {
-  starter: "Enchant Starter",
+  starter: "Sprinkle of Joy",
+  duo: "Dynamic Duo Pop-In",
   signature: "Dream Signature",
   grand: "Grand Celebration",
 };

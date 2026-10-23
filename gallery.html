@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Photos from D&J Dream Entertainment parties and events." />
+    <title>Gallery | D&J Dream Entertainment</title>
+    <link rel="icon" href="./assets/logo-dj-dream.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/logo-dj-dream.png" />
+    <link rel="canonical" href="https://dandjdream.com/gallery.html" />
+    <meta property="og:url" content="https://dandjdream.com/gallery.html" />
+    <meta property="og:title" content="Gallery | D&J Dream Entertainment" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=pages-v1" />
+  </head>
+  <body data-page="gallery">
+    <div class="location-modal" id="location-modal" hidden>
+      <div class="location-modal-card" role="dialog" aria-modal="true" aria-labelledby="location-modal-title">
+        <img class="location-modal-logo" src="./assets/logo-dj-dream.png" alt="" />
+        <h2 id="location-modal-title">Where Are You Booking?</h2>
+        <p>Choose your service area so we can show the right details for your event.</p>
+        <div class="location-choices">
+          <button type="button" class="btn btn-outline" data-location="newburgh-hudson">
+            Newburgh-Hudson Valley, NY
+          </button>
+          <button type="button" class="btn btn-outline" data-location="baltimore">
+            Baltimore, MD
+          </button>
+        </div>
+      </div>
+    </div>
+    <a id="top" class="page-top-anchor" aria-hidden="true" tabindex="-1"></a>
+    <header class="site-header">
+      <nav class="container nav">
+        <a class="brand" href="./index.html">
+          <img class="brand-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <span class="brand-copy">
+            <span class="brand-text">Dream Entertainment</span>
+            <span
+              class="brand-location"
+              data-location-copy="navLabel"
+              title="Change service location"
+              hidden
+            ></span>
+          </span>
+        </a>
+        <button class="menu-btn" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./characters.html">Characters</a></li>
+          <li><a href="./experience.html">Experience</a></li>
+          <li><a href="./packages.html">Packages</a></li>
+          <li><a href="./gallery.html" aria-current="page">Gallery</a></li>
+          <li><a href="./casting.html">Casting</a></li>
+          <li class="nav-venue" hidden><a href="./venue.html">Venue</a></li>
+          <li class="nav-book-menu-item">
+            <a class="btn btn-small" href="./packages.html#booking">BOOK NOW</a>
+          </li>
+        </ul>
+        <a class="btn btn-small nav-book-btn" href="./packages.html#booking">BOOK NOW</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Social embed swap: replace this slideshow with an Instagram or Facebook embed if the gallery should update from social media. -->
+      <section class="section">
+        <div class="container">
+          <p class="eyebrow center">Gallery</p>
+          <h2 class="center">Parties And Performances</h2>
+          <p class="center">A few moments from recent celebrations.</p>
+          <div class="gallery-slideshow" id="gallery-slideshow">
+            <p class="gallery-empty" id="gallery-empty">Photos are coming soon.</p>
+            <div class="gallery-frame" id="gallery-frame" hidden>
+              <img id="gallery-image" alt="" />
+              <p class="gallery-caption" id="gallery-caption"></p>
+            </div>
+            <div class="gallery-controls" id="gallery-controls" hidden>
+              <button type="button" class="gallery-nav" id="gallery-prev" aria-label="Previous photo">&#8249;</button>
+              <div class="gallery-dots" id="gallery-dots"></div>
+              <button type="button" class="gallery-nav" id="gallery-next" aria-label="Next photo">&#8250;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <img class="footer-logo" src="./assets/logo-dj-dream.png" alt="D&J Dream Entertainment logo" />
+          <p class="brand-footer">D&J Dream Entertainment</p>
+          <p>Bringing premium character entertainment to birthdays and celebrations.</p>
+          <p><strong>Phone:</strong> <a href="tel:+18456451534">(845) 645-1534</a></p>
+          <p><strong>Email:</strong> <a href="mailto:dandjdream@gmail.com">dandjdream@gmail.com</a></p>
+          <p>
+            <strong>Service Area:</strong>
+            <span data-location-copy="label">Newburgh-Hudson Valley, NY</span>
+          </p>
+          <p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfKbD1vgyusRQVZfN3ZX8kvw1VDtYgZtgT_dXKDUmZeM94wnw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Casting Call / Careers
+            </a>
+          </p>
+          <p>
+            <button type="button" class="location-switch-btn" id="location-switch-btn">
+              Change location
+            </button>
+          </p>
+        </div>
+      </div>
+      <p class="copyright">© <span id="year"></span> D&J Dream Entertainment. All rights reserved.</p>
+    </footer>
+
+    <script src="./gallery.js?v=pages-v1"></script>
+    <script src="./script.js?v=pages-v1"></script>
+  </body>
+</html>
