@@ -2056,14 +2056,19 @@ textarea:focus {
 .photos-brevo-wrap #sib-container textarea.input,
 .photos-brevo-wrap #sib-container .sib-sms-input .input,
 .photos-brevo-wrap #sib-container .sib-sms-input .entry__field,
-.photos-brevo-wrap #sib-container .sib-sms-input-wrapper {
+.photos-brevo-wrap #sib-container .sib-sms-input-wrapper,
+.photos-brevo-wrap #sib-container .sib-sms-select__title,
+.photos-brevo-wrap #sib-container .sib-sms-select__number-input,
+.photos-brevo-wrap #sib-container .sib-sms-select__calling-code,
+.photos-brevo-wrap #sib-container .sib-sms-select__phone-number {
   color: var(--surface) !important;
   background: #ffffff !important;
   border-color: var(--border) !important;
 }
 
 .photos-brevo-wrap #sib-container input::placeholder,
-.photos-brevo-wrap #sib-container textarea::placeholder {
+.photos-brevo-wrap #sib-container textarea::placeholder,
+.photos-brevo-wrap #sib-container .sib-sms-select__phone-number::placeholder {
   color: #6a5b94 !important;
 }
 
