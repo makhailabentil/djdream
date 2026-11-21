@@ -1887,9 +1887,63 @@ textarea:focus {
   margin-inline: auto;
 }
 
+.gallery-photos-cta {
+  max-width: 36rem;
+  margin: 1.25rem auto 0;
+  padding: 1rem 1.15rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.gallery-photos-cta p {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+}
+
 .gallery-slideshow {
   max-width: 860px;
   margin: 1.5rem auto 0;
+}
+
+.photos-section {
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.photos-page {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.photos-title {
+  margin-bottom: 0.75rem;
+}
+
+.photos-lead,
+.photos-lead-es {
+  max-width: 38rem;
+  margin: 0 auto 0.85rem;
+  color: var(--muted);
+}
+
+.photos-lead-es {
+  margin-bottom: 1.5rem;
+}
+
+.photos-brevo-wrap {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.photos-brevo-wrap #sib-form-container,
+.photos-brevo-wrap #sib-container {
+  margin-inline: auto;
+}
+
+/* Keep Brevo form readable on the dark site chrome */
+.photos-brevo-wrap .sib-form {
+  background: transparent !important;
 }
 
 .gallery-empty,

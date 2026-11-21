@@ -332,7 +332,11 @@ const selectServiceLocation = (locationId) => {
 
 const initServiceLocationPicker = () => {
   const savedLocation = getSavedServiceLocation();
-  if (savedLocation) {
+  // Photo signup is Newburgh-only. Guests arriving from a photo card should
+  // reach the form without first answering the location modal.
+  if (!savedLocation && document.body?.dataset.page === "photos") {
+    selectServiceLocation("newburgh-hudson");
+  } else if (savedLocation) {
     applyServiceLocation(savedLocation);
   } else {
     openLocationModal();
@@ -2060,11 +2064,11 @@ if (heroCarousel && heroCarouselTrack) {
   });
 }
 
-const syncVenueVisibility = () => {
+const syncNewburghOnlyVisibility = () => {
   const locationId = document.documentElement.dataset.serviceLocation || "";
   const isNewburgh = locationId === "newburgh-hudson";
 
-  document.querySelectorAll(".nav-venue").forEach((item) => {
+  document.querySelectorAll(".nav-venue, .nav-photos, .footer-photos, .gallery-photos-cta").forEach((item) => {
     item.hidden = !isNewburgh;
   });
 
@@ -2081,8 +2085,8 @@ const syncVenueVisibility = () => {
   if (other) other.hidden = !known || isNewburgh;
 };
 
-serviceLocationChangeHandlers.push(syncVenueVisibility);
-syncVenueVisibility();
+serviceLocationChangeHandlers.push(syncNewburghOnlyVisibility);
+syncNewburghOnlyVisibility();
 
 document.querySelectorAll("#venue-switch, #venue-switch-other").forEach((button) => {
   button.addEventListener("click", openLocationModal);
