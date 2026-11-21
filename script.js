@@ -2064,11 +2064,13 @@ if (heroCarousel && heroCarouselTrack) {
   });
 }
 
-const syncNewburghOnlyVisibility = () => {
+const syncVenueVisibility = () => {
   const locationId = document.documentElement.dataset.serviceLocation || "";
   const isNewburgh = locationId === "newburgh-hudson";
 
-  document.querySelectorAll(".nav-venue, .nav-photos, .footer-photos, .gallery-photos-cta").forEach((item) => {
+  // Venue stays Newburgh-only. Event photo signup stays visible site-wide so
+  // guests can find it without first choosing a booking location.
+  document.querySelectorAll(".nav-venue").forEach((item) => {
     item.hidden = !isNewburgh;
   });
 
@@ -2085,8 +2087,8 @@ const syncNewburghOnlyVisibility = () => {
   if (other) other.hidden = !known || isNewburgh;
 };
 
-serviceLocationChangeHandlers.push(syncNewburghOnlyVisibility);
-syncNewburghOnlyVisibility();
+serviceLocationChangeHandlers.push(syncVenueVisibility);
+syncVenueVisibility();
 
 document.querySelectorAll("#venue-switch, #venue-switch-other").forEach((button) => {
   button.addEventListener("click", openLocationModal);

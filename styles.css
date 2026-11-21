@@ -846,6 +846,22 @@ h1 {
   border-color: transparent;
 }
 
+.location-photos-link {
+  margin: 1.15rem 0 0;
+  font-size: 0.95rem;
+}
+
+.location-photos-link a {
+  color: #f3ecff;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.location-photos-link a:hover,
+.location-photos-link a:focus-visible {
+  color: #fff;
+}
+
 .location-switch-btn {
   padding: 0;
   border: 0;
@@ -1890,16 +1906,38 @@ textarea:focus {
 .gallery-photos-cta {
   max-width: 36rem;
   margin: 1.25rem auto 0;
-  padding: 1rem 1.15rem;
+  padding: 1.15rem 1.25rem 1.25rem;
   text-align: center;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.04);
 }
 
+.gallery-photos-cta-title {
+  margin: 0 0 0.45rem;
+  color: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
 .gallery-photos-cta p {
   margin: 0 0 0.85rem;
   color: var(--muted);
+}
+
+.photos-home-section {
+  border-top: 1px solid var(--border);
+}
+
+.photos-home {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.photos-home-copy {
+  margin: 0.75rem auto 1.35rem;
 }
 
 .gallery-slideshow {
