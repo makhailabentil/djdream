@@ -2007,16 +2007,16 @@ textarea:focus {
   margin-inline: auto;
 }
 
-/* Keep Brevo's light form; force dark lettering (site muted purple was too light on white) */
+/* Keep Brevo's light form; use dark UI purple for lettering (not light muted lavender) */
 .photos-brevo-wrap .sib-form {
   background: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container {
   background: #ffffff !important;
-  border-color: #cfc4ea !important;
+  border-color: var(--border) !important;
   border-radius: 12px !important;
-  color: #1a1230 !important;
+  color: var(--surface) !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-form-block,
@@ -2026,42 +2026,42 @@ textarea:focus {
 .photos-brevo-wrap #sib-container .entry__choice,
 .photos-brevo-wrap #sib-container .entry__choice span,
 .photos-brevo-wrap #sib-container .entry__choice strong {
-  color: #1a1230 !important;
+  color: var(--surface) !important;
   background-color: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-text-form-block p {
-  color: #2a2044 !important;
+  color: var(--surface-alt) !important;
   line-height: 1.55 !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"],
 .photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"] p {
-  color: #120f29 !important;
+  color: var(--surface) !important;
   font-family: "Space Grotesk", Manrope, sans-serif !important;
 }
 
 .photos-brevo-wrap #sib-container .entry__specification {
-  color: #3a3158 !important;
+  color: var(--border) !important;
   background-color: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container a {
-  color: #5a3fd4 !important;
+  color: var(--primary-dark) !important;
 }
 
 .photos-brevo-wrap #sib-container .input,
 .photos-brevo-wrap #sib-container input.input,
 .photos-brevo-wrap #sib-container select.input,
 .photos-brevo-wrap #sib-container textarea.input {
-  color: #120f29 !important;
+  color: var(--surface) !important;
   background: #ffffff !important;
-  border-color: #b9aed8 !important;
+  border-color: var(--border) !important;
 }
 
 .photos-brevo-wrap #sib-container input::placeholder,
 .photos-brevo-wrap #sib-container textarea::placeholder {
-  color: #6d628c !important;
+  color: #6a5b94 !important;
 }
 
 .gallery-empty,
