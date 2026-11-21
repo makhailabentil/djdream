@@ -795,13 +795,31 @@ const closeMobileNav = () => {
 };
 
 if (menuButton && navLinks) {
-  menuButton.addEventListener("click", () => {
+  menuButton.addEventListener("click", (event) => {
+    event.stopPropagation();
     const isOpen = navLinks.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
   });
 
   navLinks.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeMobileNav);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!navLinks.classList.contains("open")) {
+      return;
+    }
+    const target = event.target;
+    if (target instanceof Node && (navLinks.contains(target) || menuButton.contains(target))) {
+      return;
+    }
+    closeMobileNav();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMobileNav();
+    }
   });
 }
 
