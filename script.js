@@ -332,7 +332,11 @@ const selectServiceLocation = (locationId) => {
 
 const initServiceLocationPicker = () => {
   const savedLocation = getSavedServiceLocation();
-  if (savedLocation) {
+  // Photo signup is Newburgh-only. Guests arriving from a photo card should
+  // reach the form without first answering the location modal.
+  if (!savedLocation && document.body?.dataset.page === "photos") {
+    selectServiceLocation("newburgh-hudson");
+  } else if (savedLocation) {
     applyServiceLocation(savedLocation);
   } else {
     openLocationModal();
@@ -2064,6 +2068,8 @@ const syncVenueVisibility = () => {
   const locationId = document.documentElement.dataset.serviceLocation || "";
   const isNewburgh = locationId === "newburgh-hudson";
 
+  // Venue stays Newburgh-only. Event photo signup stays visible site-wide so
+  // guests can find it without first choosing a booking location.
   document.querySelectorAll(".nav-venue").forEach((item) => {
     item.hidden = !isNewburgh;
   });
