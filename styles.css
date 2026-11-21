@@ -82,10 +82,12 @@ p {
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.75rem;
   min-height: 72px;
   width: 100%;
+  position: relative;
+  min-width: 0;
 }
 
 .brand {
@@ -167,17 +169,36 @@ p {
 
 .nav-links {
   list-style: none;
-  display: flex;
-  align-items: center;
-  gap: clamp(0.45rem, 0.95vw, 0.95rem);
-  flex-wrap: nowrap;
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: 70;
+  width: min(18.5rem, calc(100vw - 2rem));
   margin: 0;
-  padding: 0;
-  white-space: nowrap;
+  padding: 0.85rem 0.9rem 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+  background: linear-gradient(180deg, #1a1538, #120f29);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  white-space: normal;
+}
+
+.nav-links.open {
+  display: flex;
+}
+
+.nav-links li {
+  width: 100%;
 }
 
 .nav-book-btn {
+  order: 2;
   flex-shrink: 0;
+  margin-left: auto;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -186,31 +207,56 @@ p {
   display: none;
 }
 
-.nav {
-  min-width: 0;
-}
-
 .nav-links a {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
   text-decoration: none;
   color: var(--text);
   font-weight: 600;
-  font-size: clamp(0.78rem, 0.88vw, 0.95rem);
+  font-size: 0.92rem;
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-links a[aria-current="page"] {
+  background: rgba(127, 100, 255, 0.16);
 }
 
 .menu-btn {
-  display: none;
+  order: 3;
+  display: block;
+  flex-shrink: 0;
   background: none;
-  border: 0;
-  padding: 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.45rem 0.5rem;
+  cursor: pointer;
+}
+
+.menu-btn:hover,
+.menu-btn:focus-visible {
+  border-color: #6d5bb8;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.menu-btn[aria-expanded="true"] {
+  border-color: #8f7ad8;
+  background: rgba(127, 100, 255, 0.14);
 }
 
 .menu-btn span {
   display: block;
-  width: 24px;
-  height: 3px;
+  width: 22px;
+  height: 2px;
   margin: 4px 0;
   border-radius: 2px;
   background: var(--text);
@@ -1730,14 +1776,11 @@ textarea:focus {
   }
 
   .menu-btn {
-    display: block;
-    flex-shrink: 0;
     order: 2;
     margin-left: auto;
   }
 
   .nav {
-    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -1747,37 +1790,22 @@ textarea:focus {
   }
 
   .nav-links {
-    display: none;
-    order: 3;
-    flex-basis: 100%;
-    position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     width: 100%;
     margin: 0;
     padding: 1rem 1.25rem 1.25rem;
-    flex-direction: column;
     align-items: center;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
     background: #100c24;
-    border-bottom: 1px solid var(--border);
-    z-index: 60;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links li {
-    width: 100%;
-    text-align: center;
   }
 
   .nav-links a {
-    display: inline-block;
-    width: 100%;
     text-align: center;
-    padding: 0.35rem 0;
   }
 
   .nav-book-btn {
@@ -1979,9 +2007,79 @@ textarea:focus {
   margin-inline: auto;
 }
 
-/* Keep Brevo form readable on the dark site chrome */
+/*
+  Keep Brevo's light form.
+  Use a darker shade of the UI accent purple (#7f64ff / #6a47f8), not near-black
+  surface colors that read as black on white.
+*/
+.photos-brevo-wrap {
+  --form-purple: #4a2fb8;
+  --form-purple-deep: #3d2499;
+  --form-purple-soft: #5b45c4;
+}
+
 .photos-brevo-wrap .sib-form {
   background: transparent !important;
+}
+
+.photos-brevo-wrap #sib-container {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  border-radius: 12px !important;
+  color: var(--form-purple) !important;
+}
+
+.photos-brevo-wrap #sib-container .sib-form-block,
+.photos-brevo-wrap #sib-container .sib-text-form-block,
+.photos-brevo-wrap #sib-container p,
+.photos-brevo-wrap #sib-container .entry__label,
+.photos-brevo-wrap #sib-container .entry__choice,
+.photos-brevo-wrap #sib-container .entry__choice span,
+.photos-brevo-wrap #sib-container .entry__choice strong {
+  color: var(--form-purple) !important;
+  background-color: transparent !important;
+}
+
+.photos-brevo-wrap #sib-container .sib-text-form-block p {
+  color: var(--form-purple-deep) !important;
+  line-height: 1.55 !important;
+}
+
+.photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"],
+.photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"] p {
+  color: var(--form-purple-deep) !important;
+  font-family: "Space Grotesk", Manrope, sans-serif !important;
+}
+
+.photos-brevo-wrap #sib-container .entry__specification {
+  color: var(--form-purple-soft) !important;
+  background-color: transparent !important;
+}
+
+.photos-brevo-wrap #sib-container a {
+  color: var(--primary-dark) !important;
+}
+
+.photos-brevo-wrap #sib-container .input,
+.photos-brevo-wrap #sib-container input.input,
+.photos-brevo-wrap #sib-container select.input,
+.photos-brevo-wrap #sib-container textarea.input,
+.photos-brevo-wrap #sib-container .sib-sms-input .input,
+.photos-brevo-wrap #sib-container .sib-sms-input .entry__field,
+.photos-brevo-wrap #sib-container .sib-sms-input-wrapper,
+.photos-brevo-wrap #sib-container .sib-sms-select__title,
+.photos-brevo-wrap #sib-container .sib-sms-select__number-input,
+.photos-brevo-wrap #sib-container .sib-sms-select__calling-code,
+.photos-brevo-wrap #sib-container .sib-sms-select__phone-number {
+  color: var(--form-purple-deep) !important;
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+
+.photos-brevo-wrap #sib-container input::placeholder,
+.photos-brevo-wrap #sib-container textarea::placeholder,
+.photos-brevo-wrap #sib-container .sib-sms-select__phone-number::placeholder {
+  color: #7a6bb0 !important;
 }
 
 .gallery-empty,
@@ -2097,25 +2195,3 @@ textarea:focus {
   }
 }
 
-@media (min-width: 901px) and (max-width: 1180px) {
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    row-gap: 0.15rem;
-  }
-
-  .nav-links a {
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-  }
-
-  .brand-logo {
-    width: 88px;
-    height: 40px;
-  }
-
-  .brand-text {
-    font-size: 0.78rem;
-    letter-spacing: 0.05em;
-  }
-}
