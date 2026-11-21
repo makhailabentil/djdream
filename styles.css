@@ -2053,7 +2053,10 @@ textarea:focus {
 .photos-brevo-wrap #sib-container .input,
 .photos-brevo-wrap #sib-container input.input,
 .photos-brevo-wrap #sib-container select.input,
-.photos-brevo-wrap #sib-container textarea.input {
+.photos-brevo-wrap #sib-container textarea.input,
+.photos-brevo-wrap #sib-container .sib-sms-input .input,
+.photos-brevo-wrap #sib-container .sib-sms-input .entry__field,
+.photos-brevo-wrap #sib-container .sib-sms-input-wrapper {
   color: var(--surface) !important;
   background: #ffffff !important;
   border-color: var(--border) !important;
