@@ -2007,18 +2007,16 @@ textarea:focus {
   margin-inline: auto;
 }
 
-/* Match Brevo embed to the site palette; override light-purple-on-white text */
+/* Keep Brevo's light form; force dark lettering (site muted purple was too light on white) */
 .photos-brevo-wrap .sib-form {
   background: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container {
-  background: #0d0a1c !important;
-  border-color: var(--border) !important;
-  border-radius: 16px !important;
-  box-shadow: var(--shadow);
-  color: #f7f2ff !important;
-  padding: 0.35rem 0.15rem 0.6rem;
+  background: #ffffff !important;
+  border-color: #cfc4ea !important;
+  border-radius: 12px !important;
+  color: #1a1230 !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-form-block,
@@ -2028,69 +2026,42 @@ textarea:focus {
 .photos-brevo-wrap #sib-container .entry__choice,
 .photos-brevo-wrap #sib-container .entry__choice span,
 .photos-brevo-wrap #sib-container .entry__choice strong {
-  color: #f7f2ff !important;
+  color: #1a1230 !important;
   background-color: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-text-form-block p {
-  color: #ddd2f5 !important;
+  color: #2a2044 !important;
   line-height: 1.55 !important;
 }
 
 .photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"],
 .photos-brevo-wrap #sib-container .sib-form-block[style*="font-size:32px"] p {
-  color: #ffffff !important;
+  color: #120f29 !important;
   font-family: "Space Grotesk", Manrope, sans-serif !important;
 }
 
 .photos-brevo-wrap #sib-container .entry__specification {
-  color: #b9a8e0 !important;
+  color: #4a3f6b !important;
   background-color: transparent !important;
 }
 
 .photos-brevo-wrap #sib-container a {
-  color: #d7cbff !important;
+  color: #5a3fd4 !important;
 }
 
 .photos-brevo-wrap #sib-container .input,
 .photos-brevo-wrap #sib-container input.input,
 .photos-brevo-wrap #sib-container select.input,
 .photos-brevo-wrap #sib-container textarea.input {
-  background: #0d0a1c !important;
-  color: #f3ecff !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 10px !important;
-  box-shadow: none !important;
+  color: #120f29 !important;
+  background: #ffffff !important;
+  border-color: #b9aed8 !important;
 }
 
 .photos-brevo-wrap #sib-container input::placeholder,
 .photos-brevo-wrap #sib-container textarea::placeholder {
-  color: #9b8bc4 !important;
-}
-
-.photos-brevo-wrap #sib-container .sib-sms-input-wrapper,
-.photos-brevo-wrap #sib-container .sib-sms-input {
-  background: transparent !important;
-}
-
-.photos-brevo-wrap #sib-container .checkbox {
-  border-color: #8f7ad8 !important;
-  background: #0d0a1c !important;
-}
-
-.photos-brevo-wrap #sib-container .sib-form-block__button {
-  background: linear-gradient(130deg, var(--accent), var(--primary)) !important;
-  color: #fff !important;
-  border-radius: 999px !important;
-  border: 0 !important;
-  min-height: 2.75rem;
-  padding-inline: 1.4rem !important;
-  box-shadow: 0 10px 24px rgba(127, 100, 255, 0.28);
-}
-
-.photos-brevo-wrap #sib-container .sib-form-block__button:hover,
-.photos-brevo-wrap #sib-container .sib-form-block__button:focus-visible {
-  filter: brightness(1.06);
+  color: #6d628c !important;
 }
 
 .gallery-empty,
